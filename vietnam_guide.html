@@ -30,7 +30,7 @@
     </script>
     <!-- FontAwesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts: Inter / SF Pro style + Noto Sans TC -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -47,9 +47,6 @@
             --text-primary: #1c1c1e;
             --text-secondary: #3a3a3c;
             --text-tertiary: #8e8e93;
-            
-            --pill-active-bg: #059669;
-            --pill-active-text: #ffffff;
 
             --note-bg: rgba(5, 150, 105, 0.05);
             --note-border: #059669;
@@ -70,9 +67,6 @@
             --text-primary: #ffffff;
             --text-secondary: #cbd5e1;
             --text-tertiary: #94a3b8;
-            
-            --pill-active-bg: #10b981;
-            --pill-active-text: #ffffff;
 
             --note-bg: rgba(16, 185, 129, 0.08);
             --note-border: #10b981;
@@ -138,10 +132,10 @@
 
             <!-- Header Quick Actions (iOS Style Capsule Buttons) -->
             <div class="flex items-center gap-1.5">
-                <!-- Theme Toggle Button -->
-                <button onclick="toggleTheme()" class="h-8 px-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-700 dark:text-amber-300 font-semibold text-xs transition active:scale-95 flex items-center gap-1" id="theme-toggle-btn" title="切換深淺模式">
-                    <i class="fa-solid fa-sun text-amber-500 text-xs" id="theme-icon"></i>
-                    <span id="theme-text" class="text-[11px]">淺色</span>
+                <!-- Theme Toggle Button (Correct Target Action Logic: In Light Mode shows Moon+深色; In Dark Mode shows Sun+淺色) -->
+                <button onclick="toggleTheme()" class="h-8 px-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-700 dark:text-amber-300 font-semibold text-xs transition active:scale-95 flex items-center gap-1.5" id="theme-toggle-btn" title="切換為深色模式">
+                    <i class="fa-solid fa-moon text-indigo-500 text-xs" id="theme-icon"></i>
+                    <span id="theme-text" class="text-[11px]">深色</span>
                 </button>
 
                 <!-- Fast Add Place Button -->
@@ -189,25 +183,25 @@
                 </button>
             </div>
 
-            <!-- Material You 3 Style Filter Chips: Row 1 Regions -->
+            <!-- Material You 3 Style Filter Chips: Row 1 Regions (Exact data-region matching) -->
             <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar py-0.5" id="region-filter-container">
-                <button onclick="setRegionFilter('ALL')" class="region-btn active shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition bg-emerald-600 text-white shadow-sm">全部區域</button>
-                <button onclick="setRegionFilter('慈山 (Từ Sơn)')" class="region-btn shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">慈山 (Từ Sơn)</button>
-                <button onclick="setRegionFilter('北寧市區 (Bắc Ninh)')" class="region-btn shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">北寧市區</button>
-                <button onclick="setRegionFilter('河內市 (Hà Nội)')" class="region-btn shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">河內市</button>
-                <button onclick="setRegionFilter('峴港 (Đà Nẵng)')" class="region-btn shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">峴港</button>
+                <button data-region="ALL" onclick="setRegionFilter('ALL')" class="region-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-emerald-600 text-white shadow-sm">全部區域</button>
+                <button data-region="慈山 (Từ Sơn)" onclick="setRegionFilter('慈山 (Từ Sơn)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">慈山 (Từ Sơn)</button>
+                <button data-region="北寧市區 (Bắc Ninh)" onclick="setRegionFilter('北寧市區 (Bắc Ninh)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">北寧市區</button>
+                <button data-region="河內市 (Hà Nội)" onclick="setRegionFilter('河內市 (Hà Nội)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">河內市</button>
+                <button data-region="峴港 (Đà Nẵng)" onclick="setRegionFilter('峴港 (Đà Nẵng)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">峴港</button>
             </div>
 
-            <!-- Material You 3 Style Filter Chips: Row 2 Categories -->
+            <!-- Material You 3 Style Filter Chips: Row 2 Categories (Exact data-type matching) -->
             <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar py-0.5" id="type-filter-container">
-                <button onclick="setTypeFilter('ALL')" class="type-btn active shrink-0 px-3 py-1 rounded-full text-xs font-bold transition bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm">全部類型</button>
-                <button onclick="setTypeFilter('🍜 在地/精緻美食')" class="type-btn shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">🍜 美食</button>
-                <button onclick="setTypeFilter('☕ 咖啡甜點')" class="type-btn shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">☕ 咖啡甜點</button>
-                <button onclick="setTypeFilter('🏞️ 景點園區')" class="type-btn shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">🏞️ 景點</button>
-                <button onclick="setTypeFilter('🛍️ 超市/伴手禮')" class="type-btn shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">🛍️ 採買/超市</button>
-                <button onclick="setTypeFilter('💆‍♂️ SPA/按摩')" class="type-btn shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">💆‍♂️ SPA</button>
-                <button onclick="setTypeFilter('🏋️ 運動/游泳池')" class="type-btn shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">🏋️ 運動</button>
-                <button onclick="setTypeFilter('🏨 飯店住宿')" class="type-btn shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">🏨 住宿</button>
+                <button data-type="ALL" onclick="setTypeFilter('ALL')" class="type-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-emerald-600 text-white shadow-sm">全部類型</button>
+                <button data-type="🍜 在地/精緻美食" onclick="setTypeFilter('🍜 在地/精緻美食')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">🍜 美食</button>
+                <button data-type="☕ 咖啡甜點" onclick="setTypeFilter('☕ 咖啡甜點')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">☕ 咖啡甜點</button>
+                <button data-type="🏞️ 景點園區" onclick="setTypeFilter('🏞️ 景點園區')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">🏞️ 景點</button>
+                <button data-type="🛍️ 超市/伴手禮" onclick="setTypeFilter('🛍️ 超市/伴手禮')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">🛍️ 超市/採買</button>
+                <button data-type="💆‍♂️ SPA/按摩" onclick="setTypeFilter('💆‍♂️ SPA/按摩')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">💆‍♂️ SPA</button>
+                <button data-type="🏋️ 運動/游泳池" onclick="setTypeFilter('🏋️ 運動/游泳池')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">🏋️ 運動</button>
+                <button data-type="🏨 飯店住宿" onclick="setTypeFilter('🏨 飯店住宿')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">🏨 住宿</button>
             </div>
 
             <!-- Material You 3 Style Filter Chips: Row 3 Curated Tags -->
@@ -251,15 +245,638 @@
 
             <!-- Michelin City Filters -->
             <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar py-0.5" id="michelin-city-filters">
-                <button onclick="filterMichelin('ALL')" class="michelin-btn active shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition bg-rose-600 text-white shadow-sm">全部城市 (16)</button>
-                <button onclick="filterMichelin('河內')" class="michelin-btn shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">河內 (7)</button>
-                <button onclick="filterMichelin('胡志明')" class="michelin-btn shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">胡志明市 (7)</button>
-                <button onclick="filterMichelin('峴港')" class="michelin-btn shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5">峴港 (2)</button>
+                <button onclick="filterMichelin('ALL')" class="michelin-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-rose-600 text-white shadow-sm">全部城市 (16)</button>
+                <button onclick="filterMichelin('河內')" class="michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">河內 (7)</button>
+                <button onclick="filterMichelin('胡志明')" class="michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">胡志明市 (7)</button>
+                <button onclick="filterMichelin('峴港')" class="michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">峴港 (2)</button>
             </div>
 
-            <!-- Michelin Cards Container -->
+            <!-- Michelin Cards Container (Pre-rendered + JS synced) -->
             <div class="space-y-3" id="michelin-grid">
-                <!-- Dynamic Michelin Cards -->
+                
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林一星 ⭐
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    河內市 (Hà Nội)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Tầm Vị
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    傳統北越家常菜
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                以 18 世紀傳統木造古宅裝潢，重現北越傳統農家精緻料理。經典小鯧魚煎至金黃酥翠、水芹菜炒牛肉與綠豆湯令人驚艷。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">招牌小鯧魚煎、竹筍燉豬腳湯、紅燒肉</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$$ (約 20-40 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>4b P. Yên Thế, Văn Miếu, Đống Đa, Hà Nội
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Tam+Vi+Restaurant+Hanoi" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林一星 ⭐
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    河內市 (Hà Nội)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Gia Restaurant
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    現代精緻越菜 (Fine Dining)
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                Gia 取自『家庭』與『節氣』之意，主廚 Sam 曾於墨爾本修業，以越南 24 節氣在地食材為靈感，呈現極具現代藝術感的創意套餐。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">24 節氣客製化季節 Tasting Menu</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$$$$ (約 120-180 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>61 P. Văn Miếu, Hà Nội
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Gia+Restaurant+Hanoi" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林一星 ⭐
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    河內市 (Hà Nội)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Hibana by Koki
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    頂級日式鐵板燒 (Teppanyaki)
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                位於奢華飯店 Capella Hanoi 地下室，僅 14 席隱密包廂，食材自日本北海道每週空運，頂級 A5 熊本和牛與伊勢龍蝦極致演繹。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">A5 和牛鐵板燒、伊勢龍蝦、活鮑魚干貝</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$$$$ (約 200-300 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>11 P. Lê Phụng Hiểu, Hà Nội (Capella Hanoi)
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Hibana+by+Koki+Hanoi" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林一星 ⭐
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    胡志明市 (TP. Hồ Chí Minh)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Anan Saigon
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    現代法越街頭料理 (Cuisine Mới)
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                Anan 意為『吃吧！』位於舊傳統市場巷弄樓房，主廚將越南經典小吃（如 $100 美金牛肉河粉、松露鴨肝煎餅）昇華為國際等級 Fine Dining。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">100 美金和牛松露河粉、魚子醬煎餅、和牛越式三明治</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$$$ (約 80-150 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>89 Tôn Thất Đạm, Bến Nghé, Quận 1, TP.HCM
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Anan+Saigon" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林一星 ⭐
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    峴港市 (Đà Nẵng)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    La Maison 1888
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    法式精緻料理 (French Fine Dining)
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                座落於峴港洲際渡假酒店懸崖頂端，由法國米其林三星名廚掌舵，古典殖民豪宅融合頂級法式料理工藝與頂級葡萄酒莊庫藏。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">法式香煎鴨肝、藍龍蝦佐奶油醬、頂級黑松露黑毛豬</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$$$$ (約 180-280 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>InterContinental Danang Sun Peninsula Resort, Đà Nẵng
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=La+Maison+1888+Da+Nang" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林一星 ⭐
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    胡志明市 (TP. Hồ Chí Minh)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Akuna
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    現代澳洲法式料理
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                座落於西貢河畔 Le Méridien 酒店，澳洲米其林名廚 Sam Aisbett 以大膽前衛的創新烹飪手法，將越南當地原生香草融入當代無國界料理。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">鱷魚舌刺身佐青酸柑、野生海鮮塔塔、熟成和牛</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$$$$ (約 150-250 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>Le Méridien Saigon, 3C Tôn Đức Thắng, Quận 1, TP.HCM
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Akuna+Saigon" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林一星 ⭐
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    胡志明市 (TP. Hồ Chí Minh)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    The Royal Pavilion (龍軒)
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    正統廣東粵菜與港點
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                位於奢華 Reverie Saigon 酒店內，宮廷風格奢華紅金裝潢，主打頂級鮑參翅燕、極品脆皮燒鵝與手工精緻粵式點心。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">當紅脆皮燒鵝、金牌脆皮燒肉、港式鮮蝦蒸餃</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$$$ (約 60-120 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>The Reverie Saigon, 22-36 Nguyễn Huệ, Quận 1, TP.HCM
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=The+Royal+Pavilion+Saigon" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林綠星 🍃
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    胡志明市 (TP. Hồ Chí Minh)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Nén Light
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    永續生態現代越菜
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                榮獲 2024/2025/2026 越南米其林綠星永續大獎！主打『Storrytelling Menu』，食材 99% 來自越南在地零碳小農與有機農場。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">永續自然野味故事套餐、純蔬果香草特調</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$$$ (約 80-130 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>122 Nguyễn Văn Thủ, Đa Kao, Quận 1, TP.HCM
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Nen+Light+Saigon" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    必比登推介 😋
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    河內市 (Hà Nội)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Chả Cá Thăng Long
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    傳統古法蒔蘿薑黃烤魚
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                米其林必比登多年連續推薦！熱油鐵鍋現場煎炒薑黃醃製魚塊，加入大量新鮮蒔蘿與蔥段，搭配米線、蝦醬與炒花生，極具北越風情。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">招牌蒔蘿薑黃炸魚塊、炸魚皮、越式米線</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$ (約 8-15 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>6b P. Đường Thành, Cửa Đông, Hoàn Kiếm, Hà Nội
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Cha+Ca+Thang+Long+Hanoi" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    必比登推介 😋
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    河內市 (Hà Nội)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Phở Gà Nguyệt
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    傳統雞肉河粉 (Phở Gà)
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                河內最狂的雞肉河粉名店！湯頭以全雞慢火熬煮清甜不油膩，特別推薦『Phở Gà Trộn』（乾拌雞肉河粉），淋上密製特調醬汁與炸紅蔥頭。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">招牌乾拌雞腿肉河粉、去骨雞胸湯河粉</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$ (約 3-6 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>5b P. Phủ Doãn, Hàng Bông, Hoàn Kiếm, Hà Nội
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Bun+ga+Nguyet+Hanoi" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林指南入選 🍽️
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    河內市 (Hà Nội)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Bún Chả Hương Liên
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    炭烤豬肉米線 (Bún Chả)
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                因前美國總統奧巴馬與安東尼波登在此用餐而名揚全球！炭火慢烤豬肉餅與五花肉浸泡於酸甜露中，搭配大盤新鮮生菜與香翠海鮮春捲。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">Obama Combo (烤肉米線 + 炸海鮮春捲 + 河內啤酒)</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$ (約 4-8 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>24 P. Lê Văn Hưu, Phan Chu Trinh, Hai Bà Trưng, Hà Nội
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Bun+cha+Huong+Lien+Hanoi" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    必比登推介 😋
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    胡志明市 (TP. Hồ Chí Minh)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Bánh Xèo Ăn Là Nhớ
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    南越金黃蛋黃煎餅 (Bánh Xèo)
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                『吃了就想念』的正宗南越椰奶金黃煎餅！餅皮極致薄脆，包裹澎湃鮮蝦、豬肉與豆芽菜，沾上特製魚露與豐富山菜葉包著吃。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">特級海鮮豬肉煎餅 (Bánh Xèo)、越式春捲</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">$ (約 5-10 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>74-76 Sương Nguyệt Anh, Phường Bến Thành, Quận 1, TP.HCM
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Banh+Xeo+An+La+Nho+Saigon" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林一星 ⭐
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    河內市 (Hà Nội)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    ONVIT
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    韓國當代精緻料理 (Korean Fine Dining)
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                【2026 最新摘星 ⭐】店名『ONVIT (온빛)』在韓文中意為『溫暖的光』，座落於 Grand Plaza Hotel。主廚將韓國高麗宮廷傳統與現代法式精湛烹飪技藝融合，呈現極具層次感的極品熟成韓牛與時令珍饈套餐。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">招牌熟成韓牛、炭烤牛小排佐秘醬、高麗人參海鮮九節坂</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">5371153711 (約 100-160 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>Grand Plaza Hanoi Hotel, 117 Trần Duy Hưng, Cầu Giấy, Hà Nội
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=ONVIT+Grand+Plaza+Hanoi" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林綠星 🍃
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    河內市 (Hà Nội)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Tales by Chapter
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    全植物性永續精緻料理 (Plant-based Fine Dining)
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                【2026 最新奪得綠星 🍃】越南首家推行零浪費（Zero-waste）全植物性永續概念的 Fine Dining！與在地永續小農直接契作，運用植物全部位精雕細琢，徹底顛覆蔬食與當代烹飪的感官想像。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">煙燻野生蕈菇清湯、發酵黑蒜炭烤根莖塔、季節香草純素套餐</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">53711$ (約 70-110 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>Hoàn Kiếm / Hai Bà Trưng, Hà Nội
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Tales+by+Chapter+Vietnam" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林一星 ⭐
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    胡志明市 (TP. Hồ Chí Minh)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Upstairs
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    現代創意越菜 (Modern Vietnamese)
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                【2026 最新摘星 ⭐】隱身於老建築二樓的極致驚喜，主廚 Hiệp Trương 將童年記憶中的越南傳統街頭小吃與家常風味，透過頂級國際現代烹調技法重新拆解重構，每道菜宛如精緻藝術品。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">現代重構越式烤肉碎米飯、慢燉香茅牛小排、椰奶香蘭葉慕斯球</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">5371153711 (約 90-140 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>Ho Chi Minh City
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Upstairs+Restaurant+Ho+Chi+Minh+City" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/40">
+                    米其林綠星 🍃
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    峴港市 (Đà Nẵng)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Nén Danang
+                </h4>
+                <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    當代精緻越南料理 (Contemporary Vietnamese)
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                【2026 峴港米其林綠星 🍃】峴港首座榮獲米其林綠星的標誌性餐廳！主廚 Summer Lê 長期投入越南在地原生香料與食材保育，菜單 90% 以上食材來自自營有機農場與在地小農，融合傳統故事與現代感官體驗。
+            </p>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">招牌菜色：</strong><span class="text-slate-600 dark:text-slate-300">峴港海味三重奏、香茅煙燻烤乳鴿、自栽有機香草 Tasting Menu</span></div>
+                <div><strong class="text-slate-900 dark:text-white">價位參考：</strong><span class="text-slate-600 dark:text-slate-300">5371153711 (約 80-130 USD/人)</span></div>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between">
+                <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                    <i class="fa-regular fa-compass mr-1 text-[11px]"></i>16 Mỹ Đa Tây 2, Khuê Mỹ, Ngũ Hành Sơn, Đà Nẵng
+                </span>
+                <a href="https://www.google.com/maps/search/?api=1&query=Nen+Restaurant+Da+Nang" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm active:scale-95 transition flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-location-arrow text-[10px]"></i> 開啟導航
+                </a>
+            </div>
+        </div>
+    
             </div>
         </section>
 
@@ -279,14 +896,292 @@
             <!-- Malls View Mode Toggle -->
             <div class="flex items-center justify-between px-1">
                 <span class="text-xs font-bold text-slate-500 dark:text-slate-400">商場資訊導覽</span>
-                <button onclick="toggleMallsTable()" id="toggle-mall-table-btn" class="px-3 py-1.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 text-xs font-semibold flex items-center gap-1.5 shadow-sm">
+                <button onclick="toggleMallsTable()" id="toggle-mall-table-btn" class="px-3.5 py-1.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 text-xs font-semibold flex items-center gap-1.5 shadow-sm active:scale-95 transition">
                     <i class="fa-solid fa-table-list text-xs"></i> <span>查看橫向比較表</span>
                 </button>
             </div>
 
-            <!-- Malls Mobile Cards Grid -->
+            <!-- Malls Mobile Cards Grid (Pre-rendered so it is never blank!) -->
             <div class="space-y-3" id="malls-mobile-cards">
-                <!-- Dynamic Mall Cards -->
+                
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/80 dark:border-sky-900/40">
+                    河內市 (西湖區)
+                </span>
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                    🔥 極高 (單日 10萬+ 人次)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    樂天購物中心 Lotte Mall West Lake
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    規模：巨大型 (35.4萬 m²)
+                </p>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">核心主力：</strong><span class="text-slate-600 dark:text-slate-300">Lotte Mart 超級市場、Lotte Cinema 影城、Lotte World 水族館、KidZania 兒童職業體驗、頂級國際精品專櫃、五星級 Lotte Hotel</span></div>
+                <div><strong class="text-slate-900 dark:text-white">代表餐飲：</strong><span class="text-slate-600 dark:text-slate-300">80+ 家國際與越南美食（Pizza 4P's, Marou, 鼎泰豐 style 中餐, 高檔韓式燒肉）</span></div>
+                <div><strong class="text-slate-900 dark:text-white">慈山交通：</strong><span class="text-slate-600 dark:text-slate-300">西湖地標，舊城區開車 15-20 分鐘，設有地下雙層大型汽機車停車場</span></div>
+            </div>
+
+            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                💡 2026 越南最高端綜合購物娛樂地標，水族館與奢華酒店一站體驗！
+            </p>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/80 dark:border-sky-900/40">
+                    河內市 (龍編區)
+                </span>
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                    🔥 極高 (北寧家庭週末第一首選)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    永旺夢樂城 AEON Mall Long Biên
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    規模：超大型 (12萬 m²)
+                </p>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">核心主力：</strong><span class="text-slate-600 dark:text-slate-300">AEON 旗艦生鮮超市、CGV 影城、TiniWorld 兒童樂園、日系服飾家居 (Uniqlo, GU, NITORI)</span></div>
+                <div><strong class="text-slate-900 dark:text-white">代表餐飲：</strong><span class="text-slate-600 dark:text-slate-300">廣大日系美食街、壽司生鮮熟食區、連鎖燒肉火鍋 (Gogi, Kichi-Kichi)</span></div>
+                <div><strong class="text-slate-900 dark:text-white">慈山交通：</strong><span class="text-slate-600 dark:text-slate-300">河內東側，過章陽橋即達，慈山開車 25-30 分鐘，免費大型停車場</span></div>
+            </div>
+
+            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                💡 北寧外派台商採買日系食品與家庭放鬆最推薦大型購物中心！
+            </p>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/80 dark:border-sky-900/40">
+                    河內市 (河東區)
+                </span>
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                    🔥 極高 (河內西南消費地標)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    永旺夢樂城 AEON Mall Hà Đông
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    規模：超大型 (15萬 m²)
+                </p>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">核心主力：</strong><span class="text-slate-600 dark:text-slate-300">河內最大 AEON 生鮮超市、CGV IMAX 影城、大冰場、Uniqlo, Decathlon 迪卡儂</span></div>
+                <div><strong class="text-slate-900 dark:text-white">代表餐飲：</strong><span class="text-slate-600 dark:text-slate-300">多達 100+ 餐廳，涵蓋中日韓越美各國料理與甜點街</span></div>
+                <div><strong class="text-slate-900 dark:text-white">慈山交通：</strong><span class="text-slate-600 dark:text-slate-300">河內西南側，車位豐富，設有電動車充電樁</span></div>
+            </div>
+
+            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                💡 設施最新穎的 AEON，迪卡儂與大型影城運動休閒極佳選擇。
+            </p>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/80 dark:border-sky-900/40">
+                    河內市 (南慈廉區)
+                </span>
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                    高 (科技住宅區核心)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Vincom Mega Mall Smart City
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    規模：大型 (6.8萬 m²)
+                </p>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">核心主力：</strong><span class="text-slate-600 dark:text-slate-300">WinMart 大型超市、VSM 科技體驗館、室內卡丁車賽道、CGV 影城、Uniqlo</span></div>
+                <div><strong class="text-slate-900 dark:text-white">代表餐飲：</strong><span class="text-slate-600 dark:text-slate-300">時尚餐酒館、海鮮火鍋、連鎖手搖飲與網美咖啡館</span></div>
+                <div><strong class="text-slate-900 dark:text-white">慈山交通：</strong><span class="text-slate-600 dark:text-slate-300">位於 Smart City 園區內，交通便利，未來捷運規劃站點</span></div>
+            </div>
+
+            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                💡 主打 Life-Design 智慧科技與運動體驗的未來感購物中心。
+            </p>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/80 dark:border-sky-900/40">
+                    河內市 (Hai Bà Trưng 區)
+                </span>
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                    高 (市中心白領與時尚購物族)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Vincom Center Bà Triệu
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    規模：中大型 (雙子星商務塔)
+                </p>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">核心主力：</strong><span class="text-slate-600 dark:text-slate-300">WinMart 超市、CGV 影城、Zara, Mango, Levi's, 國際美妝專櫃</span></div>
+                <div><strong class="text-slate-900 dark:text-white">代表餐飲：</strong><span class="text-slate-600 dark:text-slate-300">高空景觀餐廳、泰式料理、韓式燒肉、星巴克</span></div>
+                <div><strong class="text-slate-900 dark:text-white">慈山交通：</strong><span class="text-slate-600 dark:text-slate-300">位於河內市中心繁華地帶，周邊公車與計程車極便利</span></div>
+            </div>
+
+            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                💡 河內最經典的都會購物雙子塔，精品美妝與都會娛樂地標。
+            </p>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/80 dark:border-sky-900/40">
+                    北寧市區 (Bắc Ninh)
+                </span>
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                    中高 (北寧市民日常核心)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Dabaco Center Bắc Ninh
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    規模：中型在地龍頭 (2.5萬 m²)
+                </p>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">核心主力：</strong><span class="text-slate-600 dark:text-slate-300">Dabaco 龍頭生鮮超市、Dabaco Cinema 影城、家電館、在地服飾專櫃</span></div>
+                <div><strong class="text-slate-900 dark:text-white">代表餐飲：</strong><span class="text-slate-600 dark:text-slate-300">Dabaco Foodcourt、BBQ 燒肉、Pizza、越式連鎖飲品</span></div>
+                <div><strong class="text-slate-900 dark:text-white">慈山交通：</strong><span class="text-slate-600 dark:text-slate-300">位於北寧市中心主要幹道 Lý Thái Tổ，機車與汽車停車方便</span></div>
+            </div>
+
+            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                💡 北寧在地本土最具代表性的綜合百貨超市，生活採買第一站。
+            </p>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/80 dark:border-sky-900/40">
+                    北寧市區 (Bắc Ninh)
+                </span>
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                    中等 (市中心地標大樓)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Him Lam Plaza Bắc Ninh
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    規模：中小型 (1.5萬 m²)
+                </p>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">核心主力：</strong><span class="text-slate-600 dark:text-slate-300">綜合商業專櫃、婚宴會館、健身房、品牌咖啡館</span></div>
+                <div><strong class="text-slate-900 dark:text-white">代表餐飲：</strong><span class="text-slate-600 dark:text-slate-300">平價熱炒、咖啡館、中式合菜餐館</span></div>
+                <div><strong class="text-slate-900 dark:text-white">慈山交通：</strong><span class="text-slate-600 dark:text-slate-300">北寧市中心圓環地標，交通位置極佳</span></div>
+            </div>
+
+            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                💡 地段優秀的北寧傳統綜合商業大樓，適合快速消費與商務洽談。
+            </p>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/80 dark:border-sky-900/40">
+                    北寧市區 (Ngã 6 核心圓環)
+                </span>
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                    🔥 高 (北寧市區最現代化時尚地標)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Vincom Plaza Bắc Ninh
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    規模：中大型 (1.74萬 m²，雙塔地標底座)
+                </p>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">核心主力：</strong><span class="text-slate-600 dark:text-slate-300">CGV 電影院、WinMart 超級市場、VinPro 家電、名品服飾專櫃、親子遊樂園</span></div>
+                <div><strong class="text-slate-900 dark:text-white">代表餐飲：</strong><span class="text-slate-600 dark:text-slate-300">知名連鎖餐飲匯聚（Khao Lao 寮國菜、Hotto 鐵板燒、Highlands Coffee、Jollibee、韓式燒肉）</span></div>
+                <div><strong class="text-slate-900 dark:text-white">慈山交通：</strong><span class="text-slate-600 dark:text-slate-300">座落北寧市中心 Ngã 6 六叉圓環核心，從慈山開車 15-20 分鐘即達，地下專屬汽機車停車場</span></div>
+            </div>
+
+            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                💡 北寧市中心最具指標性的現代購物休閒地標，看電影、連鎖聚餐、超市採買一站滿足！
+            </p>
+        </div>
+    
+
+        <div class="ui-surface rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/80 dark:border-sky-900/40">
+                    河內東區 / 興安交界 (Ocean City)
+                </span>
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                    🔥 極高 (2025-2026 北越最火爆打卡與週末度假地標)
+                </span>
+            </div>
+
+            <div>
+                <h4 class="text-[15.5px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    Mega Grand World & Ocean Park 商圈
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    規模：超巨大型 (超過 100萬 m² 戶外造景與室內商場融合)
+                </p>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-100/60 dark:bg-[#141820] text-xs space-y-1">
+                <div><strong class="text-slate-900 dark:text-white">核心主力：</strong><span class="text-slate-600 dark:text-slate-300">The Venice 威尼斯運河貢多拉遊船、K-Town 韓國潮流商圈、Grand World 不夜城、水上光影秀、Vincom Mega Mall</span></div>
+                <div><strong class="text-slate-900 dark:text-white">代表餐飲：</strong><span class="text-slate-600 dark:text-slate-300">數百家河畔景觀餐廳、各國美食步行街、露天精釀酒吧、道地韓式燒肉街</span></div>
+                <div><strong class="text-slate-900 dark:text-white">慈山交通：</strong><span class="text-slate-600 dark:text-slate-300">緊鄰河內東側，由慈山經環線開車約 25-30 分鐘，設有數千個免費大型停車位</span></div>
+            </div>
+
+            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                💡 北越最新打造的威尼斯水都沉浸式購物休閒商圈，吃喝玩樂拍照全天候一站式體驗！
+            </p>
+        </div>
+    
             </div>
 
             <!-- Full Comparison Table (Optional Expand) -->
@@ -326,21 +1221,21 @@
     <!-- iOS Style Fixed Bottom Navigation Bar -->
     <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/85 dark:bg-[#141820]/85 backdrop-blur-2xl border-t border-slate-200/60 dark:border-white/5 safe-bottom shadow-lg transition-colors">
         <div class="max-w-xl mx-auto flex items-center justify-around py-1.5">
-            <button onclick="switchMainSection('secret-spots')" id="bottom-nav-spots" class="flex-1 flex flex-col items-center gap-0.5 text-emerald-600 dark:text-emerald-400 transition-colors">
+            <button onclick="switchMainSection('secret-spots')" id="bottom-nav-spots" class="flex-1 flex flex-col items-center gap-0.5 text-emerald-600 dark:text-emerald-400 transition-colors font-bold">
                 <i class="fa-solid fa-map-pin text-sm"></i>
                 <span class="text-[10px] font-bold">私房地點</span>
             </button>
-            <button onclick="switchMainSection('michelin-guide')" id="bottom-nav-michelin" class="flex-1 flex flex-col items-center gap-0.5 text-slate-400 dark:text-slate-500 transition-colors">
+            <button onclick="switchMainSection('michelin-guide')" id="bottom-nav-michelin" class="flex-1 flex flex-col items-center gap-0.5 text-slate-400 dark:text-slate-500 transition-colors font-medium">
                 <i class="fa-solid fa-utensils text-sm"></i>
-                <span class="text-[10px] font-semibold">米其林</span>
+                <span class="text-[10px]">米其林</span>
             </button>
-            <button onclick="switchMainSection('mall-comparison')" id="bottom-nav-malls" class="flex-1 flex flex-col items-center gap-0.5 text-slate-400 dark:text-slate-500 transition-colors">
+            <button onclick="switchMainSection('mall-comparison')" id="bottom-nav-malls" class="flex-1 flex flex-col items-center gap-0.5 text-slate-400 dark:text-slate-500 transition-colors font-medium">
                 <i class="fa-solid fa-bag-shopping text-sm"></i>
-                <span class="text-[10px] font-semibold">雙城商場</span>
+                <span class="text-[10px]">雙城商場</span>
             </button>
-            <button onclick="openAddModal()" class="flex-1 flex flex-col items-center gap-0.5 text-slate-400 dark:text-slate-500 transition-colors">
+            <button onclick="openAddModal()" class="flex-1 flex flex-col items-center gap-0.5 text-slate-400 dark:text-slate-500 transition-colors font-medium">
                 <i class="fa-solid fa-circle-plus text-sm text-emerald-600"></i>
-                <span class="text-[10px] font-semibold">新增地點</span>
+                <span class="text-[10px]">新增地點</span>
             </button>
         </div>
     </nav>
@@ -489,7 +1384,7 @@
         let showAllTags = false;
         let activeSection = 'secret-spots';
 
-        // --- THEME ENGINE ---
+        // --- THEME ENGINE (FIXED INVERTED LOGIC) ---
         function initTheme() {
             const savedTheme = localStorage.getItem('vn_theme') || 'light';
             setTheme(savedTheme);
@@ -497,7 +1392,7 @@
 
         function toggleTheme() {
             const current = document.documentElement.getAttribute('data-theme') || 'light';
-            const next = current === 'dark' ? 'light' : 'dark';
+            const next = (current === 'dark') ? 'light' : 'dark';
             setTheme(next);
         }
 
@@ -506,18 +1401,24 @@
             localStorage.setItem('vn_theme', theme);
             const icon = document.getElementById('theme-icon');
             const text = document.getElementById('theme-text');
+            const btn = document.getElementById('theme-toggle-btn');
+            
             if (theme === 'dark') {
                 document.documentElement.classList.add('dark');
-                if (icon) icon.className = 'fa-solid fa-moon text-amber-400 text-xs';
-                if (text) text.innerText = '深色';
+                // When in Dark Mode: Display Sun icon and prompt "淺色" to switch to Light Mode
+                if (icon) icon.className = 'fa-solid fa-sun text-amber-400 text-xs';
+                if (text) text.innerText = '淺色';
+                if (btn) btn.setAttribute('title', '切換為淺色模式');
             } else {
                 document.documentElement.classList.remove('dark');
-                if (icon) icon.className = 'fa-solid fa-sun text-amber-500 text-xs';
-                if (text) text.innerText = '淺色';
+                // When in Light Mode: Display Moon icon and prompt "深色" to switch to Dark Mode
+                if (icon) icon.className = 'fa-solid fa-moon text-indigo-500 text-xs';
+                if (text) text.innerText = '深色';
+                if (btn) btn.setAttribute('title', '切換為深色模式');
             }
         }
 
-        // --- SECTION SWITCHER ---
+        // --- SECTION SWITCHER (FIXED MALLS DISPLAY) ---
         function switchMainSection(sectionId) {
             activeSection = sectionId;
             ['secret-spots', 'michelin-guide', 'mall-comparison'].forEach(id => {
@@ -531,7 +1432,15 @@
                 }
             });
 
-            // Update Top Segmented Tabs (iOS Capsule Style)
+            // If switching to malls or michelin, ensure rendered
+            if (sectionId === 'mall-comparison') {
+                renderMallsMobileCards();
+                renderMallsTable();
+            } else if (sectionId === 'michelin-guide') {
+                renderMichelin('ALL');
+            }
+
+            // Update Top Segmented Tabs
             const tabSpots = document.getElementById('tab-secret-spots');
             const tabMich = document.getElementById('tab-michelin-guide');
             const tabMalls = document.getElementById('tab-mall-comparison');
@@ -549,7 +1458,7 @@
             const bMalls = document.getElementById('bottom-nav-malls');
 
             const bActive = 'flex-1 flex flex-col items-center gap-0.5 text-emerald-600 dark:text-emerald-400 transition-colors font-bold';
-            const bInactive = 'flex-1 flex flex-col items-center gap-0.5 text-slate-400 dark:text-slate-500 transition-colors font-semibold';
+            const bInactive = 'flex-1 flex flex-col items-center gap-0.5 text-slate-400 dark:text-slate-500 transition-colors font-medium';
 
             if (bSpots) bSpots.className = (sectionId === 'secret-spots') ? bActive : bInactive;
             if (bMich) bMich.className = (sectionId === 'michelin-guide') ? bActive : bInactive;
@@ -558,10 +1467,10 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- DATA INITIALIZATION & LOCALSTORAGE (v5 with forced rename migration) ---
+        // --- DATA INITIALIZATION & LOCALSTORAGE (v6 with forced rename migration) ---
         function initData() {
             initTheme();
-            const stored = localStorage.getItem('vn_guide_places_v5');
+            const stored = localStorage.getItem('vn_guide_places_v6');
             if (stored) {
                 try {
                     placesState = JSON.parse(stored);
@@ -569,7 +1478,7 @@
                     placesState = [...DEFAULT_PLACES];
                 }
             } else {
-                const oldStored = localStorage.getItem('vn_guide_places_v4') || localStorage.getItem('vn_guide_places_v3') || localStorage.getItem('vn_guide_places_v2');
+                const oldStored = localStorage.getItem('vn_guide_places_v5') || localStorage.getItem('vn_guide_places_v4') || localStorage.getItem('vn_guide_places_v3');
                 if (oldStored) {
                     try {
                         const oldPlaces = JSON.parse(oldStored);
@@ -620,12 +1529,12 @@
         }
 
         function saveToLocalStorage() {
-            localStorage.setItem('vn_guide_places_v5', JSON.stringify(placesState));
+            localStorage.setItem('vn_guide_places_v6', JSON.stringify(placesState));
             const pill = document.getElementById('header-count-pill');
             if (pill) pill.innerText = `${placesState.length} 處`;
         }
 
-        // --- FILTERS & RENDER PLACES ---
+        // --- FILTERS & RENDER PLACES (FIXED MENU COLOR BUG) ---
         function toggleShowAllTags() {
             showAllTags = !showAllTags;
             renderHotTags();
@@ -658,44 +1567,48 @@
             }
 
             const toggleBtn = sortedTags.length > 7 ? `
-                <button onclick="toggleShowAllTags()" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold border transition bg-slate-100 dark:bg-[#1e2532] text-slate-500 dark:text-slate-400 border-dashed border-slate-300 dark:border-white/10">
+                <button onclick="toggleShowAllTags()" class="shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold border transition bg-slate-100 dark:bg-[#1e2532] text-slate-500 dark:text-slate-400 border-dashed border-slate-300 dark:border-white/10 active:scale-95">
                     ${showAllTags ? '收合' : '更多...'}
                 </button>
             ` : '';
 
             container.innerHTML = displayTags.map(tag => {
                 const isActive = (currentTag === tag);
-                return `<button onclick="setTagFilter('${tag}')" class="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold transition ${
+                return `<button onclick="setTagFilter('${tag}')" class="shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition active:scale-95 ${
                     isActive 
                     ? 'bg-rose-600 text-white shadow-sm font-bold' 
-                    : 'bg-white dark:bg-[#1e2532] text-slate-600 dark:text-slate-300 border border-slate-200/70 dark:border-white/5'
+                    : 'bg-white dark:bg-[#1e2532] text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-white/10'
                 }">
                     ${tag} <span class="text-[10px] opacity-70">(${tagCounts[tag]})</span>
                 </button>`;
             }).join('') + toggleBtn;
         }
 
+        // FIXED: Exact data-region matching for region buttons
         function setRegionFilter(region) {
             currentRegion = region;
             document.querySelectorAll('#region-filter-container button').forEach(btn => {
-                const isMatch = (region === 'ALL' && btn.innerText.includes('全部')) || btn.innerText.includes(region.split(' ')[0]);
+                const btnRegion = btn.getAttribute('data-region');
+                const isMatch = (btnRegion === region);
                 if (isMatch) {
-                    btn.className = 'region-btn active shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition bg-emerald-600 text-white shadow-sm';
+                    btn.className = 'region-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-emerald-600 text-white shadow-sm';
                 } else {
-                    btn.className = 'region-btn shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5';
+                    btn.className = 'region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10';
                 }
             });
             applyFilters();
         }
 
+        // FIXED: Exact data-type matching for category buttons (Fixes 美食, 採買/超市, 運動, 住宿 not changing color)
         function setTypeFilter(type) {
             currentType = type;
             document.querySelectorAll('#type-filter-container button').forEach(btn => {
-                const isMatch = (type === 'ALL' && btn.innerText.includes('全部')) || (type !== 'ALL' && btn.innerText.includes(type.split(' ')[1] || type));
+                const btnType = btn.getAttribute('data-type');
+                const isMatch = (btnType === type);
                 if (isMatch) {
-                    btn.className = 'type-btn active shrink-0 px-3 py-1 rounded-full text-xs font-bold transition bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm';
+                    btn.className = 'type-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-emerald-600 text-white shadow-sm';
                 } else {
-                    btn.className = 'type-btn shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5';
+                    btn.className = 'type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10';
                 }
             });
             applyFilters();
@@ -797,10 +1710,10 @@
                     <!-- Top Category & Rating -->
                     <div class="flex items-center justify-between gap-2 mb-2">
                         <div class="flex items-center gap-1.5 flex-wrap">
-                            <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/40">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/40">
                                 ${item.region}
                             </span>
-                            <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200/60 dark:border-amber-800/40">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200/60 dark:border-amber-800/40">
                                 ${item.type}
                             </span>
                         </div>
@@ -1001,9 +1914,9 @@
             document.querySelectorAll('#michelin-city-filters button').forEach(btn => {
                 const isMatch = (city === 'ALL' && btn.innerText.includes('全部')) || btn.innerText.includes(city);
                 if (isMatch) {
-                    btn.className = 'michelin-btn active shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition bg-rose-600 text-white shadow-sm';
+                    btn.className = 'michelin-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-rose-600 text-white shadow-sm';
                 } else {
-                    btn.className = 'michelin-btn shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/5';
+                    btn.className = 'michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10';
                 }
             });
 
