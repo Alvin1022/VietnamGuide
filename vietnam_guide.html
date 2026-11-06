@@ -115,42 +115,40 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased">
+<body class="min-h-screen flex flex-col antialiased overflow-x-hidden">
 
-    <!-- iOS 18 Style Translucent Navigation Bar -->
-    <header class="sticky top-0 z-40 px-4 py-2.5 bg-white/85 dark:bg-[#141820]/85 backdrop-blur-xl border-b border-slate-200/60 dark:border-white/5 transition-colors">
-        <div class="app-container max-w-xl md:max-w-5xl lg:max-w-7xl mx-auto flex items-center justify-between transition-all">
-            <div class="flex items-center gap-2">
-                <span class="text-xl">🇻🇳</span>
-                <div>
-                    <div class="flex items-center gap-1.5">
-                        <h1 class="text-[15px] font-bold text-slate-900 dark:text-white tracking-tight">越南私房導覽</h1>
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100/80 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300" id="header-count-pill">118 處</span>
-                    </div>
-                </div>
+    <!-- iOS 18 Style Translucent Navigation Bar (Optimized Never-Wrap Mobile Layout) -->
+    <header class="sticky top-0 z-40 px-3.5 sm:px-4 h-[50px] bg-white/85 dark:bg-[#141820]/85 backdrop-blur-xl border-b border-slate-200/60 dark:border-white/5 transition-colors flex items-center">
+        <div class="app-container max-w-xl md:max-w-5xl lg:max-w-7xl mx-auto w-full flex items-center justify-between gap-2">
+            <!-- Brand & Count -->
+            <div class="flex items-center gap-1.5 shrink-0">
+                <span class="text-lg">🇻🇳</span>
+                <h1 class="text-[15px] font-bold text-slate-900 dark:text-white tracking-tight whitespace-nowrap">越南私房導覽</h1>
+                <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100/80 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 shrink-0" id="header-count-pill">118 處</span>
             </div>
 
-            <!-- Header Quick Actions (iOS Style Capsule Buttons) -->
-            <div class="flex items-center gap-1.5">
-                <!-- Layout Mode Toggle (Auto / Mobile / Desktop) -->
-                <button onclick="toggleLayoutMode()" class="h-8 px-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 font-semibold text-xs transition active:scale-95 flex items-center gap-1.5" id="layout-toggle-btn" title="切換版面寬度">
+            <!-- Header Quick Actions (Compact Touch Buttons, No Mobile Overflow) -->
+            <div class="flex items-center gap-1.5 shrink-0">
+                <!-- Layout Mode Toggle (Shown on tablet/desktop, mobile uses settings menu) -->
+                <button onclick="toggleLayoutMode()" class="hidden md:flex h-8 px-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 font-semibold text-xs transition active:scale-95 items-center gap-1" id="layout-toggle-btn" title="切換版面寬度">
                     <i class="fa-solid fa-desktop text-sky-600 dark:text-sky-400 text-xs" id="layout-icon"></i>
-                    <span id="layout-text" class="text-[11px] hidden sm:inline">自適應</span>
+                    <span id="layout-text" class="text-[11px]">自適應</span>
                 </button>
 
-                <!-- Theme Toggle Button -->
-                <button onclick="toggleTheme()" class="h-8 px-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-700 dark:text-amber-300 font-semibold text-xs transition active:scale-95 flex items-center gap-1.5" id="theme-toggle-btn" title="切換為深色模式">
+                <!-- Theme Toggle Button (Compact circular icon on mobile, label on tablet/desktop) -->
+                <button onclick="toggleTheme()" class="h-8 w-8 sm:w-auto sm:px-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-700 dark:text-amber-300 font-semibold text-xs transition active:scale-95 flex items-center justify-center gap-1.5 shrink-0" id="theme-toggle-btn" title="切換為深色模式">
                     <i class="fa-solid fa-moon text-indigo-500 text-xs" id="theme-icon"></i>
-                    <span id="theme-text" class="text-[11px]">深色</span>
+                    <span id="theme-text" class="text-[11px] hidden sm:inline">深色</span>
                 </button>
 
-                <!-- Fast Add Place Button -->
-                <button onclick="openAddModal()" class="h-8 px-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition active:scale-95 flex items-center gap-1">
-                    <i class="fa-solid fa-plus text-xs"></i> <span>新增</span>
+                <!-- Fast Add Place Button (Compact circular + icon on mobile, text on desktop) -->
+                <button onclick="openAddModal()" class="h-8 w-8 sm:w-auto sm:px-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition active:scale-95 flex items-center justify-center gap-1 shrink-0" title="新增私房地點">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    <span class="hidden sm:inline">新增</span>
                 </button>
 
                 <!-- More Menu Trigger -->
-                <button onclick="openMenuModal()" class="h-8 w-8 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-600 dark:text-slate-300 flex items-center justify-center text-xs active:scale-95" title="資料管理">
+                <button onclick="openMenuModal()" class="h-8 w-8 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-600 dark:text-slate-300 flex items-center justify-center text-xs active:scale-95 shrink-0" title="更多設定">
                     <i class="fa-solid fa-ellipsis"></i>
                 </button>
             </div>
@@ -158,7 +156,7 @@
     </header>
 
     <!-- iOS Style Segmented Control (Sticky Under Navigation Bar) -->
-    <div class="sticky top-[49px] z-30 px-4 pt-2 pb-1.5 bg-white/85 dark:bg-[#141820]/85 backdrop-blur-xl border-b border-slate-200/40 dark:border-white/5">
+    <div class="sticky top-[50px] z-30 px-4 pt-2 pb-1.5 bg-white/85 dark:bg-[#141820]/85 backdrop-blur-xl border-b border-slate-200/40 dark:border-white/5">
         <div class="app-container max-w-xl md:max-w-5xl lg:max-w-7xl mx-auto transition-all">
             <div class="p-1 rounded-xl bg-slate-200/60 dark:bg-[#1e2532] flex items-center gap-1 text-xs font-semibold" id="segmented-tabs">
                 <button onclick="switchMainSection('secret-spots')" id="tab-secret-spots" class="flex-1 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 bg-white dark:bg-[#283241] text-emerald-700 dark:text-emerald-400 shadow-sm font-bold">
