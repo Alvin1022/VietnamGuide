@@ -1437,32 +1437,42 @@
                 renderMallsMobileCards();
                 renderMallsTable();
             } else if (sectionId === 'michelin-guide') {
-                renderMichelin('ALL');
+                filterMichelin('ALL');
             }
 
-            // Update Top Segmented Tabs
+            // Update Top Segmented Tabs (Distinct thematic active color)
             const tabSpots = document.getElementById('tab-secret-spots');
             const tabMich = document.getElementById('tab-michelin-guide');
             const tabMalls = document.getElementById('tab-mall-comparison');
 
-            const activeClass = 'flex-1 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 bg-white dark:bg-[#283241] text-emerald-700 dark:text-emerald-400 shadow-sm font-bold';
-            const inactiveClass = 'flex-1 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900';
+            const inactiveTab = 'flex-1 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900';
 
-            if (tabSpots) tabSpots.className = (sectionId === 'secret-spots') ? activeClass : inactiveClass;
-            if (tabMich) tabMich.className = (sectionId === 'michelin-guide') ? activeClass : inactiveClass;
-            if (tabMalls) tabMalls.className = (sectionId === 'mall-comparison') ? activeClass : inactiveClass;
+            if (tabSpots) tabSpots.className = (sectionId === 'secret-spots') 
+                ? 'flex-1 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 bg-white dark:bg-[#283241] text-emerald-700 dark:text-emerald-400 shadow-sm font-bold' 
+                : inactiveTab;
+            if (tabMich) tabMich.className = (sectionId === 'michelin-guide') 
+                ? 'flex-1 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 bg-white dark:bg-[#283241] text-rose-700 dark:text-rose-400 shadow-sm font-bold' 
+                : inactiveTab;
+            if (tabMalls) tabMalls.className = (sectionId === 'mall-comparison') 
+                ? 'flex-1 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 bg-white dark:bg-[#283241] text-sky-700 dark:text-sky-400 shadow-sm font-bold' 
+                : inactiveTab;
 
-            // Update Bottom Nav
+            // Update Bottom Nav (Distinct thematic active colors)
             const bSpots = document.getElementById('bottom-nav-spots');
             const bMich = document.getElementById('bottom-nav-michelin');
             const bMalls = document.getElementById('bottom-nav-malls');
 
-            const bActive = 'flex-1 flex flex-col items-center gap-0.5 text-emerald-600 dark:text-emerald-400 transition-colors font-bold';
             const bInactive = 'flex-1 flex flex-col items-center gap-0.5 text-slate-400 dark:text-slate-500 transition-colors font-medium';
 
-            if (bSpots) bSpots.className = (sectionId === 'secret-spots') ? bActive : bInactive;
-            if (bMich) bMich.className = (sectionId === 'michelin-guide') ? bActive : bInactive;
-            if (bMalls) bMalls.className = (sectionId === 'mall-comparison') ? bActive : bInactive;
+            if (bSpots) bSpots.className = (sectionId === 'secret-spots') 
+                ? 'flex-1 flex flex-col items-center gap-0.5 text-emerald-600 dark:text-emerald-400 transition-colors font-bold' 
+                : bInactive;
+            if (bMich) bMich.className = (sectionId === 'michelin-guide') 
+                ? 'flex-1 flex flex-col items-center gap-0.5 text-rose-600 dark:text-rose-400 transition-colors font-bold' 
+                : bInactive;
+            if (bMalls) bMalls.className = (sectionId === 'mall-comparison') 
+                ? 'flex-1 flex flex-col items-center gap-0.5 text-sky-600 dark:text-sky-400 transition-colors font-bold' 
+                : bInactive;
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1510,7 +1520,7 @@
 
             renderHotTags();
             applyFilters();
-            renderMichelin('ALL');
+            filterMichelin('ALL');
             renderMallsMobileCards();
             renderMallsTable();
 
@@ -1907,6 +1917,10 @@
                 }
             };
             reader.readAsText(file);
+        }
+
+                function renderMichelin(city = 'ALL') {
+            filterMichelin(city);
         }
 
         // --- MODULE 2: MICHELIN LOGIC ---
