@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="light" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>越南生活導覽指南 | 手機專用版</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Variables - Light Theme & Soft Slate Twilight Dark Theme (不沉重、高質感) */
+        :root, [data-theme="light"] {
+            --bg-page: #f4f6f9;
+            --bg-panel: #ffffff;
+            --bg-card: #ffffff;
+            --bg-subpanel: #f8fafc;
+            --bg-input: #ffffff;
+            
+            --border-main: #e2e8f0;
+            --border-sub: #cbd5e1;
+            
+            --text-title: #0f172a;  /* High Contrast Slate 900 */
+            --text-body: #1e293b;   /* Slate 800 */
+            --text-muted: #64748b;  /* Slate 500 */
+            
+            --accent-emerald: #059669;
+            --accent-amber: #d97706;
+            --accent-rose: #e11d48;
+            
+            --badge-region-bg: #ecfdf5;
+            --badge-region-text: #065f46;
+            --badge-region-border: #a7f3d0;
+            
+            --badge-type-bg: #fffbeb;
+            --badge-type-text: #92400e;
+            --badge-type-border: #fde68a;
+            
+            --badge-michelin-bg: #fff1f2;
+            --badge-michelin-text: #9f1239;
+            --badge-michelin-border: #fecdd3;
+            
+            --tag-bg: #f1f5f9;
+            --tag-text: #334155;
+            --tag-border: #e2e8f0;
+
+            --note-bg: #fefce8;
+            --note-text: #334155;
+            --note-border: #fef08a;
+
+            --shadow-card: 0 2px 8px -2px rgba(15, 23, 42, 0.06), 0 1px 4px -1px rgba(15, 23, 42, 0.04);
+            --shadow-hover: 0 8px 18px -3px rgba(15, 23, 42, 0.1);
+        }
+
+        /* 輕盈舒適的現代深灰石墨色 (Airy Soft Slate Dark - 擺脫暗黑沉重感) */
+        [data-theme="dark"] {
+            --bg-page: #232a35;      /* 柔和透氣的中深石墨色，視覺輕鬆不壓迫 */
+            --bg-panel: #2e3746;     /* 輕盈卡片底色 (RGB: 46, 55, 70) */
+            --bg-card: #2e3746;
+            --bg-subpanel: #262f3c;  /* 輔助面板與小標籤區 (RGB: 38, 47, 60) */
+            --bg-input: #262f3c;
+            
+            --border-main: rgba(255, 255, 255, 0.13);
+            --border-sub: rgba(255, 255, 255, 0.22);
+            
+            --text-title: #ffffff;   /* 明亮清晰標題 */
+            --text-body: #e2e8f0;    /* 清爽柔和內文 */
+            --text-muted: #94a3b8;   /* 柔和輔助文字 */
+            
+            --accent-emerald: #34d399;
+            --accent-amber: #fbbf24;
+            --accent-rose: #fb7185;
+            
+            --badge-region-bg: rgba(16, 185, 129, 0.22);
+            --badge-region-text: #6ee7b7;
+            --badge-region-border: rgba(110, 231, 183, 0.4);
+            
+            --badge-type-bg: rgba(245, 158, 11, 0.22);
+            --badge-type-text: #fde68a;
+            --badge-type-border: rgba(253, 230, 138, 0.4);
+            
+            --badge-michelin-bg: rgba(244, 63, 94, 0.22);
+            --badge-michelin-text: #fecdd3;
+            --badge-michelin-border: rgba(254, 205, 211, 0.4);
+            
+            --tag-bg: #262f3c;
+            --tag-text: #cbd5e1;
+            --tag-border: rgba(255, 255, 255, 0.12);
+
+            --note-bg: rgba(254, 240, 138, 0.10);
+            --note-text: #f8fafc;
+            --note-border: rgba(250, 204, 21, 0.35);
+
+            --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.15);
+            --shadow-hover: 0 8px 22px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-body);
+            font-family: 'Noto Sans TC', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding-bottom: calc(75px + env(safe-area-inset-bottom, 16px));
+            transition: background-color 0.25s ease, color 0.25s ease;
+            user-select: text;
+        }
+
+        .ui-panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-main);
+        }
+
+        .ui-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-main);
+            box-shadow: var(--shadow-card);
+            transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .ui-card:active {
+            transform: scale(0.99);
+        }
+
+        .badge-region {
+            background-color: var(--badge-region-bg);
+            color: var(--badge-region-text);
+            border: 1px solid var(--badge-region-border);
+        }
+
+        .badge-type {
+            background-color: var(--badge-type-bg);
+            color: var(--badge-type-text);
+            border: 1px solid var(--badge-type-border);
+        }
+
+        .badge-michelin {
+            background-color: var(--badge-michelin-bg);
+            color: var(--badge-michelin-text);
+            border: 1px solid var(--badge-michelin-border);
+        }
+
+        .note-box {
+            background-color: var(--note-bg);
+            color: var(--note-text);
+            border: 1px solid var(--note-border);
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Safe area support for iOS Dynamic Island / Notch / Home Bar */
+        .safe-top {
+            padding-top: max(env(safe-area-inset-top), 12px);
+        }
+        .safe-bottom {
+            padding-bottom: max(env(safe-area-inset-bottom), 12px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <!-- Top Sticky Header Navigation for Mobile -->
+    <header class="sticky top-0 z-40 ui-panel border-b px-3.5 py-2.5 shadow-sm bg-white/95 dark:bg-[#2e3746]/95 backdrop-blur-md">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 via-amber-500 to-rose-600 flex items-center justify-center text-sm text-white shadow-sm shrink-0">
+                    🇻🇳
+                </div>
+                <div>
+                    <h1 class="text-sm font-black text-slate-900 dark:text-white leading-tight">
+                        越南私房導覽
+                    </h1>
+                    <p class="text-[10px] font-bold text-emerald-700 dark:text-emerald-400">慈山 • 北寧 • 河內 • 峴港</p>
+                </div>
+            </div>
+
+            <!-- Header Quick Actions -->
+            <div class="flex items-center gap-1.5">
+                <!-- Theme Switcher Button -->
+                <button onclick="toggleTheme()" class="h-8 px-2.5 rounded-xl border border-slate-300 dark:border-slate-700/60 bg-slate-100/90 dark:bg-slate-800/80 text-slate-800 dark:text-amber-300 font-bold text-xs shadow-sm transition flex items-center gap-1 active:scale-95" id="theme-toggle-btn">
+                    <i class="fa-solid fa-sun text-amber-500 text-xs" id="theme-icon"></i>
+                    <span id="theme-text" class="text-[11px]">淺色</span>
+                </button>
+
+                <!-- Fast Add Modal Trigger -->
+                <button onclick="openAddModal()" class="h-8 px-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 text-white font-bold text-xs shadow-sm transition flex items-center gap-1 active:scale-95">
+                    <i class="fa-solid fa-plus text-xs"></i> <span>新增</span>
+                </button>
+
+                <!-- More Menu Trigger -->
+                <button onclick="openMenuModal()" class="h-8 w-8 rounded-xl border border-slate-300 dark:border-slate-700/60 bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 flex items-center justify-center text-xs active:scale-95">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Summary & Fast Status Ribbon -->
+    <div class="px-3.5 pt-3 max-w-4xl mx-auto w-full">
+        <div class="ui-panel rounded-2xl p-3 shadow-sm bg-white dark:bg-[#2e3746] border border-slate-200 dark:border-white/10">
+            <div class="flex items-center justify-between mb-2">
+                <div class="text-xs font-black text-slate-900 dark:text-white flex items-center gap-1.5">
+                    <span class="text-emerald-700 dark:text-emerald-400">📍 私房庫</span>
+                    <span class="text-slate-400">|</span>
+                    <span class="text-amber-700 dark:text-amber-400">🍽️ 米其林</span>
+                    <span class="text-slate-400">|</span>
+                    <span class="text-rose-700 dark:text-rose-400">🛍️ 雙城商場</span>
+                </div>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800/60" id="total-count-header">
+                    共 118 個地點
+                </span>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="grid grid-cols-4 gap-1.5 text-center">
+                <div class="py-1.5 px-1 rounded-xl bg-amber-50/70 dark:bg-[#262f3c] border border-amber-200/60 dark:border-white/5">
+                    <div class="text-sm font-black text-amber-800 dark:text-amber-400" id="stat-spots-count">118</div>
+                    <div class="text-[10px] font-bold text-amber-900 dark:text-slate-400">私房地點</div>
+                </div>
+                <div class="py-1.5 px-1 rounded-xl bg-emerald-50/70 dark:bg-[#262f3c] border border-emerald-200/60 dark:border-white/5">
+                    <div class="text-sm font-black text-emerald-800 dark:text-emerald-400">4 大</div>
+                    <div class="text-[10px] font-bold text-emerald-900 dark:text-slate-400">城市區域</div>
+                </div>
+                <div class="py-1.5 px-1 rounded-xl bg-rose-50/70 dark:bg-[#262f3c] border border-rose-200/60 dark:border-white/5">
+                    <div class="text-sm font-black text-rose-800 dark:text-rose-400">12 家</div>
+                    <div class="text-[10px] font-bold text-rose-900 dark:text-slate-400">米其林</div>
+                </div>
+                <div class="py-1.5 px-1 rounded-xl bg-sky-50/70 dark:bg-[#262f3c] border border-sky-200/60 dark:border-white/5">
+                    <div class="text-sm font-black text-sky-800 dark:text-sky-400">7 大</div>
+                    <div class="text-[10px] font-bold text-sky-900 dark:text-slate-400">商場評比</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky 1-Tap Section Switcher Tabs -->
+    <div class="px-3.5 max-w-4xl mx-auto w-full sticky top-[49px] z-30 pt-2.5 pb-1">
+        <div class="ui-panel rounded-2xl p-1 shadow-md flex items-center justify-between gap-1 border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#2e3746]/95 backdrop-blur-md">
+            <div class="flex items-center gap-1 w-full" id="main-section-tabs">
+                <button onclick="switchMainSection('secret-spots')" id="tab-btn-secret-spots" class="section-tab-btn active flex-1 py-1.5 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 bg-emerald-700 dark:bg-emerald-600 text-white shadow-sm">
+                    <i class="fa-solid fa-map-location-dot text-[11px]"></i> <span>私房地點</span>
+                </button>
+                <button onclick="switchMainSection('michelin-guide')" id="tab-btn-michelin-guide" class="section-tab-btn flex-1 py-1.5 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 bg-amber-100/80 dark:bg-[#262f3c] text-amber-900 dark:text-amber-300">
+                    <i class="fa-solid fa-utensils text-[11px] text-amber-600 dark:text-amber-400"></i> <span>米其林</span>
+                </button>
+                <button onclick="switchMainSection('mall-comparison')" id="tab-btn-mall-comparison" class="section-tab-btn flex-1 py-1.5 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 bg-rose-100/80 dark:bg-[#262f3c] text-rose-900 dark:text-rose-300">
+                    <i class="fa-solid fa-bag-shopping text-[11px] text-rose-600 dark:text-rose-400"></i> <span>雙城商場</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-4xl mx-auto w-full px-3.5 space-y-4">
+
+        <!-- SECTION 1: SECRET SPOTS -->
+        <section id="secret-spots" class="scroll-mt-28 pt-1">
+            <!-- Search Input Bar -->
+            <div class="relative mb-2">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="search-input" oninput="applyFilters()" placeholder="搜尋店名、地址、標籤（如 #台菜, #燒肉, #游泳池）..." class="w-full pl-9 pr-8 py-2 bg-white dark:bg-[#262f3c] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-slate-100 font-medium placeholder-slate-400 text-xs focus:outline-none focus:border-emerald-600 transition shadow-sm">
+                <button onclick="clearSearch()" class="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Horizontal Swipeable Region Tabs -->
+            <div class="mb-2">
+                <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar py-0.5" id="region-filter-container">
+                    <button onclick="setRegionFilter('ALL')" class="region-btn active shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition bg-emerald-700 dark:bg-emerald-600 text-white shadow-sm">全部區域</button>
+                    <button onclick="setRegionFilter('慈山 (Từ Sơn)')" class="region-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">慈山 (Từ Sơn)</button>
+                    <button onclick="setRegionFilter('北寧市區 (Bắc Ninh)')" class="region-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">北寧市區 (Bắc Ninh)</button>
+                    <button onclick="setRegionFilter('河內市 (Hà Nội)')" class="region-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">河內市 (Hà Nội)</button>
+                    <button onclick="setRegionFilter('峴港 (Đà Nẵng)')" class="region-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">峴港 (Đà Nẵng)</button>
+                </div>
+            </div>
+
+            <!-- Horizontal Swipeable Category Pills -->
+            <div class="mb-2.5">
+                <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar py-0.5" id="type-filter-container">
+                    <button onclick="setTypeFilter('ALL')" class="type-btn active shrink-0 px-3 py-1 rounded-xl text-xs font-bold transition bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950">全部類型</button>
+                    <button onclick="setTypeFilter('🍜 在地/精緻美食')" class="type-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">🍜 美食</button>
+                    <button onclick="setTypeFilter('☕ 咖啡甜點')" class="type-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">☕ 咖啡甜點</button>
+                    <button onclick="setTypeFilter('💆‍♂️ SPA/按摩')" class="type-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">💆‍♂️ SPA/按摩</button>
+                    <button onclick="setTypeFilter('🏋️ 運動/游泳池')" class="type-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">🏋️ 運動/泳池</button>
+                    <button onclick="setTypeFilter('🛍️ 超市/伴手禮')" class="type-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">🛍️ 超市/伴手禮</button>
+                    <button onclick="setTypeFilter('🏨 飯店住宿')" class="type-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">🏨 飯店住宿</button>
+                    <button onclick="setTypeFilter('🏞️ 景點園區')" class="type-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">🏞️ 景點園區</button>
+                </div>
+            </div>
+
+            <!-- Hot Tags Horizontal Scroll -->
+            <div class="mb-2.5">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-[11px] font-bold text-slate-700 dark:text-slate-400">
+                        <i class="fa-solid fa-tags text-rose-600 dark:text-rose-400 mr-1"></i>熱門標籤快篩
+                    </span>
+                    <button onclick="clearTagFilter()" class="text-[10px] text-amber-700 dark:text-amber-400 font-bold" id="clear-tag-btn" style="display:none;">清除標籤</button>
+                </div>
+                <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar" id="hot-tags-container">
+                    <!-- Dynamic Tag Pills -->
+                </div>
+            </div>
+
+            <!-- Results Counter Header -->
+            <div class="flex items-center justify-between mb-2.5 px-0.5">
+                <span class="text-xs font-extrabold text-slate-900 dark:text-slate-100" id="filtered-count-badge">118 個地點</span>
+                <span class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">點擊標籤可快篩</span>
+            </div>
+
+            <!-- Cards Grid (Optimized for Mobile Single Column & Tablet Dual Column) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="places-grid">
+                <!-- JS dynamically populates secret spots cards -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="no-results-msg" class="hidden text-center py-10 ui-panel rounded-2xl my-3 bg-white dark:bg-[#2e3746]">
+                <div class="text-slate-400 text-2xl mb-1.5"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <h4 class="text-xs font-bold text-slate-900 dark:text-slate-200 mb-1.5">找不到符合條件的地點</h4>
+                <button onclick="resetAllFilters()" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white font-bold text-xs shadow-sm">
+                    重置搜尋條件
+                </button>
+            </div>
+        </section>
+
+        <!-- SECTION 2: MICHELIN GUIDE -->
+        <section id="michelin-guide" class="scroll-mt-28 pt-4 border-t border-slate-200 dark:border-white/10">
+            <div class="mb-2.5">
+                <h3 class="text-base font-black text-slate-900 dark:text-white flex items-center gap-1.5">
+                    🍽️ 2026 越南米其林餐廳指南
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 text-[11px] font-medium mt-0.5">
+                    精選河內、胡志明市與峴港 12 家星級與必比登美食。
+                </p>
+            </div>
+
+            <!-- Michelin Swipeable Filters -->
+            <div class="space-y-1.5 mb-3">
+                <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar" id="michelin-city-filters">
+                    <button onclick="filterMichelin('city', 'ALL')" class="m-city-btn active shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950">全部城市</button>
+                    <button onclick="filterMichelin('city', '河內市 (Hà Nội)')" class="m-city-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">河內市 (Hà Nội)</button>
+                    <button onclick="filterMichelin('city', '胡志明市 (TP. Hồ Chí Minh)')" class="m-city-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">胡志明市 (TP.HCM)</button>
+                    <button onclick="filterMichelin('city', '峴港市 (Đà Nẵng)')" class="m-city-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">峴港市 (Đà Nẵng)</button>
+                </div>
+
+                <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar" id="michelin-award-filters">
+                    <button onclick="filterMichelin('award', 'ALL')" class="m-award-btn active shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-rose-700 dark:bg-rose-600 text-white">全部星級</button>
+                    <button onclick="filterMichelin('award', '米其林一星 ⭐')" class="m-award-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">米其林一星 ⭐</button>
+                    <button onclick="filterMichelin('award', '米其林綠星 🍃')" class="m-award-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">米其林綠星 🍃</button>
+                    <button onclick="filterMichelin('award', '必比登推介 😋')" class="m-award-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10">必比登推介 😋</button>
+                </div>
+            </div>
+
+            <!-- Michelin Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="michelin-grid">
+                <!-- JS dynamically populates michelin cards -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: MALL COMPARISON -->
+        <section id="mall-comparison" class="scroll-mt-28 pt-4 border-t border-slate-200 dark:border-white/10">
+            <div class="mb-2.5">
+                <h3 class="text-base font-black text-slate-900 dark:text-white">
+                    🛍️ 河內與北寧 Shopping Mall 全景評比
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 text-[11px] font-medium mt-0.5">
+                    慈山與北寧台商 / 居民雙城 9 大購物中心深度比較表。
+                </p>
+            </div>
+
+            <!-- Mobile Mall Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3.5" id="malls-mobile-cards">
+                <!-- JS populates Mobile Mall Cards -->
+            </div>
+
+            <!-- Full Matrix Table (Horizontal Scrolling Support) -->
+            <div class="ui-panel rounded-2xl overflow-hidden shadow-sm mb-4 border border-slate-200 dark:border-white/10 bg-white dark:bg-[#2e3746]">
+                <div class="p-3 bg-slate-50 dark:bg-[#262f3c] border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
+                    <span class="font-black text-xs text-slate-900 dark:text-white">
+                        雙城商圈詳細評比表
+                    </span>
+                    <span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold"><i class="fa-solid fa-arrows-left-right text-emerald-600 mr-1"></i>左右滑動表格</span>
+                </div>
+
+                <div class="overflow-x-auto hide-scrollbar">
+                    <table class="w-full text-left text-xs text-slate-800 dark:text-slate-300">
+                        <thead class="bg-slate-100 dark:bg-[#262f3c] text-slate-900 dark:text-slate-100 uppercase font-black border-b border-slate-200 dark:border-white/10">
+                            <tr>
+                                <th class="py-2.5 px-3 min-w-[150px]">商場名稱與區域</th>
+                                <th class="py-2.5 px-3 min-w-[100px]">商業規模</th>
+                                <th class="py-2.5 px-3 min-w-[190px]">主力設施與品牌</th>
+                                <th class="py-2.5 px-3 min-w-[100px]">人氣指數</th>
+                                <th class="py-2.5 px-3 min-w-[170px]">餐飲娛樂亮點</th>
+                                <th class="py-2.5 px-3 min-w-[160px]">交通/慈山車程</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-white/5" id="mall-table-body">
+                            <!-- JS renders Mall Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- 2026 Shopping Strategy & Intel Card -->
+            <div class="mt-4 p-4 rounded-2xl border border-emerald-500/30 bg-emerald-50/60 dark:bg-emerald-950/20 text-slate-800 dark:text-slate-200">
+                <div class="flex items-center gap-2 mb-2.5 font-black text-xs text-emerald-800 dark:text-emerald-300">
+                    <i class="fa-solid fa-lightbulb text-amber-500"></i> 2026 雙城購物最新情報與外派採購建議
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px] leading-relaxed">
+                    <div class="p-2.5 rounded-xl bg-white/90 dark:bg-[#262f3c] border border-slate-200/60 dark:border-white/5">
+                        <span class="font-bold text-slate-900 dark:text-white block mb-1">🇯🇵 AEON Mall 北寧旗艦最新進展</span>
+                        2026 年 AEON 官方已正式拍板投資近 1.5 億美元於北寧市 Tân Tiến 區域（7.7 公頃），預計打造北寧第一座日本巨艦級購物中心，未來北寧外派人員免跨省即可享受全套日系生活！
+                    </div>
+                    <div class="p-2.5 rounded-xl bg-white/90 dark:bg-[#262f3c] border border-slate-200/60 dark:border-white/5">
+                        <span class="font-bold text-slate-900 dark:text-white block mb-1">🌊 週末度假首選：Ocean Park 商圈</span>
+                        從慈山開車僅 25-30 分鐘直達 Mega Grand World 與 Ocean Park，擁有威尼斯運河遊船、巨大人造沙灘與 K-Town 韓國街，是外派家庭放鬆休閒的頂級選擇。
+                    </div>
+                    <div class="p-2.5 rounded-xl bg-white/90 dark:bg-[#262f3c] border border-slate-200/60 dark:border-white/5">
+                        <span class="font-bold text-slate-900 dark:text-white block mb-1">🏙️ 平日商務娛樂：Vincom Plaza 北寧</span>
+                        北寧市區聚會、商務洽談、看電影首選市中心 Ngã 6 的 Vincom Plaza；日常生鮮快速補給則以慈山市區的 Dabaco Mart 與 AEON Mall Long Biên 為便利首選。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MOBILE FIXED BOTTOM NAVIGATION BAR -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 ui-panel border-t border-slate-200 dark:border-white/10 px-2 py-2 flex items-center justify-around shadow-2xl bg-white/95 dark:bg-[#2e3746]/95 backdrop-blur-md safe-bottom">
+        <button onclick="switchMainSection('secret-spots')" class="flex-1 flex flex-col items-center gap-0.5 text-emerald-700 dark:text-emerald-400 font-black py-1 active:scale-95 transition">
+            <i class="fa-solid fa-map-location-dot text-base"></i>
+            <span class="text-[10px]">私房地點</span>
+        </button>
+        <button onclick="switchMainSection('michelin-guide')" class="flex-1 flex flex-col items-center gap-0.5 text-amber-700 dark:text-amber-400 font-black hover:text-amber-800 transition py-1 active:scale-95">
+            <i class="fa-solid fa-utensils text-base"></i>
+            <span class="text-[10px]">米其林</span>
+        </button>
+        <button onclick="switchMainSection('mall-comparison')" class="flex-1 flex flex-col items-center gap-0.5 text-rose-700 dark:text-rose-400 font-black hover:text-rose-800 transition py-1 active:scale-95">
+            <i class="fa-solid fa-bag-shopping text-base"></i>
+            <span class="text-[10px]">雙城商圈</span>
+        </button>
+        <button onclick="openAddModal()" class="flex-1 flex flex-col items-center gap-0.5 text-slate-700 dark:text-slate-300 font-bold py-1 active:scale-95 transition">
+            <i class="fa-solid fa-circle-plus text-base text-emerald-600"></i>
+            <span class="text-[10px]">新增地點</span>
+        </button>
+    </nav>
+
+    <!-- FLOATING BACK TO TOP BUTTON FOR MOBILE -->
+    <button onclick="scrollToTop()" id="back-to-top-btn" class="fixed right-4 bottom-20 z-40 w-10 h-10 rounded-full bg-slate-900/80 dark:bg-white/90 text-white dark:text-slate-900 shadow-xl flex items-center justify-center text-xs opacity-0 pointer-events-none transition-all duration-200 active:scale-90">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- MODAL: ADD / EDIT LOCATION (Mobile Bottom-Sheet Style) -->
+    <div id="place-modal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/70 backdrop-blur-sm hidden">
+        <div class="ui-panel rounded-t-3xl sm:rounded-3xl w-full max-w-lg p-5 sm:p-6 border border-slate-200 dark:border-white/10 shadow-2xl relative max-h-[90vh] overflow-y-auto hide-scrollbar bg-white dark:bg-[#2e3746]">
+            <button onclick="closeModal('place-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 dark:hover:text-white text-lg p-1">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-sm font-black text-slate-900 dark:text-white mb-3" id="modal-title">
+                新增私房地點
+            </h3>
+
+            <form id="place-form" onsubmit="handleSavePlace(event)" class="space-y-2.5">
+                <input type="hidden" id="form-id">
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-800 dark:text-slate-300 mb-1">店名 / 地點名稱 *</label>
+                    <input type="text" id="form-name" required placeholder="例如：247 Fitness Bắc Ninh" class="w-full px-3 py-2 bg-slate-50 dark:bg-[#262f3c] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-slate-100 font-medium text-xs focus:outline-none focus:border-emerald-600">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-800 dark:text-slate-300 mb-1">區域 *</label>
+                        <select id="form-region" required class="w-full px-3 py-2 bg-slate-50 dark:bg-[#262f3c] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-slate-100 font-medium text-xs">
+                            <option value="慈山 (Từ Sơn)">慈山 (Từ Sơn)</option>
+                            <option value="北寧市區 (Bắc Ninh)">北寧市區 (Bắc Ninh)</option>
+                            <option value="河內市 (Hà Nội)">河內市 (Hà Nội)</option>
+                            <option value="峴港 (Đà Nẵng)">峴港 (Đà Nẵng)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-800 dark:text-slate-300 mb-1">類型分類 *</label>
+                        <select id="form-type" required class="w-full px-3 py-2 bg-slate-50 dark:bg-[#262f3c] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-slate-100 font-medium text-xs">
+                            <option value="🍜 在地/精緻美食">🍜 在地/精緻美食</option>
+                            <option value="☕ 咖啡甜點">☕ 咖啡甜點</option>
+                            <option value="💆‍♂️ SPA/按摩">💆‍♂️ SPA/按摩</option>
+                            <option value="🏋️ 運動/游泳池">🏋️ 運動/游泳池</option>
+                            <option value="🛍️ 超市/伴手禮">🛍️ 超市/伴手禮</option>
+                            <option value="🏨 飯店住宿">🏨 飯店住宿</option>
+                            <option value="🏞️ 景點園區">🏞️ 景點園區</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-800 dark:text-slate-300 mb-1">評分 (1.0 - 5.0) *</label>
+                        <input type="number" step="0.1" min="1" max="5" id="form-rating" required placeholder="4.5" class="w-full px-3 py-2 bg-slate-50 dark:bg-[#262f3c] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-slate-100 font-medium text-xs">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-800 dark:text-slate-300 mb-1">自訂標籤 (逗號分隔)</label>
+                        <input type="text" id="form-tags" placeholder="#台菜, #燒肉" class="w-full px-3 py-2 bg-slate-50 dark:bg-[#262f3c] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-slate-100 font-medium text-xs">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-800 dark:text-slate-300 mb-1">地址 / 位置</label>
+                    <input type="text" id="form-address" placeholder="例如：Từ Sơn, Bắc Ninh" class="w-full px-3 py-2 bg-slate-50 dark:bg-[#262f3c] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-slate-100 font-medium text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-800 dark:text-slate-300 mb-1">Google 地圖連結</label>
+                    <input type="url" id="form-mapurl" placeholder="https://www.google.com/maps/search/?api=1&query=..." class="w-full px-3 py-2 bg-slate-50 dark:bg-[#262f3c] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-slate-100 font-medium text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-800 dark:text-slate-300 mb-1">個人私房筆記</label>
+                    <textarea id="form-note" rows="2" placeholder="輸入個人心得、推薦菜色或注意事項..." class="w-full px-3 py-2 bg-slate-50 dark:bg-[#262f3c] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-slate-100 font-medium text-xs"></textarea>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-200 dark:border-white/10">
+                    <button type="button" onclick="closeModal('place-modal')" class="px-3.5 py-1.5 rounded-xl bg-slate-200 dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 text-xs font-bold">
+                        取消
+                    </button>
+                    <button type="submit" class="px-4 py-1.5 rounded-xl bg-emerald-600 text-white font-bold text-xs shadow-md">
+                        儲存地點
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: MORE MENU (Mobile Bottom-Sheet Style) -->
+    <div id="menu-modal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/70 backdrop-blur-sm hidden">
+        <div class="ui-panel rounded-t-3xl sm:rounded-3xl w-full max-w-sm p-5 border border-slate-200 dark:border-white/10 shadow-2xl relative text-center bg-white dark:bg-[#2e3746]">
+            <button onclick="closeModal('menu-modal')" class="absolute top-4 right-4 text-slate-400 text-lg p-1">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">選單管理</h3>
+            <div class="space-y-2">
+                <button onclick="toggleTheme(); closeModal('menu-modal');" class="w-full py-2 rounded-xl bg-slate-100 dark:bg-[#262f3c] text-slate-900 dark:text-slate-200 border border-slate-200 dark:border-white/10 text-xs font-bold flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-half-stroke text-amber-500"></i> 切換淺色 / 暮色主題
+                </button>
+                <button onclick="exportJSON(); closeModal('menu-modal');" class="w-full py-2 rounded-xl bg-slate-100 dark:bg-[#262f3c] text-slate-900 dark:text-slate-200 border border-slate-200 dark:border-white/10 text-xs font-bold flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-download text-emerald-600"></i> 匯出 JSON 備份檔
+                </button>
+                <label class="w-full py-2 rounded-xl bg-slate-100 dark:bg-[#262f3c] text-slate-900 dark:text-slate-200 border border-slate-200 dark:border-white/10 text-xs font-bold cursor-pointer flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-upload text-sky-600"></i> 匯入 JSON 備份檔
+                    <input type="file" id="import-json-mobile" accept=".json" class="hidden" onchange="importJSON(event); closeModal('menu-modal');">
+                </label>
+                <button onclick="confirmResetModal(); closeModal('menu-modal');" class="w-full py-2 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800/50 text-xs font-bold flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-left"></i> 重置為預設 118 個地點
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: CONFIRM RESET -->
+    <div id="reset-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm hidden">
+        <div class="ui-panel rounded-3xl w-full max-w-sm p-4 border shadow-2xl text-center bg-white dark:bg-[#2e3746]">
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-1">重置為預設地點庫？</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mb-3.5 font-medium">將還原至原始 118 個地點紀錄。</p>
+            <div class="flex items-center justify-center gap-2">
+                <button onclick="closeModal('reset-modal')" class="px-3.5 py-1.5 rounded-xl bg-slate-200 dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 text-xs font-bold">
+                    取消
+                </button>
+                <button onclick="executeResetData()" class="px-4 py-1.5 rounded-xl bg-rose-700 text-white font-bold text-xs shadow-md">
+                    確認重置
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-3 right-3 left-3 sm:left-auto sm:right-5 z-50 space-y-1.5 pointer-events-none"></div>
+
+    <!-- JS State & Logic -->
+    <script>
+        const DEFAULT_PLACES = [{"id": "ts-001", "name": "Ah Ma Hand made (阿媽媽手作糕點)", "region": "慈山 (Từ Sơn)", "type": "☕ 咖啡甜點", "rating": 4.5, "tags": ["#手作甜點", "#台味蛋糕", "#慈山美食", "#下午茶"], "note": "在地超人氣手作古早味蛋糕與烘焙甜點，口感綿密，深受台商與居民喜愛。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ah+Ma+Hand+made+Tu+Son"}, {"id": "ts-002", "name": "Tùng Lộc #173 (松祿 173 中華料理)", "region": "慈山 (Từ Sơn)", "type": "🍜 在地/精緻美食", "rating": 4.5, "tags": ["#中式料理", "#台菜熱炒", "#聚餐首選", "#慈山美食", "#台菜"], "note": "慈山經典中餐館，道地家鄉味熱炒與合菜，台商商務聚會熱門選擇。", "address": "173 Đ. Lê Quang Đạo, Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Tung+Loc+173+Tu+Son"}, {"id": "ts-003", "name": "Nhà Hàng Panda_Panda (熊貓餐廳)", "region": "慈山 (Từ Sơn)", "type": "🍜 在地/精緻美食", "rating": 4.4, "tags": ["#中式燒肉", "#四川火鍋", "#川菜", "#晚宵夜", "#燒肉", "#火鍋"], "note": "主打川味火鍋與精緻燒肉，醬料豐富，肉質新鮮，宵夜聚餐好去處。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nha+Hang+Panda+Panda+Tu+Son"}, {"id": "ts-004", "name": "DingWall Restaurant (鼎王中餐廳)", "region": "慈山 (Từ Sơn)", "type": "🍜 在地/精緻美食", "rating": 4.5, "tags": ["#台式火鍋", "#中式合菜", "#商務包廂", "#台菜", "#火鍋"], "note": "精緻中式料理與台式火鍋，環境優雅提供包廂，適合請客聚會。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=DingWall+Restaurant+Tu+Son"}, {"id": "ts-005", "name": "MoonQuan (月亮館私房菜)", "region": "慈山 (Từ Sơn)", "type": "🍜 在地/精緻美食", "rating": 5.0, "tags": ["#精緻中菜", "#私房料理", "#口碑高分", "#中式料理"], "note": "評分高達 5.0 的私房美味中餐，食材考究，招牌熱炒與湯品口碑極佳。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=MoonQuan+Tu+Son"}, {"id": "ts-006", "name": "Bể bơi Nam Hồng (Nam Hồng 游泳池)", "region": "慈山 (Từ Sơn)", "type": "🏋️ 運動/游泳池", "rating": 4.2, "tags": ["#游泳池", "#戶外戲水", "#夏日消暑", "#運動健身"], "note": "慈山在地大型標準游泳池，水質乾淨，設有休閒戲水區與長水道。", "address": "Đ. Lê Quang Đạo, Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Be+boi+Nam+Hong+Tu+Son"}, {"id": "ts-007", "name": "Bể bơi THCS Tân Hồng (Tân Hồng 游泳池)", "region": "慈山 (Từ Sơn)", "type": "🏋️ 運動/游泳池", "rating": 3.7, "tags": ["#游泳池", "#親子戲水", "#社區泳池"], "note": "位於 Tân Hồng 中學旁的游泳池，在地居民晨泳與青少年游泳訓練場所。", "address": "Tân Hồng, Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Be+boi+THCS+Tan+Hong"}, {"id": "ts-008", "name": "La Mia Casa (義式休閒餐館)", "region": "慈山 (Từ Sơn)", "type": "☕ 咖啡甜點", "rating": 4.2, "tags": ["#義式料理", "#披薩義大利麵", "#約會咖啡"], "note": "氛圍溫馨的義式西餐與咖啡館，手工披薩與義大利麵相當精緻。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=La+Mia+Casa+Tu+Son"}, {"id": "ts-009", "name": "Hương Cuốn Từ Sơn Bắc Ninh (香捲越式傳統春捲)", "region": "慈山 (Từ Sơn)", "type": "🍜 在地/精緻美食", "rating": 3.7, "tags": ["#越式春捲", "#傳統小吃", "#平價美食", "#慈山美食"], "note": "【2026-08-04 新增】慈山在地經典越式春捲與烤肉春捲專賣店，皮薄料多沾醬美味。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Huong+Cuon+Tu+Son+Bac+Ninh"}, {"id": "ts-010", "name": "MOON CAFÉ (MOON 質感咖啡館)", "region": "慈山 (Từ Sơn)", "type": "☕ 咖啡甜點", "rating": 4.3, "tags": ["#網美咖啡", "#手沖咖啡", "#慈山下午茶", "#咖啡甜點"], "note": "【2026-08-04 新增】氛圍舒適的特色咖啡館，氣氛悠閒，特調飲品與特選咖啡豆。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=MOON+CAFE+Tu+Son"}, {"id": "ts-011", "name": "NHÀ HÀNG HỒ BÉO (湖胖海鮮大排檔)", "region": "慈山 (Từ Sơn)", "type": "🍜 在地/精緻美食", "rating": 3.5, "tags": ["#海鮮熱炒", "#平價台越菜", "#大排檔", "#越式美食"], "note": "臨湖大排檔風格，提供活海鮮現烹、烤魚與在地啤酒下酒菜。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nha+hang+Ho+Beo+Tu+Son"}, {"id": "ts-012", "name": "Đông Đô Garden (東都花園度假園區)", "region": "慈山 (Từ Sơn)", "type": "🏞️ 景點園區", "rating": 3.8, "tags": ["#景點園區", "#景觀餐廳", "#綠意庭園", "#休閒散步"], "note": "結合綠化園林與景觀餐廳的綜合休閒園區，適合週末家族聚會散心。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Dong+Do+Garden+Tu+Son"}, {"id": "ts-013", "name": "Tửu Lẩu (酒火鍋燒肉)", "region": "慈山 (Từ Sơn)", "type": "🍜 在地/精緻美食", "rating": 3.8, "tags": ["#越式火鍋", "#平價燒烤", "#聚會飲酒", "#火鍋", "#燒肉"], "note": "道地越式酸辣海鮮火鍋與炭火燒肉，氣氛熱鬧，價格親民。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Tuu+Lau+Tu+Son"}, {"id": "ts-014", "name": "Gia Bao Hotel (嘉寶商務酒店)", "region": "慈山 (Từ Sơn)", "type": "🏨 飯店住宿", "rating": 4.3, "tags": ["#商務飯店", "#台商首選", "#慈山住宿"], "note": "慈山工業區周邊熱門商務酒店，客房整潔、服務親切且地理位置方便。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Gia+Bao+Hotel+Tu+Son"}, {"id": "ts-015", "name": "Army Fitness & Yoga Từ Sơn (軍隊健身瑜伽)", "region": "慈山 (Từ Sơn)", "type": "🏋️ 運動/游泳池", "rating": 4.0, "tags": ["#健身房", "#瑜伽課程", "#重訓器材"], "note": "設備齊全的專業健身中心，提供重訓區、有氧團課與瑜伽教室。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Army+Fitness+Yoga+Tu+Son"}, {"id": "ts-016", "name": "3S Wellness Từ Sơn (3S 養生SPA健身)", "region": "慈山 (Từ Sơn)", "type": "💆‍♂️ SPA/按摩", "rating": 4.9, "tags": ["#SPA按摩", "#養生水療", "#汗蒸幕", "#放鬆推薦"], "note": "評分高達 4.9 的高端養生 SPA，提供專業按摩、蒸氣浴與健康理療。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=3S+Wellness+Tu+Son"}, {"id": "ts-017", "name": "La PaPa Cafe (La PaPa 文青咖啡館)", "region": "慈山 (Từ Sơn)", "type": "☕ 咖啡甜點", "rating": 4.6, "tags": ["#網美咖啡", "#手沖咖啡", "#氣氛佳", "#咖啡甜點"], "note": "裝潢極具質感的韓風文青咖啡館，特調咖啡與甜點顏值高且美味。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=La+PaPa+Cafe+Tu+Son"}, {"id": "ts-018", "name": "NEW CITY FITNESS TỪ SƠN (新城健身中心)", "region": "慈山 (Từ Sơn)", "type": "🏋️ 運動/游泳池", "rating": 5.0, "tags": ["#頂級健身房", "#個人教練", "#運動設施"], "note": "獲得 5.0 滿分評價的新穎健身房，空間明亮寬敞，器材高級專業。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=NEW+CITY+FITNESS+TU+SON"}, {"id": "ts-019", "name": "BerMan Hotel (伯曼精品酒店)", "region": "慈山 (Từ Sơn)", "type": "🏨 飯店住宿", "rating": 3.9, "tags": ["#精品酒店", "#出差住宿", "#平價舒服"], "note": "簡約現代風格住宿，房間舒適，鄰近市區主要交通幹道。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=BerMan+Hotel+Tu+Son"}, {"id": "ts-020", "name": "Rose garden hotel (玫瑰花園飯店)", "region": "慈山 (Từ Sơn)", "type": "🏨 飯店住宿", "rating": 4.0, "tags": ["#商務旅館", "#花園景觀", "#優雅住宿"], "note": "附設花園庭院的舒適旅館，環境幽靜，服務周到。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Rose+garden+hotel+Tu+Son"}, {"id": "ts-021", "name": "CÔNG Ô: BÁNH MÌ HỘI AN (會安法國麵包)", "region": "慈山 (Từ Sơn)", "type": "🍜 在地/精緻美食", "rating": 5.0, "tags": ["#越式法國麵包", "#街頭小吃", "#傳統平價", "#越式美食"], "note": "外皮極致酥翠、內餡滿滿的會安風味法國麵包，好評高達 5.0。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=BANH+MI+HOI+AN+Tu+Son"}, {"id": "ts-022", "name": "Ume Mart (烏梅生鮮日系超市)", "region": "慈山 (Từ Sơn)", "type": "🛍️ 超市/伴手禮", "rating": 5.0, "tags": ["#進口超市", "#日韓食品", "#生鮮雜貨", "#超市伴手禮"], "note": "精選日韓進口零食、調味料與生鮮食材的生鮮精品超市。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ume+Mart+Tu+Son"}, {"id": "ts-023", "name": "INTECH Group Business Hub (INTECH 科技園區)", "region": "慈山 (Từ Sơn)", "type": "🏞️ 景點園區", "rating": 4.8, "tags": ["#科技園區", "#商務地標", "#現代建築"], "note": "慈山代表性企業園區，現代化商務辦公與展覽中心。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=INTECH+Group+Business+Hub"}, {"id": "ts-024", "name": "Fushan Foxconn (富士康富山廠區)", "region": "慈山 (Từ Sơn)", "type": "🏞️ 景點園區", "rating": 3.9, "tags": ["#工業區", "#富士康", "#地標科技"], "note": "位於北寧慈山地界的核心科技產業園區地標。", "address": "VSIP Bắc Ninh, Từ Sơn", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Fushan+Foxconn+Bac+Ninh"}, {"id": "ts-025", "name": "Lotte Mart Từ Sơn Express (樂天便利快店)", "region": "慈山 (Từ Sơn)", "type": "🛍️ 超市/伴手禮", "rating": 4.2, "tags": ["#便利超市", "#韓國零食", "#日常採買"], "note": "慈山地區買韓國進口食品、飲料與熟食的便捷選物超市。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Lotte+Mart+Tu+Son"}, {"id": "bn-001", "name": "247 Fitness Bắc Ninh (247 全天候健身中心)", "region": "北寧市區 (Bắc Ninh)", "type": "🏋️ 運動/游泳池", "rating": 4.6, "tags": ["#健身房", "#24小時健身", "#重訓有氧", "#運動設施"], "note": "【2026-08-04 新增】北寧市區熱門全天候健身中心，設施高級齊全，極受運動愛好者喜愛。", "address": "Bắc Ninh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=247+Fitness+Bac+Ninh"}, {"id": "bn-002", "name": "Cơm Gà Hội An Bắc Ninh (北寧會安雞飯)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 3.9, "tags": ["#會安雞飯", "#越式傳統", "#金黃手撕雞", "#越式美食"], "note": "主打中越會安傳統手撕雞肉飯，搭配薑黃飯與特製辣椒醬，風味獨特。", "address": "Bắc Ninh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Com+Ga+Hoi+An+Bac+Ninh"}, {"id": "bn-003", "name": "Tân Lương Sơn Bắc Ninh (新梁山風情熱炒)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 4.3, "tags": ["#越式熱炒", "#武俠主題", "#燒烤啤酒", "#聚餐熱點", "#燒肉"], "note": "竹林竹屋古風裝潢，特色山珍海味熱炒與竹筒酒，超有氣氛的大型聚餐場所。", "address": "Bắc Ninh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Tan+Luong+Son+Bac+Ninh"}, {"id": "bn-004", "name": "WASU BẮC NINH (WASU 和風日料燒肉)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 4.6, "tags": ["#日式燒肉", "#生魚片", "#日料食堂", "#燒肉"], "note": "北寧市區評價極高的高級日式燒肉與刺身居酒屋，食材鮮美新鮮。", "address": "Bắc Ninh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=WASU+Bac+Ninh"}, {"id": "bn-005", "name": "Nhà hàng Nhật Bản KINZA (金座日式料理)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 4.9, "tags": ["#日式無菜單", "#壽司生魚片", "#商務包廂", "#高級日料"], "note": "高高達 4.9 分的正統高級日本料理，提供高檔和牛、鰻魚飯與頂級壽司。", "address": "Bắc Ninh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nha+hang+Nhat+Ban+KINZA+Bac+Ninh"}, {"id": "bn-006", "name": "Vinpearl Hotel Bắc Ninh (北寧 Vinpearl 五星飯店)", "region": "北寧市區 (Bắc Ninh)", "type": "🏨 飯店住宿", "rating": 4.9, "tags": ["#五星級飯店", "#高空泳池", "#地標飯店", "#奢華住宿", "#游泳池"], "note": "北寧市地標級五星酒店，擁有高空無邊際泳池、頂級自助餐與奢華設施。", "address": "Trần Hưng Đạo, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Vinpearl+Hotel+Bac+Ninh"}, {"id": "bn-007", "name": "Kinh Bắc Flagship (輕咖啡旗艦店)", "region": "北寧市區 (Bắc Ninh)", "type": "☕ 咖啡甜點", "rating": 4.8, "tags": ["#旗艦咖啡館", "#網美打卡", "#輕食甜點", "#咖啡甜點"], "note": "北寧規模最大且氣派時尚的咖啡旗艦店，室內造景極佳，適合工作與拍照。", "address": "Bắc Ninh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=nh%E1%BA%B9+cafe+Kinh+Bac+Flagship"}, {"id": "bn-008", "name": "Bún Hải Sản Buhasa (Buhasa 海鮮米線)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 4.7, "tags": ["#海鮮米線", "#酸辣湯頭", "#澎湃海鮮", "#越式美食"], "note": "湯頭鮮甜酸辣、澎湃蝦蟹烏賊配料的超受歡迎海鮮湯米線。", "address": "Bắc Ninh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bun+Hai+San+Buhasa+Bac+Ninh"}, {"id": "bn-009", "name": "Butoomac Bắc Ninh (日韓燒肉微醺館)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 4.5, "tags": ["#韓式燒肉", "#酒吧居酒屋", "#聚餐必訪", "#燒肉"], "note": "結合韓式烤肉與精釀啤酒的潮流餐酒館，氛圍熱烈。", "address": "Bắc Ninh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Butoomac+Bac+Ninh"}, {"id": "bn-010", "name": "Nhà Hàng Sao Mỹ (星美中韓餐廳)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 4.0, "tags": ["#中韓料理", "#家庭聚餐", "#經典合菜", "#中式料理"], "note": "提供多樣化中韓家庭式料理與熱炒，口味親切價格實惠。", "address": "Bắc Ninh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nha+Hang+Sao+My+Bac+Ninh"}, {"id": "bn-011", "name": "Dabaco Center Bắc Ninh (Dabaco 購物中心)", "region": "北寧市區 (Bắc Ninh)", "type": "🛍️ 超市/伴手禮", "rating": 4.3, "tags": ["#購物中心", "#Dabaco超市", "#電影院", "#綜合商場"], "note": "北寧在地龍頭購物中心，含超市、品牌服飾、美食街與電影院。", "address": "Lý Thái Tổ, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Dabaco+Center+Bac+Ninh"}, {"id": "bn-012", "name": "Funing Precision (富寧精密科技廠區)", "region": "北寧市區 (Bắc Ninh)", "type": "🏞️ 景點園區", "rating": 4.2, "tags": ["#科技園區", "#桂武工業區", "#富士康廠區"], "note": "位於北寧桂武工業區的核心製造科技基地。", "address": "KCN Quế Võ, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Funing+Precision+Bac+Ninh"}, {"id": "bn-013", "name": "Him Lam Plaza Bắc Ninh (Him Lam 廣場)", "region": "北寧市區 (Bắc Ninh)", "type": "🛍️ 超市/伴手禮", "rating": 4.1, "tags": ["#購物中心", "#美食街", "#連鎖品牌"], "note": "位於北寧市中心的綜合商業廣場，涵蓋品牌專櫃、咖啡館與宴會廳。", "address": "22 Lý Thái Tổ, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Him+Lam+Plaza+Bac+Ninh"}, {"id": "hn-001", "name": "Tầm Vị (米其林一星傳統越菜)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.0, "tags": ["#米其林一星", "#北越家常菜", "#古宅餐廳", "#越式美食"], "note": "榮獲 Michelin 1 Star！古色古香的傳統木造宅邸，重現道地北越精緻家常菜風味。", "address": "4b P. Yên Thế, Văn Miếu, Đống Đa, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Tam+Vi+Restaurant+Hanoi"}, {"id": "hn-002", "name": "Gia Restaurant (米其林一星現代精緻越菜)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.7, "tags": ["#米其林一星", "#現代越菜", "#FineDining", "#創意料理"], "note": "米其林一星頂級法越融合餐廳，主廚以季節性在地食材呈現現代法越 Fine Dining。", "address": "61 P. Văn Miếu, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Gia+Restaurant+Hanoi"}, {"id": "hn-003", "name": "Hibana by Koki (米其林一星頂級日式鐵板燒)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.8, "tags": ["#米其林一星", "#Capella飯店", "#日式鐵板燒", "#奢華美食"], "note": "位於 Capella Hanoi 酒店內的米其林一星日料，日本空運食材與精緻鐵板燒工藝。", "address": "11 P. Lê Phụng Hiểu, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Hibana+by+Koki+Hanoi"}, {"id": "hn-004", "name": "Pho 10 Ly Quoc Su (李國師牛肉河粉)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.2, "tags": ["#米其林必比登", "#河內河粉", "#排隊名店", "#越式美食"], "note": "河內最知名的傳統牛肉河粉地標之一，高湯濃郁、牛肉嫩滑，熱門排隊美食。", "address": "10 P. Lý Quốc Sư, Hàng Trống, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Pho+10+Ly+Quoc+Su+Hanoi"}, {"id": "hn-005", "name": "Bún chả Hương Liên (奧巴馬烤肉米線)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.1, "tags": ["#米其林必比登", "#奧巴馬米線", "#烤肉米線", "#越式美食"], "note": "美國前總統奧巴馬與主廚波登親訪的經典烤肉米線店，炭香豬肉與酸甜醬汁極讚。", "address": "24 P. Lê Văn Hưu, Phan Chu Trinh, Hai Bà Trưng, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bun+cha+Huong+Lien+Hanoi"}, {"id": "hn-006", "name": "Bun Cha Ta Hanoi (Ta 傳統烤肉米線)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.4, "tags": ["#米其林必比登", "#烤肉米線", "#舊城區美食", "#越式美食"], "note": "獲得米其林必比登推薦，環境乾淨衛生，炸春捲與烤肉米線深獲國際遊客好評。", "address": "21 P. Nguyễn Hữu Huân, Lý Thái Tổ, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bun+Cha+Ta+Hanoi"}, {"id": "hn-007", "name": "Quan An Ngon (館安旨 越式美食大集合)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.4, "tags": ["#越式小吃大集合", "#米其林推薦", "#庭園餐館", "#越式美食"], "note": "將越南北中南各地街頭美食集中於大型古典庭園中，一次吃遍南北越南小吃。", "address": "18 P. Phan Bội Châu, Cửa Nam, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Quan+An+Ngon+Phan+Boi+Chau+Hanoi"}, {"id": "hn-008", "name": "Cafe Giảng (雞蛋咖啡創始店)", "region": "河內市 (Hà Nội)", "type": "☕ 咖啡甜點", "rating": 4.4, "tags": ["#雞蛋咖啡", "#百年老店", "#河內必訪", "#咖啡甜點"], "note": "1946 年創立的越南雞蛋咖啡 (Egg Coffee) 發源地，濃郁蛋香奶泡與黑咖啡完美結合。", "address": "39 P. Nguyễn Hữu Huân, Lý Thái Tổ, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Cafe+Giang+Hanoi"}, {"id": "hn-009", "name": "The Note Coffee (便利貼暖心咖啡館)", "region": "河內市 (Hà Nội)", "type": "☕ 咖啡甜點", "rating": 4.3, "tags": ["#便利貼牆", "#環還劍湖", "#網美打卡", "#咖啡甜點"], "note": "牆面貼滿來自世界各地旅客手寫便利貼的超人氣溫馨咖啡館，俯瞰還劍湖夜景。", "address": "64 P. Lương Văn Can, Hàng Trống, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=The+Note+Coffee+Hanoi"}, {"id": "hn-010", "name": "Cong Cafe Nha Tho (共產風教堂店)", "region": "河內市 (Hà Nội)", "type": "☕ 咖啡甜點", "rating": 4.2, "tags": ["#椰奶冰沙咖啡", "#復古共產風", "#教堂景觀", "#咖啡甜點"], "note": "位於河內大教堂正對面的 Cong Caphe 旗艦門市，招牌椰奶冰沙咖啡必點！", "address": "27 P. Nhà Thờ, Hàng Trống, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Cong+Caphe+Nha+Tho+Hanoi"}, {"id": "hn-011", "name": "Maison Marou Café Nha Tho (頂級精品巧克力)", "region": "河內市 (Hà Nội)", "type": "☕ 咖啡甜點", "rating": 4.5, "tags": ["#越南巧克力之光", "#精品可可", "#伴手禮推薦", "#咖啡甜點"], "note": "被紐約時報譽為『最棒巧克力』的 Marou 旗艦體驗館，提供現做巧克力甜點與精美伴手禮。", "address": "91b P. Thợ Nhuộm, Trần Hưng Đạo, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Maison+Marou+Nha+Tho+Hanoi"}, {"id": "hn-012", "name": "Pizza 4P's Tràng Tiền (4P's 窯烤起司披薩)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.9, "tags": ["#自製鮮起司", "#窯烤披薩", "#越南神級披薩", "#排隊名店"], "note": "越南現象級日系窯烤披薩！自產鮮 Burrata 起司與蟹肉蟹膏義大利麵令人驚豔。", "address": "43 P. Tràng Tiền, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Pizza+4Ps+Trang+Tien+Hanoi"}, {"id": "hn-013", "name": "Banh Mi 25 (25 號法國麵包專賣)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.5, "tags": ["#名牌法國麵包", "#舊城區排隊美食", "#平價美味", "#越式美食"], "note": "河內舊城區最知名的法國麵包排隊名店，配料新鮮，特製醬料美味。", "address": "25 P. Hàng Cá, Hàng Bồ, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Banh+Mi+25+Hanoi"}, {"id": "hn-014", "name": "MẸT Vietnamese restaurant (MẸT 越式拼盤餐廳)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.9, "tags": ["#竹編拼盤", "#烤肉春捲", "#高分越菜", "#越式美食"], "note": "好評突破三萬則的超狂傳統越菜！竹編大拼盤集結春捲、烤肉與米線。", "address": "舊城區多家分店, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=MET+Vietnamese+restaurant+Hanoi"}, {"id": "hn-015", "name": "Xôi Yến (燕糯米飯老店)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.0, "tags": ["#越式糯米飯", "#傳統小吃", "#綠豆沙叉燒", "#越式美食"], "note": "河內最經典的傳統糯米飯老店，Q彈糯米飯鋪上綠豆沙、叉燒、滷蛋與紅蔥頭。", "address": "35b P. Nguyễn Hữu Huân, Lý Thái Tổ, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Xoi+Yen+Hanoi"}, {"id": "hn-016", "name": "Nhà hàng Nhật Bản KINZA (河內分店)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.9, "tags": ["#高級日料", "#刺身壽司", "#精緻包廂"], "note": "高級日本料理餐館，提供道地生魚片、壽司與居酒屋精緻菜色。", "address": "Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nha+hang+Nhat+Ban+KINZA+Hanoi"}, {"id": "hn-017", "name": "Master Tan / MasterTan Hang Dao (譚師傅伴手禮)", "region": "河內市 (Hà Nội)", "type": "🛍️ 超市/伴手禮", "rating": 4.8, "tags": ["#越南伴手禮", "#特色糕餅", "#果乾腰果", "#超市伴手禮"], "note": "河內熱門精緻伴手禮專賣店，包裝質感極佳，主打特色鳳梨酥、腰果與精品咖啡。", "address": "Hang Dao, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Master+Tan+Hang+Dao+Hanoi"}, {"id": "hn-018", "name": "Carpe Diem Souvenir (Carpe Diem 文創紀念品)", "region": "河內市 (Hà Nội)", "type": "🛍️ 超市/伴手禮", "rating": 5.0, "tags": ["#手作選物", "#文創商品", "#質感禮物", "#超市伴手禮"], "note": "評價高達 5.0 的手工藝品與文創選物店，販售精緻明信片、刺繡與特色紀念品。", "address": "48 P. Âu Triệu, Hàng Trống, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Carpe+Diem+48+Au+Trieu+Hanoi"}, {"id": "hn-019", "name": "MF Spa Hanoi / MF Maison Spa (MF 尊榮養生 SPA)", "region": "河內市 (Hà Nội)", "type": "💆‍♂️ SPA/按摩", "rating": 4.9, "tags": ["#頂級按摩", "#越式草本SPA", "#放鬆療癒", "#SPA按摩"], "note": "舊城區評分超高的精品 SPA 護理中心，提供草本熱敷、精油按摩與熱石舒壓。", "address": "Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=MF+Spa+Hanoi"}, {"id": "hn-020", "name": "Omamori Spa Old Quarter (盲人按摩公益 SPA)", "region": "河內市 (Hà Nội)", "type": "💆‍♂️ SPA/按摩", "rating": 4.8, "tags": ["#專業按摩", "#公益SPA", "#手法道地", "#SPA按摩"], "note": "支持視障人士就業的非營利專業按摩館，手法道地到位，環境清幽無壓力。", "address": "Old Quarter, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Omamori+Spa+Old+Quarter+Hanoi"}, {"id": "hn-021", "name": "Orient & Flora Spa & Nails (東方花語美甲 SPA)", "region": "河內市 (Hà Nội)", "type": "💆‍♂️ SPA/按摩", "rating": 5.0, "tags": ["#美甲沙龍", "#全身SPA", "#女性放鬆", "#SPA按摩"], "note": "獲得 5.0 滿分星級的複合式美甲美體沙龍，服務細緻溫馨。", "address": "Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Orient+Flora+Spa+Nails+Hanoi"}, {"id": "hn-022", "name": "Hanoi Garden Restaurant (河內庭園法越餐廳)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.3, "tags": ["#法式庭園", "#高級越菜", "#浪漫氛圍", "#越式美食"], "note": "露天綠意盎然的浪漫庭園餐廳，呈現古典北越與法式融合料理。", "address": "36 P. Hàng Bông, Hàng Gai, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Hanoi+Garden+Restaurant"}, {"id": "hn-023", "name": "Ốc Vi Sài Gòn (西貢海鮮螺肉大排檔)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.3, "tags": ["#西貢螺肉", "#炒海鮮", "#越式啤酒宵夜", "#越式美食"], "note": "將西貢傳統炒螺肉與熱炒搬到河內的熱門大排檔，黃金奶油炒螺肉搭配麵包必吃！", "address": "19 P. Gia Ngư, Hàng Bạc, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Oc+Vi+Sai+Gon+Hanoi"}, {"id": "hn-024", "name": "WABI-SABI YA Cuisine (侘寂日式料理)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.8, "tags": ["#日式割烹", "#居酒屋", "#高級日本料理"], "note": "禪意裝潢的現代日式割烹餐館，生魚片與日式串燒品質優良。", "address": "Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=WABI+SABI+YA+Hanoi"}, {"id": "hn-025", "name": "BORN FIRE Ocean Park 1 (BORN FIRE 德州燻肉燒烤)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.9, "tags": ["#美式燻肉", "#BBQ燒烤", "#OceanPark美食", "#燒肉"], "note": "位於 Ocean Park 1 的美式原木慢火煙燻燒烤店，牛胸肉與豬肋排軟嫩多汁。", "address": "Ocean Park 1, Gia Lâm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=BORN+FIRE+Ocean+Park+1"}, {"id": "hn-026", "name": "CHUUM BBQ (CHUUM 韓式正宗燒肉)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.5, "tags": ["#韓式烤肉", "#厚切豬五花", "#小菜無限續", "#燒肉"], "note": "正宗韓國主廚經營的厚切豬五花與調味五花肉，配菜道地多樣。", "address": "Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=CHUUM+BBQ+Hanoi"}, {"id": "hn-027", "name": "Lá Dong Cơm Niêu (葉冬煲仔飯傳統菜)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 3.8, "tags": ["#煲仔飯", "#砂鍋飯", "#家常越菜", "#越式美食"], "note": "專營香脆鍋巴煲仔飯與傳統越式家常煲菜的在地餐館。", "address": "Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=La+Dong+Com+Nieu+Hanoi"}, {"id": "hn-028", "name": "YOKOZUNA Japanese Restaurant (橫綱日本料理)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.2, "tags": ["#橫綱日料", "#日式定食", "#拉麵壽司"], "note": "相撲橫綱主題的日本料理店，定食份量十足，豚骨拉麵味道濃郁。", "address": "Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=YOKOZUNA+Japanese+Restaurant+Hanoi"}, {"id": "hn-029", "name": "Tràng Tiền Ice cream (長錢傳統冰淇淋)", "region": "河內市 (Hà Nội)", "type": "☕ 咖啡甜點", "rating": 4.4, "tags": ["#長錢冰淇淋", "#河內童年回億", "#綠豆芋頭冰棒", "#咖啡甜點"], "note": "1958 年創立的河內國民冰淇淋！椰子、綠豆、芋頭冰棒與甜筒是河內人的共同記憶。", "address": "35 P. Tràng Tiền, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Trang+Tien+Ice+cream+Hanoi"}, {"id": "hn-030", "name": "Nhà Thờ Lớn Hà Nội (河內大教堂 / 聖若瑟主教座堂)", "region": "河內市 (Hà Nội)", "type": "🏞️ 景點園區", "rating": 4.6, "tags": ["#河內地標", "#哥德式教堂", "#歷史古蹟", "#景點園區"], "note": "1886 年建成的哥德式新廣州風格大教堂，河內舊城區最核心地標景點。", "address": "40 P. Nhà Thờ, Hàng Trống, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nha+Tho+Lon+Ha+Noi"}, {"id": "hn-031", "name": "Bun Cha Dac Kim (達金烤肉米線)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 3.9, "tags": ["#傳統烤肉米線", "#舊城區老店", "#炸海鮮春捲", "#越式美食"], "note": "位於舊城區千龍街口的烤肉米線老店，肉餅厚實，炸春捲份量澎湃。", "address": "1 P. Hàng Mành, Hàng Gai, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bun+Cha+Dac+Kim+Hanoi"}, {"id": "hn-032", "name": "Vincom Center Bà Triệu (Vincom 購物中心)", "region": "河內市 (Hà Nội)", "type": "🛍️ 超市/伴手禮", "rating": 4.4, "tags": ["#Vincom商場", "#時尚購物", "#威秀影城", "#超市伴手禮"], "note": "河內市中心經典雙子星購物大樓，包含國際品牌、電影院與大型連鎖餐廳。", "address": "191 P. Bà Triệu, Lê Đại Hành, Hai Bà Trưng, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Vincom+Center+Ba+Trieu+Hanoi"}, {"id": "hn-033", "name": "MUJI Vincom Times City (MUJI 無印良品)", "region": "河內市 (Hà Nội)", "type": "🛍️ 超市/伴手禮", "rating": 4.4, "tags": ["#MUJI", "#無印良品", "#日系雜貨", "#超市伴手禮"], "note": "無印良品 Times City 大型旗艦門市，商品齊全，附設咖啡休閒區。", "address": "Times City, Hai Bà Trưng, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=MUJI+Vincom+Times+City"}, {"id": "hn-034", "name": "MUJI Lotte Mall Tây Hồ (MUJI 西湖樂天旗艦門市)", "region": "河內市 (Hà Nội)", "type": "🛍️ 超市/伴手禮", "rating": 3.9, "tags": ["#MUJI旗艦店", "#樂天西湖", "#生活用品", "#超市伴手禮"], "note": "位於 Lotte Mall West Lake 的超級無印良品門市，販售服飾、食品與刺繡客製化服務。", "address": "Lotte Mall West Lake, Tây Hồ, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=MUJI+Lotte+Mall+Tay+Ho"}, {"id": "hn-035", "name": "Tạ Hiện Beer Street (謝現啤酒洋人街)", "region": "河內市 (Hà Nội)", "type": "🏞️ 景點園區", "rating": 4.4, "tags": ["#啤酒街", "#夜生活", "#酒吧熱炒", "#景點園區"], "note": "河內最著名的夜生活啤酒街，矮塑膠椅、生啤酒 (Bia Hơi) 與熱鬧氛圍。", "address": "P. Tạ Hiện, Hàng Buồm, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ta+Hien+Beer+Street+Hanoi"}, {"id": "hn-036", "name": "CULCAT (貓咪文青咖啡館)", "region": "河內市 (Hà Nội)", "type": "☕ 咖啡甜點", "rating": 5.0, "tags": ["#貓咪咖啡館", "#寵物友善", "#滿分好評", "#咖啡甜點"], "note": "獲得 5.0 星級讚譽的貓咪主題咖啡館，貓咪溫馴，環境乾淨療癒。", "address": "Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=CULCAT+Coffee+Hanoi"}, {"id": "hn-037", "name": "Phương Nơi Stationery & Souvenir (Phương Nơi 文具選物店)", "region": "河內市 (Hà Nội)", "type": "🛍️ 超市/伴手禮", "rating": 4.8, "tags": ["#文具雜貨", "#紀念品", "#特色貼紙選物", "#超市伴手禮"], "note": "精緻文具與越南手繪貼紙、紙質紀念品選物店。", "address": "Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Phuong+Noi+Stationery+Souvenir+Hanoi"}, {"id": "hn-038", "name": "Souvenir Store Hà Phương (夏芳手作伴手禮)", "region": "河內市 (Hà Nội)", "type": "🛍️ 超市/伴手禮", "rating": 5.0, "tags": ["#手工藝品", "#手作袋包", "#滿分禮品", "#超市伴手禮"], "note": "專營越南手工編織包、布藝飾品與溫馨伴手禮的小店。", "address": "Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Souvenir+Store+Ha+Phuong+Hanoi"}, {"id": "hn-039", "name": "Bún gà Nguyệt (月亮雞肉河粉/米線)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.4, "tags": ["#米其林必比登", "#雞肉河粉", "#乾拌河粉", "#越式美食"], "note": "米其林必比登推薦，招牌乾拌雞肉絲河粉淋上記香醬汁，老饕最愛！", "address": "5b P. Phủ Doãn, Hàng Bông, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bun+ga+Nguyet+Hanoi"}, {"id": "hn-040", "name": "Chả Cả Thăng Long (昇龍古法蒔蘿烤魚)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.3, "tags": ["#米其林必比登", "#越南古法蒔蘿烤魚", "#百年名菜", "#越式美食"], "note": "經典傳統越式蒔蘿茴香炒薑黃魚塊，搭配米線、花生與蝦醬，極具特色！", "address": "6b P. Đường Thành, Cửa Đông, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Cha+Ca+Thang+Long+Hanoi"}, {"id": "hn-041", "name": "Anan Saigon (Anan 西貢現代越菜 - 南部指標)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.6, "tags": ["#米其林一星", "#100美金河粉", "#創意越菜", "#越式美食"], "note": "越南首批米其林一星得主！主廚 Peter Cường Franklin 打造現代風格精緻越南街頭美食。", "address": "89 Tôn Thất Đạm, Bến Nghé, Quận 1, TP.HCM", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Anan+Saigon"}, {"id": "hn-042", "name": "Phở Thín Lò Đúc (Thin 爆炒牛肉河粉老店)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.1, "tags": ["#老字號河粉", "#爆炒牛肉", "#綠青蔥滿滿", "#越式美食"], "note": "40 年傳統老店，爆炒蒜香牛肉搭配滿滿青蔥與大骨濃湯，在地老饕最愛！", "address": "13 P. Lò Đúc, Phạm Đình Hổ, Hai Bà Trưng, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Pho+Thin+Lo+Duc+Hanoi"}, {"id": "hn-043", "name": "Aeon Mall Long Biên (龍編永旺夢樂城)", "region": "河內市 (Hà Nội)", "type": "🛍️ 超市/伴手禮", "rating": 4.6, "tags": ["#永旺購物中心", "#日系超市", "#親子購物", "#超市伴手禮"], "note": "河內東側大型日系購物中心，涵蓋永旺超市、大型美食街、電影院與連鎖專櫃。", "address": "27 Đ. Cổ Linh, Long Biên, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Aeon+Mall+Long+Bien"}, {"id": "dn-001", "name": "Sun World Ba Na Hills (巴拿山太陽世界)", "region": "峴港 (Đà Nẵng)", "type": "🏞️ 景點園區", "rating": 4.4, "tags": ["#黃金佛手橋", "#巴拿山", "#纜車景點", "#景點園區"], "note": "峴港必訪地標！搭乘世界紀錄纜車直達佛手黃金橋、法式城堡小鎮與室內遊樂園。", "address": "Thôn An Sơn, Hòa Vang, Đà Nẵng", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ba+Na+Hills+Da+Nang"}, {"id": "dn-002", "name": "MAY KITCHENWARE (MAY 廚具雜貨質感選物)", "region": "峴港 (Đà Nẵng)", "type": "🛍️ 超市/伴手禮", "rating": 3.6, "tags": ["#廚具選物", "#餐具雜貨", "#生活質感", "#超市伴手禮"], "note": "販售精美陶瓷餐具、木質砧板與廚房選物雜貨專賣店。", "address": "Đà Nẵng", "mapUrl": "https://www.google.com/maps/search/?api=1&query=MAY+KITCHENWARE+Da+Nang"}, {"id": "dn-003", "name": "AHA Cafe Đà Nẵng (AHA 連鎖休閒咖啡)", "region": "峴港 (Đà Nẵng)", "type": "☕ 咖啡甜點", "rating": 3.7, "tags": ["#街頭咖啡", "#連鎖咖啡", "#檸檬茶", "#咖啡甜點"], "note": "越南綠意街頭風格連鎖咖啡店，提供特調滴漏咖啡與檸檬茶。", "address": "Đà Nẵng", "mapUrl": "https://www.google.com/maps/search/?api=1&query=AHA+Cafe+Da+Nang"}, {"id": "dn-004", "name": "La Maison 1888 (峴港洲際米其林一星法餐)", "region": "峴港 (Đà Nẵng)", "type": "🍜 在地/精緻美食", "rating": 4.7, "tags": ["#米其林一星", "#洲際酒店", "#頂級法餐", "#無敵海景"], "note": "位於 InterContinental Danang 的米其林一星高級法式餐廳，名廚加持與無敵灣景。", "address": "InterContinental Danang Sun Peninsula Resort, Đà Nẵng", "mapUrl": "https://www.google.com/maps/search/?api=1&query=La+Maison+1888+Da+Nang"}, {"id": "dn-005", "name": "Chợ Hàn (峴港韓市場伴手禮)", "region": "峴港 (Đà Nẵng)", "type": "🛍️ 超市/伴手禮", "rating": 4.2, "tags": ["#韓市場", "#腰果果乾", "#越南奧黛定制", "#超市伴手禮"], "note": "峴港規模最大傳統市場，購買帶皮腰果、芒果乾、咖啡豆與訂做奧黛傳統服飾首選。", "address": "119 Đ. Trần Phú, Hải Châu 1, Hải Châu, Đà Nẵng", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Cho+Han+Da+Nang"}, {"id": "dn-006", "name": "Cầu Rồng Đà Nẵng (峴港龍橋噴火秀)", "region": "峴港 (Đà Nẵng)", "type": "🏞️ 景點園區", "rating": 4.6, "tags": ["#龍橋", "#噴火噴水秀", "#韓江夜景", "#景點園區"], "note": "峴港標誌性巨龍跨江大橋，週末晚上 9:00 精采的吐火噴水表演震撼全場！", "address": "Cầu Rồng, Hải Châu, Đà Nẵng", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Cau+Rong+Da+Nang"}, {"id": "dn-007", "name": "Biển Mỹ Khê (美溪海灘 - 福布斯最美海灘)", "region": "峴港 (Đà Nẵng)", "type": "🏞️ 景點園區", "rating": 4.7, "tags": ["#美溪沙灘", "#海邊踏浪", "#水上活動", "#景點園區"], "note": "被富比士評為全球最美六大沙灘之一，白沙細軟、海水清澈，適合散步踏浪。", "address": "Sơn Trà, Đà Nẵng", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bien+My+Khe+Da+Nang"}, {"id": "ts-026", "name": "Tiệm bánh Kiukiu (Kiukiu 手作烘焙蛋糕 / Kiukiu Bakery)", "region": "慈山 (Từ Sơn)", "type": "☕ 咖啡甜點", "rating": 4.9, "tags": ["#手作蛋糕", "#烘焙甜點", "#網美蛋糕", "#KiukiuBakery", "#慈山美食", "#咖啡甜點"], "note": "【2026-08-27 最新熱門】慈山超高人氣 4.9 星手作烘焙坊！主打客製化精緻生日蛋糕、法式小甜點與新鮮現烤麵包，深受在地與外派家庭喜愛。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Tiem+banh+Kiukiu+Tu+Son"}, {"id": "ts-027", "name": "Tiệm bánh Simple Cơ Sở 4 Trần Phú (Simple 烘焙蛋糕 4 號店 / Simple Bakery)", "region": "慈山 (Từ Sơn)", "type": "☕ 咖啡甜點", "rating": 4.9, "tags": ["#烘焙麵包", "#鮮奶油蛋糕", "#SimpleBakery", "#下午茶", "#咖啡甜點"], "note": "【2026-08-27 新增】Simple 烘焙連鎖陳富分店，評分高達 4.9，每日現烤香濃麵包、泡芙與各式精緻慕斯蛋糕。", "address": "Trần Phú, Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Tiem+banh+Simple+Co+So+4+Tran+Phu+Tu+Son"}, {"id": "ts-028", "name": "Ăn Quán Từ Sơn - Món cuốn & Cơm (Ăn Quán 慈山越式捲餅與家常快餐)", "region": "慈山 (Từ Sơn)", "type": "🍜 在地/精緻美食", "rating": 4.8, "tags": ["#越式春捲", "#家常便飯", "#越式料理", "#慈山美食", "#越式美食"], "note": "【2026-08-27 新增】4.8 高分越式捲餅專賣！主打多種招牌春捲（Món cuốn）、越式烤肉套餐與平價美味快餐。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=An+Quan+Tu+Son+Mon+cuon+Com"}, {"id": "ts-029", "name": "Phở Gà Ta Lan Anh (Lan Anh 傳統正宗土雞肉河粉)", "region": "慈山 (Từ Sơn)", "type": "🍜 在地/精緻美食", "rating": 3.5, "tags": ["#雞肉河粉", "#傳統早餐", "#放山土雞", "#越式美食"], "note": "【2026-08-27 新增】慈山傳統土雞肉河粉老店，採用放山土雞肉質紮實鮮美，湯頭清甜不油膩。", "address": "Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Pho+Ga+Ta+Lan+Anh+Tu+Son"}, {"id": "bn-014", "name": "WASU BẮC NINH (WASU 頂級日式料理壽司割烹)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 4.6, "tags": ["#日式料理", "#生魚片壽司", "#商務宴請", "#北寧日本料理"], "note": "北寧市區頂級日式料理，空運生魚片鮮度極高，提供雅緻包廂，非常適合商務洽談宴請。", "address": "Bắc Ninh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=WASU+BAC+NINH"}, {"id": "bn-015", "name": "WABI-SABI YA Ẩm Thực Nhật Bản (佗寂家 日本料理)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 4.8, "tags": ["#日式居酒屋", "#精緻割烹", "#烤物串燒", "#清酒料理"], "note": "高達 4.8 星的道地日式居酒屋，氛圍靜謐雅緻，烤物與刺身手藝精湛，深受外籍幹部好評。", "address": "Bắc Ninh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=WABI+SABI+YA+Am+Thuc+Nhat+Ban+Bac+Ninh"}, {"id": "hn-044", "name": "Cơm Niêu Singapore KOMBO (KOMBO 新加坡招牌焦香煲仔飯)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.5, "tags": ["#新加坡料理", "#脆皮煲仔飯", "#特色焦香", "#聚餐推薦"], "note": "知名新加坡風味雙面鍋巴焦香煲仔飯，醬汁濃郁，肉質軟嫩，極具特色人氣餐廳。", "address": "Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Com+nieu+Singapore+KOMBO+Ha+Noi"}, {"id": "hn-045", "name": "Pizza 4P's Tràng Tiền (4P's 頂級窯烤披薩 錢場旗艦店)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.8, "tags": ["#義式窯烤披薩", "#自製布拉塔起司", "#超人氣排隊名店", "#還劍湖美食"], "note": "全越南最知名的日義混血手工窯烤披薩！自製新鮮布拉塔起司配帕瑪火腿為必點招牌，強烈建議提早預訂。", "address": "43 Tràng Tiền, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Pizza+4Ps+Trang+Tien+Hanoi"}, {"id": "hn-046", "name": "Chào Bạn - Vietnamese Restaurant (Chào Bạn 米其林入選精緻越菜)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.6, "tags": ["#米其林精選", "#新派越菜", "#精緻私房料理", "#質感聚餐"], "note": "米其林指南推薦新派越南精緻料理，以現代烹飪手藝重新演繹傳統越南家常美味，味道層次豐富。", "address": "Ba Đình, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Chao+Ban+Vietnamese+Restaurant+Hanoi"}, {"id": "hn-047", "name": "Timeline Coffee & Restaurant (時光軸景觀咖啡西餐廳)", "region": "河內市 (Hà Nội)", "type": "☕ 咖啡甜點", "rating": 4.6, "tags": ["#復古咖啡", "#英倫美學", "#景觀下午茶", "#拍照打卡"], "note": "歐式復古與老時光風格裝潢，多層不同主題拍照空間，提供香醇手沖咖啡與精美西式甜點。", "address": "Cầu Giấy, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Timeline+Coffee+Restaurant+Hanoi"}, {"id": "hn-048", "name": "Bánh Mì Mama (Mama 街頭人氣法國麵包)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.5, "tags": ["#越式法國麵包", "#街頭排隊美食", "#還劍湖必吃", "#越式美食"], "note": "位於大教堂商圈的超人氣排隊法國麵包攤，烤肉香嫩、特調醬汁與酥脆麵包完美結合。", "address": "Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Banh+mi+Mama+Hanoi"}, {"id": "hn-049", "name": "Ta Hien Beer Street (謝現街 / 國際啤酒老街)", "region": "河內市 (Hà Nội)", "type": "🏞️ 景點園區", "rating": 4.4, "tags": ["#啤酒街", "#老城區夜生活", "#街頭下酒菜", "#河內夜市"], "note": "河內三十六古街最熱鬧的不夜城！坐在矮塑膠凳上喝冰涼 Bia Hơi，搭配烤魷魚與烤鳥，體驗道地夜市喧囂。", "address": "Tạ Hiện, Hàng Buồm, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ta+Hien+Beer+Street+Hanoi"}, {"id": "ts-030", "name": "Redfishcoffee (Redfish 質感文青手沖咖啡館)", "region": "慈山 (Từ Sơn)", "type": "☕ 咖啡甜點", "rating": 4.8, "tags": ["#慈山咖啡", "#質感咖啡", "#文青咖啡", "#手沖拿鐵", "#下午茶"], "note": "【2026-10 最新新增】隱身慈山巷弄的 4.8 星高質感咖啡廳，空間悠閒清幽，手沖單品、特調冷萃與香醇拿鐵表現亮眼，是放鬆工作的好去處。", "address": "B64 Ngõ Quy Chế, Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Redfishcoffee+Tu+Son"}, {"id": "ts-031", "name": "Dabaco Mart Từ Sơn (Dabaco 慈山大型生活超市)", "region": "慈山 (Từ Sơn)", "type": "🛍️ 超市/伴手禮", "rating": 4.0, "tags": ["#在地超市", "#日常採買", "#生鮮雜貨", "#進口食品", "#慈山購物"], "note": "【2026-10 最新新增】慈山市中心核心生活超市，生鮮蔬果、肉品熟食、進口零食與各式日常居家用品齊全，外派生活補給極為便利。", "address": "Lý Thái Tổ, Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Dabaco+Mart+Tu+Son"}, {"id": "ts-032", "name": "Chè Tofu Ngoại Thương (外貿街人氣手工豆腐花甜品)", "region": "慈山 (Từ Sơn)", "type": "☕ 咖啡甜點", "rating": 4.2, "tags": ["#手工豆花", "#消暑甜湯", "#慈山美食", "#銅板小吃", "#外貿街"], "note": "【2026-10 最新新增】慈山外貿街必訪銅板甜品老店！主打滑嫩香濃的手工冰豆花，搭配軟糯黑糖珍珠、仙草與蓮子，清甜爽口、飯後解膩首選。", "address": "14 Phố Ngoại Thương, Từ Sơn, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Che+Tofu+Ngoai+Thuong+Tu+Son"}, {"id": "bn-016", "name": "Nhà hàng Samwon (Samwon 道地韓式烤肉料理)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 4.2, "tags": ["#韓式烤肉", "#厚切五花肉", "#牛排骨湯", "#小菜無限續", "#北寧韓國街"], "note": "【2026-10 最新新增】北寧韓國街高人氣傳統烤肉店，炭火直烤厚切五花肉與調味牛小排香氣逼人，韓式大醬湯與豐富小菜深受外派幹部喜愛。", "address": "1 Ngọc Hân Công Chúa, Phường Ninh Xá, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nha+hang+Samwon+Bac+Ninh"}, {"id": "bn-017", "name": "Nhà Hàng SUWONSUNG (수원성 水原城韓式炭火燒肉)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 4.4, "tags": ["#水原排骨", "#韓式燒肉", "#商務聚餐", "#包廂宴請", "#北寧美食"], "note": "【2026-10 最新新增】以韓國水原傳統秘製醬汁醃排骨聞名，肉質鮮嫩入味、多汁甘甜，店內環境典雅並提供獨立包廂，商務宴客極為體面。", "address": "Võ Cường, Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nha+Hang+SUWONSUNG+Bac+Ninh"}, {"id": "bn-018", "name": "Nhà hàng Nhật TAIYOU SUSHI (TAIYOU 太陽頂級日式壽司料理)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 5.0, "tags": ["#滿分好評", "#日本料理", "#日式刺身", "#精緻割烹", "#北寧日料"], "note": "【2026-10 最新新增】Google 獲得 5.0 滿分評價的頂級日式料理！空運生魚片鮮度極致，握壽司與烤物手法細膩道地，是北寧日式美食的隱藏旗艦。", "address": "Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nha+hang+Nhat+TAIYOU+SUSHI+Bac+Ninh"}, {"id": "hn-050", "name": "WOOMASTER Ngô Thì Nhậm (WOOMASTER 頂級炙烤熟成牛燒肉)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 4.8, "tags": ["#熟成黑牛", "#頂級和牛", "#千則好評", "#精緻燒肉", "#河內必吃"], "note": "【2026-10 最新新增】河內二徵夫人區破 2,000 則 4.8 星頂級燒肉！嚴選極品熟成牛肉與頂級和牛，專業桌邊代烤掌握完美熟度，肉香濃郁爆汁。", "address": "Ngô Thì Nhậm, Hai Bà Trưng, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=WOOMASTER+Ngo+Thi+Nham+Hanoi"}, {"id": "hn-051", "name": "Làng gốm Bát Tràng (鉢場陶瓷文化古村 / Bát Tràng)", "region": "河內市 (Hà Nội)", "type": "🏞️ 景點園區", "rating": 4.5, "tags": ["#傳統手作", "#陶瓷古村", "#陶藝拉胚", "#老街漫遊", "#文化體驗"], "note": "【2026-10 最新新增】擁有數百年悠久歷史的越南國寶級陶藝古村，漫步於紅磚巷弄間可親自體驗手拉胚製陶樂趣，選購典雅茶具瓷器伴手禮。", "address": "Bát Tràng, Gia Lâm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bat+Trang+Ceramic+Village+Hanoi"}, {"id": "hn-052", "name": "Vinhomes Ocean Park (海洋公園大型休閒造鎮生活圈)", "region": "河內市 (Hà Nội)", "type": "🏞️ 景點園區", "rating": 4.6, "tags": ["#人造白沙灘", "#網美打卡", "#歐風商圈", "#大型商場", "#週末度假"], "note": "【2026-10 最新新增】距慈山車程近的東河內旗艦造鎮！獨創 6.1 公頃巨大鹹水人工沙灘與水晶湖，集結歐風洋房、美食步行街與購物中心，週末度假首選。", "address": "Đa Tốn, Gia Lâm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Vinhomes+Ocean+Park+Gia+Lam"}, {"id": "hn-053", "name": "Dong Mo Lake (同莫湖水庫自然生態風景區 / Hồ Đồng Mô)", "region": "河內市 (Hà Nội)", "type": "🏞️ 景點園區", "rating": 4.4, "tags": ["#湖光山色", "#露營勝地", "#日落夕陽", "#高爾夫球場", "#戶外踏青"], "note": "【2026-10 最新新增】座落於山西市郊的 500 公頃浩瀚湖泊水庫，湖中有無數翠綠島嶼，夕陽餘暉倒映如畫，是遠離都市喧囂露營泛舟的休閒秘境。", "address": "Sơn Tây, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Dong+Mo+Lake+Son+Tay+Hanoi"}, {"id": "hn-054", "name": "Ba Vì (巴位國家公園 / 巴位高山雲海避暑勝地)", "region": "河內市 (Hà Nội)", "type": "🏞️ 景點園區", "rating": 4.7, "tags": ["#國家公園", "#高山雲海", "#仙人掌溫室", "#百年法式教堂", "#健行避暑"], "note": "【2026-10 最新新增】河內最高峰避暑勝地！氣候終年涼爽宜人，可健行穿越原始雲霧森林、探訪法殖時期古老教堂石造遺跡與巨大球形仙人掌植物園。", "address": "Ba Vì, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ba+Vi+National+Park+Hanoi"}, {"id": "hn-055", "name": "Làng cổ Đường Lâm (唐林千年紅土磚傳統古村落)", "region": "河內市 (Hà Nội)", "type": "🏞️ 景點園區", "rating": 4.6, "tags": ["#千年古村", "#蜂窩紅土石", "#古老四合院", "#歷史遺產", "#傳統醬缸"], "note": "【2026-10 最新新增】北越最古老的傳統聚落國家級歷史遺產！以獨特紅土蜂窩石築砌的古老門樓與三合院，老樟樹與古井間散發純樸恬靜的鄉村歲月。", "address": "Đường Lâm, Sơn Tây, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Duong+Lam+Ancient+Village+Son+Tay+Hanoi"}, {"id": "hn-056", "name": "Sóc Sơn (朔山自然風景區 / 青浪湖松林露營秘境)", "region": "河內市 (Hà Nội)", "type": "🏞️ 景點園區", "rating": 4.5, "tags": ["#青浪湖", "#松林野營", "#朔山越王廟", "#山水秘境", "#戶外冒險"], "note": "【2026-10 最新新增】河內近郊松林環抱的自然寶地，以 Đồng Đò（青浪湖）翠綠湖泊與山林露營地聞名，亦有供奉扶董天王的千年古老越王廟。", "address": "Sóc Sơn, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Soc+Son+Hanoi"}, {"id": "hn-057", "name": "Grand World Hưng Yên (Mega Grand World 威尼斯水都樂園)", "region": "河內市 (Hà Nội)", "type": "🏞️ 景點園區", "rating": 4.4, "tags": ["#威尼斯運河", "#貢多拉遊船", "#水上大秀", "#網美打卡", "#OceanCity"], "note": "【2026-11 最新新增】超過 1,500 則好評的北越最火爆水上文旅地標！830 公尺威尼斯彩色運河、貢多拉遊船與每晚 20:30 免費震撼水上大秀《The Grand Voyage》，週末度假首選。", "address": "Vinhomes Ocean Park 3, Văn Giang, Hưng Yên", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Grand+World+Hung+Yen"}, {"id": "hn-058", "name": "K-Town, Vinhomes Ocean Park 2 (K-Town 韓國潮流商圈)", "region": "河內市 (Hà Nội)", "type": "🏞️ 景點園區", "rating": 4.7, "tags": ["#韓國街", "#弘大梨泰院風", "#韓屋造景", "#拍貼機", "#韓式街頭"], "note": "【2026-11 最新新增】以首爾江南、弘大、梨泰院為靈感打造的沉浸式韓流街區！巨大 K-Gate 牌坊、韓屋聚落與街頭霓虹塗鴉，聚集韓式烤肉、炸雞啤酒與四格拍貼機店。", "address": "Vinhomes Ocean Park 2, Văn Giang, Hưng Yên", "mapUrl": "https://www.google.com/maps/search/?api=1&query=K-Town+Vinhomes+Ocean+Park+2"}, {"id": "hn-059", "name": "Ngan cháy tỏi Dũng Huyền (勇玄蒜香香酥番鴨老店)", "region": "河內市 (Hà Nội)", "type": "🍜 在地/精緻美食", "rating": 3.8, "tags": ["#蒜香番鴨", "#河內老城區", "#錫街名店", "#外酥內嫩", "#越式特色"], "note": "【2026-11 最新新增】河內老城區錫街（Hàng Thiếc）近 600 則評價的蒜香番鴨名店！番鴨肉炸至外皮金黃微酥、肉質鮮嫩，搭配爆量金黃酥炸蒜片與特調酸辣沾醬，香氣撲鼻極度下飯。", "address": "71 Phố Hàng Thiếc, Hàng Gai, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ngan+chay+toi+Dung+Huyen+71+Hang+Thiec"}, {"id": "bn-019", "name": "老秦地中餐館 (CÔNG TY TNHH DỊCH VỤ ĂN UỐNG / 中國菜)", "region": "北寧市區 (Bắc Ninh)", "type": "🍜 在地/精緻美食", "rating": 5.0, "tags": ["#道地中餐", "#北方麵食", "#家常熱炒", "#華人聚餐", "#中菜館"], "note": "【2026-11 最新新增】獲得滿分 5.0 評價的中式精緻餐館！專營道地傳統中華料理、家常熱炒與手工麵食，口味醇厚地道，非常適合外派台商與華人家庭聚餐解鄉愁。", "address": "Bắc Ninh", "mapUrl": "https://www.google.com/maps/search/?api=1&query=CONG+TY+TNHH+DICH+VU+AN+UONG+Bac+Ninh"}, {"id": "hn-060", "name": "Eggyolk Coffee - Ocean City (Eggyolk 精品蛋咖啡旗艦店)", "region": "河內市 (Hà Nội)", "type": "☕ 咖啡甜點", "rating": 4.9, "tags": ["#精品蛋咖啡", "#綿密蛋霜", "#OceanCity", "#人氣咖啡", "#打卡甜品"], "note": "【2026-11 最新新增】河內知名精品蛋咖啡品牌在 Ocean City 的 4.9 星高分旗艦店！位於 Vincom Mega Mall Ocean City 1 樓，招牌蛋咖啡以頂級蛋黃與純淨奶油低溫慢打，泡沫宛如法式布蕾般綿密香濃、毫無腥味。", "address": "Lô L1-13A+B Tầng 1, Vincom Mega Mall Ocean City, Hưng Yên", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Eggyolk+Coffee+Ocean+City"}];
+        const MICHELIN_DATA = [{"id": "mich-01", "name": "Tầm Vị", "award": "米其林一星 ⭐", "city": "河內市 (Hà Nội)", "cuisine": "傳統北越家常菜", "chef": "Chef Nông Thị Dẹt & 家族團隊", "desc": "以 18 世紀傳統木造古宅裝潢，重現北越傳統農家精緻料理。經典小鯧魚煎至金黃酥翠、水芹菜炒牛肉與綠豆湯令人驚艷。", "dish": "招牌小鯧魚煎、竹筍燉豬腳湯、紅燒肉", "price": "$$ (約 20-40 USD/人)", "address": "4b P. Yên Thế, Văn Miếu, Đống Đa, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Tam+Vi+Restaurant+Hanoi"}, {"id": "mich-02", "name": "Gia Restaurant", "award": "米其林一星 ⭐", "city": "河內市 (Hà Nội)", "cuisine": "現代精緻越菜 (Fine Dining)", "chef": "Chef Sam Trần (陳清夏)", "desc": "Gia 取自『家庭』與『節氣』之意，主廚 Sam 曾於墨爾本修業，以越南 24 節氣在地食材為靈感，呈現極具現代藝術感的創意套餐。", "dish": "24 節氣客製化季節 Tasting Menu", "price": "$$$$ (約 120-180 USD/人)", "address": "61 P. Văn Miếu, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Gia+Restaurant+Hanoi"}, {"id": "mich-03", "name": "Hibana by Koki", "award": "米其林一星 ⭐", "city": "河內市 (Hà Nội)", "cuisine": "頂級日式鐵板燒 (Teppanyaki)", "chef": "Chef Yamaguchi Hiroshi", "desc": "位於奢華飯店 Capella Hanoi 地下室，僅 14 席隱密包廂，食材自日本北海道每週空運，頂級 A5 熊本和牛與伊勢龍蝦極致演繹。", "dish": "A5 和牛鐵板燒、伊勢龍蝦、活鮑魚干貝", "price": "$$$$ (約 200-300 USD/人)", "address": "11 P. Lê Phụng Hiểu, Hà Nội (Capella Hanoi)", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Hibana+by+Koki+Hanoi"}, {"id": "mich-04", "name": "Anan Saigon", "award": "米其林一星 ⭐", "city": "胡志明市 (TP. Hồ Chí Minh)", "cuisine": "現代法越街頭料理 (Cuisine Mới)", "chef": "Chef Peter Cường Franklin", "desc": "Anan 意為『吃吧！』位於舊傳統市場巷弄樓房，主廚將越南經典小吃（如 $100 美金牛肉河粉、松露鴨肝煎餅）昇華為國際等級 Fine Dining。", "dish": "100 美金和牛松露河粉、魚子醬煎餅、和牛越式三明治", "price": "$$$ (約 80-150 USD/人)", "address": "89 Tôn Thất Đạm, Bến Nghé, Quận 1, TP.HCM", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Anan+Saigon"}, {"id": "mich-05", "name": "La Maison 1888", "award": "米其林一星 ⭐", "city": "峴港市 (Đà Nẵng)", "cuisine": "法式精緻料理 (French Fine Dining)", "chef": "Chef Christian Le Squer (三星名廚)", "desc": "座落於峴港洲際渡假酒店懸崖頂端，由法國米其林三星名廚掌舵，古典殖民豪宅融合頂級法式料理工藝與頂級葡萄酒莊庫藏。", "dish": "法式香煎鴨肝、藍龍蝦佐奶油醬、頂級黑松露黑毛豬", "price": "$$$$ (約 180-280 USD/人)", "address": "InterContinental Danang Sun Peninsula Resort, Đà Nẵng", "mapUrl": "https://www.google.com/maps/search/?api=1&query=La+Maison+1888+Da+Nang"}, {"id": "mich-06", "name": "Akuna", "award": "米其林一星 ⭐", "city": "胡志明市 (TP. Hồ Chí Minh)", "cuisine": "現代澳洲法式料理", "chef": "Chef Sam Aisbett", "desc": "座落於西貢河畔 Le Méridien 酒店，澳洲米其林名廚 Sam Aisbett 以大膽前衛的創新烹飪手法，將越南當地原生香草融入當代無國界料理。", "dish": "鱷魚舌刺身佐青酸柑、野生海鮮塔塔、熟成和牛", "price": "$$$$ (約 150-250 USD/人)", "address": "Le Méridien Saigon, 3C Tôn Đức Thắng, Quận 1, TP.HCM", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Akuna+Saigon"}, {"id": "mich-07", "name": "The Royal Pavilion (龍軒)", "award": "米其林一星 ⭐", "city": "胡志明市 (TP. Hồ Chí Minh)", "cuisine": "正統廣東粵菜與港點", "chef": "Chef Ho Wai Kong", "desc": "位於奢華 Reverie Saigon 酒店內，宮廷風格奢華紅金裝潢，主打頂級鮑參翅燕、極品脆皮燒鵝與手工精緻粵式點心。", "dish": "當紅脆皮燒鵝、金牌脆皮燒肉、港式鮮蝦蒸餃", "price": "$$$ (約 60-120 USD/人)", "address": "The Reverie Saigon, 22-36 Nguyễn Huệ, Quận 1, TP.HCM", "mapUrl": "https://www.google.com/maps/search/?api=1&query=The+Royal+Pavilion+Saigon"}, {"id": "mich-08", "name": "Nén Light", "award": "米其林綠星 🍃", "city": "胡志明市 (TP. Hồ Chí Minh)", "cuisine": "永續生態現代越菜", "chef": "Chef Summer Le", "desc": "榮獲 2024/2025/2026 越南米其林綠星永續大獎！主打『Storrytelling Menu』，食材 99% 來自越南在地零碳小農與有機農場。", "dish": "永續自然野味故事套餐、純蔬果香草特調", "price": "$$$ (約 80-130 USD/人)", "address": "122 Nguyễn Văn Thủ, Đa Kao, Quận 1, TP.HCM", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nen+Light+Saigon"}, {"id": "mich-09", "name": "Chả Cá Thăng Long", "award": "必比登推介 😋", "city": "河內市 (Hà Nội)", "cuisine": "傳統古法蒔蘿薑黃烤魚", "chef": "傳統老店團隊", "desc": "米其林必比登多年連續推薦！熱油鐵鍋現場煎炒薑黃醃製魚塊，加入大量新鮮蒔蘿與蔥段，搭配米線、蝦醬與炒花生，極具北越風情。", "dish": "招牌蒔蘿薑黃炸魚塊、炸魚皮、越式米線", "price": "$ (約 8-15 USD/人)", "address": "6b P. Đường Thành, Cửa Đông, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Cha+Ca+Thang+Long+Hanoi"}, {"id": "mich-10", "name": "Phở Gà Nguyệt", "award": "必比登推介 😋", "city": "河內市 (Hà Nội)", "cuisine": "傳統雞肉河粉 (Phở Gà)", "chef": "Madam Nguyệt", "desc": "河內最狂的雞肉河粉名店！湯頭以全雞慢火熬煮清甜不油膩，特別推薦『Phở Gà Trộn』（乾拌雞肉河粉），淋上密製特調醬汁與炸紅蔥頭。", "dish": "招牌乾拌雞腿肉河粉、去骨雞胸湯河粉", "price": "$ (約 3-6 USD/人)", "address": "5b P. Phủ Doãn, Hàng Bông, Hoàn Kiếm, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bun+ga+Nguyet+Hanoi"}, {"id": "mich-11", "name": "Bún Chả Hương Liên", "award": "米其林指南入選 🍽️", "city": "河內市 (Hà Nội)", "cuisine": "炭烤豬肉米線 (Bún Chả)", "chef": "Hương Liên 家族", "desc": "因前美國總統奧巴馬與安東尼波登在此用餐而名揚全球！炭火慢烤豬肉餅與五花肉浸泡於酸甜露中，搭配大盤新鮮生菜與香翠海鮮春捲。", "dish": "Obama Combo (烤肉米線 + 炸海鮮春捲 + 河內啤酒)", "price": "$ (約 4-8 USD/人)", "address": "24 P. Lê Văn Hưu, Phan Chu Trinh, Hai Bà Trưng, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bun+cha+Huong+Lien+Hanoi"}, {"id": "mich-12", "name": "Bánh Xèo Ăn Là Nhớ", "award": "必比登推介 😋", "city": "胡志明市 (TP. Hồ Chí Minh)", "cuisine": "南越金黃蛋黃煎餅 (Bánh Xèo)", "chef": "在地傳統主廚", "desc": "『吃了就想念』的正宗南越椰奶金黃煎餅！餅皮極致薄脆，包裹澎湃鮮蝦、豬肉與豆芽菜，沾上特製魚露與豐富山菜葉包著吃。", "dish": "特級海鮮豬肉煎餅 (Bánh Xèo)、越式春捲", "price": "$ (約 5-10 USD/人)", "address": "74-76 Sương Nguyệt Anh, Phường Bến Thành, Quận 1, TP.HCM", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Banh+Xeo+An+La+Nho+Saigon"}, {"id": "mich-13", "name": "ONVIT", "award": "米其林一星 ⭐", "city": "河內市 (Hà Nội)", "cuisine": "韓國當代精緻料理 (Korean Fine Dining)", "chef": "Chef Kang 韓籍星級主廚團隊", "desc": "【2026 最新摘星 ⭐】店名『ONVIT (온빛)』在韓文中意為『溫暖的光』，座落於 Grand Plaza Hotel。主廚將韓國高麗宮廷傳統與現代法式精湛烹飪技藝融合，呈現極具層次感的極品熟成韓牛與時令珍饈套餐。", "dish": "招牌熟成韓牛、炭烤牛小排佐秘醬、高麗人參海鮮九節坂", "price": "5371153711 (約 100-160 USD/人)", "address": "Grand Plaza Hanoi Hotel, 117 Trần Duy Hưng, Cầu Giấy, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=ONVIT+Grand+Plaza+Hanoi"}, {"id": "mich-14", "name": "Tales by Chapter", "award": "米其林綠星 🍃", "city": "河內市 (Hà Nội)", "cuisine": "全植物性永續精緻料理 (Plant-based Fine Dining)", "chef": "Chef Quang Dũng & Chapter 團隊", "desc": "【2026 最新奪得綠星 🍃】越南首家推行零浪費（Zero-waste）全植物性永續概念的 Fine Dining！與在地永續小農直接契作，運用植物全部位精雕細琢，徹底顛覆蔬食與當代烹飪的感官想像。", "dish": "煙燻野生蕈菇清湯、發酵黑蒜炭烤根莖塔、季節香草純素套餐", "price": "53711$ (約 70-110 USD/人)", "address": "Hoàn Kiếm / Hai Bà Trưng, Hà Nội", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Tales+by+Chapter+Vietnam"}, {"id": "mich-15", "name": "Upstairs", "award": "米其林一星 ⭐", "city": "胡志明市 (TP. Hồ Chí Minh)", "cuisine": "現代創意越菜 (Modern Vietnamese)", "chef": "Chef Hiệp Trương", "desc": "【2026 最新摘星 ⭐】隱身於老建築二樓的極致驚喜，主廚 Hiệp Trương 將童年記憶中的越南傳統街頭小吃與家常風味，透過頂級國際現代烹調技法重新拆解重構，每道菜宛如精緻藝術品。", "dish": "現代重構越式烤肉碎米飯、慢燉香茅牛小排、椰奶香蘭葉慕斯球", "price": "5371153711 (約 90-140 USD/人)", "address": "Ho Chi Minh City", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Upstairs+Restaurant+Ho+Chi+Minh+City"}, {"id": "mich-16", "name": "Nén Danang", "award": "米其林綠星 🍃", "city": "峴港市 (Đà Nẵng)", "cuisine": "當代精緻越南料理 (Contemporary Vietnamese)", "chef": "Chef Summer Lê (黎夏)", "desc": "【2026 峴港米其林綠星 🍃】峴港首座榮獲米其林綠星的標誌性餐廳！主廚 Summer Lê 長期投入越南在地原生香料與食材保育，菜單 90% 以上食材來自自營有機農場與在地小農，融合傳統故事與現代感官體驗。", "dish": "峴港海味三重奏、香茅煙燻烤乳鴿、自栽有機香草 Tasting Menu", "price": "5371153711 (約 80-130 USD/人)", "address": "16 Mỹ Đa Tây 2, Khuê Mỹ, Ngũ Hành Sơn, Đà Nẵng", "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nen+Restaurant+Da+Nang"}];
+        const MALLS_DATA = [{"id": "mall-01", "name": "樂天購物中心 Lotte Mall West Lake", "region": "河內市 (西湖區)", "scale": "巨大型 (35.4萬 m²)", "facilities": "Lotte Mart 超級市場、Lotte Cinema 影城、Lotte World 水族館、KidZania 兒童職業體驗、頂級國際精品專櫃、五星級 Lotte Hotel", "busyness": "🔥 極高 (單日 10萬+ 人次)", "target": "中高收入家庭、外籍人士、時尚族群", "dining": "80+ 家國際與越南美食（Pizza 4P's, Marou, 鼎泰豐 style 中餐, 高檔韓式燒肉）", "transport": "西湖地標，舊城區開車 15-20 分鐘，設有地下雙層大型汽機車停車場", "highlight": "2026 越南最高端綜合購物娛樂地標，水族館與奢華酒店一站體驗！"}, {"id": "mall-02", "name": "永旺夢樂城 AEON Mall Long Biên", "region": "河內市 (龍編區)", "scale": "超大型 (12萬 m²)", "facilities": "AEON 旗艦生鮮超市、CGV 影城、TiniWorld 兒童樂園、日系服飾家居 (Uniqlo, GU, NITORI)", "busyness": "🔥 極高 (北寧家庭週末第一首選)", "target": "全家大小、外派台商家庭、日系愛好者", "dining": "廣大日系美食街、壽司生鮮熟食區、連鎖燒肉火鍋 (Gogi, Kichi-Kichi)", "transport": "河內東側，過章陽橋即達，慈山開車 25-30 分鐘，免費大型停車場", "highlight": "北寧外派台商採買日系食品與家庭放鬆最推薦大型購物中心！"}, {"id": "mall-03", "name": "永旺夢樂城 AEON Mall Hà Đông", "region": "河內市 (河東區)", "scale": "超大型 (15萬 m²)", "facilities": "河內最大 AEON 生鮮超市、CGV IMAX 影城、大冰場、Uniqlo, Decathlon 迪卡儂", "busyness": "🔥 極高 (河內西南消費地標)", "target": "家庭客群、年輕學生、運動休閒愛好者", "dining": "多達 100+ 餐廳，涵蓋中日韓越美各國料理與甜點街", "transport": "河內西南側，車位豐富，設有電動車充電樁", "highlight": "設施最新穎的 AEON，迪卡儂與大型影城運動休閒極佳選擇。"}, {"id": "mall-04", "name": "Vincom Mega Mall Smart City", "region": "河內市 (南慈廉區)", "scale": "大型 (6.8萬 m²)", "facilities": "WinMart 大型超市、VSM 科技體驗館、室內卡丁車賽道、CGV 影城、Uniqlo", "busyness": "高 (科技住宅區核心)", "target": "年輕科技族群、新興家庭、VinSmart 居民", "dining": "時尚餐酒館、海鮮火鍋、連鎖手搖飲與網美咖啡館", "transport": "位於 Smart City 園區內，交通便利，未來捷運規劃站點", "highlight": "主打 Life-Design 智慧科技與運動體驗的未來感購物中心。"}, {"id": "mall-05", "name": "Vincom Center Bà Triệu", "region": "河內市 (Hai Bà Trưng 區)", "scale": "中大型 (雙子星商務塔)", "facilities": "WinMart 超市、CGV 影城、Zara, Mango, Levi's, 國際美妝專櫃", "busyness": "高 (市中心白領與時尚購物族)", "target": "都會上班族、時尚年輕人、舊城區遊客", "dining": "高空景觀餐廳、泰式料理、韓式燒肉、星巴克", "transport": "位於河內市中心繁華地帶，周邊公車與計程車極便利", "highlight": "河內最經典的都會購物雙子塔，精品美妝與都會娛樂地標。"}, {"id": "mall-06", "name": "Dabaco Center Bắc Ninh", "region": "北寧市區 (Bắc Ninh)", "scale": "中型在地龍頭 (2.5萬 m²)", "facilities": "Dabaco 龍頭生鮮超市、Dabaco Cinema 影城、家電館、在地服飾專櫃", "busyness": "中高 (北寧市民日常核心)", "target": "北寧在地居民、廠區員工、當地家庭", "dining": "Dabaco Foodcourt、BBQ 燒肉、Pizza、越式連鎖飲品", "transport": "位於北寧市中心主要幹道 Lý Thái Tổ，機車與汽車停車方便", "highlight": "北寧在地本土最具代表性的綜合百貨超市，生活採買第一站。"}, {"id": "mall-07", "name": "Him Lam Plaza Bắc Ninh", "region": "北寧市區 (Bắc Ninh)", "scale": "中小型 (1.5萬 m²)", "facilities": "綜合商業專櫃、婚宴會館、健身房、品牌咖啡館", "busyness": "中等 (市中心地標大樓)", "target": "商務人士、喜慶宴會賓客、周邊居民", "dining": "平價熱炒、咖啡館、中式合菜餐館", "transport": "北寧市中心圓環地標，交通位置極佳", "highlight": "地段優秀的北寧傳統綜合商業大樓，適合快速消費與商務洽談。"}, {"id": "mall-08", "name": "Vincom Plaza Bắc Ninh", "region": "北寧市區 (Ngã 6 核心圓環)", "scale": "中大型 (1.74萬 m²，雙塔地標底座)", "facilities": "CGV 電影院、WinMart 超級市場、VinPro 家電、名品服飾專櫃、親子遊樂園", "busyness": "🔥 高 (北寧市區最現代化時尚地標)", "target": "北寧外派幹部、年輕白領、家庭休閒客群", "dining": "知名連鎖餐飲匯聚（Khao Lao 寮國菜、Hotto 鐵板燒、Highlands Coffee、Jollibee、韓式燒肉）", "transport": "座落北寧市中心 Ngã 6 六叉圓環核心，從慈山開車 15-20 分鐘即達，地下專屬汽機車停車場", "highlight": "北寧市中心最具指標性的現代購物休閒地標，看電影、連鎖聚餐、超市採買一站滿足！"}, {"id": "mall-09", "name": "Mega Grand World & Ocean Park 商圈", "region": "河內東區 / 興安交界 (Ocean City)", "scale": "超巨大型 (超過 100萬 m² 戶外造景與室內商場融合)", "facilities": "The Venice 威尼斯運河貢多拉遊船、K-Town 韓國潮流商圈、Grand World 不夜城、水上光影秀、Vincom Mega Mall", "busyness": "🔥 極高 (2025-2026 北越最火爆打卡與週末度假地標)", "target": "外派家庭、年輕族群、網美打卡客、週末度假遊客", "dining": "數百家河畔景觀餐廳、各國美食步行街、露天精釀酒吧、道地韓式燒肉街", "transport": "緊鄰河內東側，由慈山經環線開車約 25-30 分鐘，設有數千個免費大型停車位", "highlight": "北越最新打造的威尼斯水都沉浸式購物休閒商圈，吃喝玩樂拍照全天候一站式體驗！"}];
+        let placesState = [];
+        let currentRegion = 'ALL';
+        let currentType = 'ALL';
+        let currentTag = 'ALL';
+        let michelinCityFilter = 'ALL';
+        let michelinAwardFilter = 'ALL';
+        let currentTheme = 'light';
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('vn_guide_theme') || 'light';
+            setTheme(savedTheme);
+        }
+
+        function toggleTheme() {
+            const newTheme = (currentTheme === 'light') ? 'dark' : 'light';
+            setTheme(newTheme);
+            showToast(`已切換至${newTheme === 'light' ? '淺色模式 ☀️' : '暮色模式 🌙'}`, 'info');
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            localStorage.setItem('vn_guide_theme', theme);
+
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            if (themeIcon && themeText) {
+                if (theme === 'light') {
+                    themeIcon.className = 'fa-solid fa-sun text-amber-500 text-xs';
+                    themeText.innerText = '淺色';
+                } else {
+                    themeIcon.className = 'fa-solid fa-moon text-amber-300 text-xs';
+                    themeText.innerText = '暮色';
+                }
+            }
+        }
+
+        function switchMainSection(sectionId) {
+            const targetEl = document.getElementById(sectionId);
+            if (targetEl) {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            document.querySelectorAll('.section-tab-btn').forEach(btn => {
+                btn.className = 'section-tab-btn flex-1 py-1.5 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 bg-slate-100 dark:bg-[#262f3c] text-slate-800 dark:text-slate-300';
+            });
+
+            const activeBtn = document.getElementById(`tab-btn-${sectionId}`);
+            if (activeBtn) {
+                if (sectionId === 'secret-spots') activeBtn.className = 'section-tab-btn active flex-1 py-1.5 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 bg-emerald-700 dark:bg-emerald-600 text-white shadow-sm';
+                if (sectionId === 'michelin-guide') activeBtn.className = 'section-tab-btn active flex-1 py-1.5 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 shadow-sm';
+                if (sectionId === 'mall-comparison') activeBtn.className = 'section-tab-btn active flex-1 py-1.5 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 bg-rose-700 dark:bg-rose-600 text-white shadow-sm';
+            }
+        }
+
+        function initData() {
+            initTheme();
+
+            const stored = localStorage.getItem('vn_guide_places_v4');
+            if (stored) {
+                try {
+                    placesState = JSON.parse(stored);
+                } catch (e) {
+                    placesState = [...DEFAULT_PLACES];
+                }
+            } else {
+                const oldStored = localStorage.getItem('vn_guide_places_v3') || localStorage.getItem('vn_guide_places_v2');
+                if (oldStored) {
+                    try {
+                        const oldPlaces = JSON.parse(oldStored);
+                        const existingIds = new Set(oldPlaces.map(p => p.id));
+                        const addedDefaults = DEFAULT_PLACES.filter(p => !existingIds.has(p.id));
+                        placesState = [...oldPlaces, ...addedDefaults];
+                    } catch(e) {
+                        placesState = [...DEFAULT_PLACES];
+                    }
+                } else {
+                    placesState = [...DEFAULT_PLACES];
+                }
+                saveToLocalStorage();
+            }
+            renderHotTags();
+            applyFilters();
+            renderMichelin();
+            renderMallsMobileCards();
+            renderMallsTable();
+            updateStatsCount();
+
+            // Setup scroll listener for floating back-to-top button
+            window.addEventListener('scroll', () => {
+                const btn = document.getElementById('back-to-top-btn');
+                if (btn) {
+                    if (window.scrollY > 300) {
+                        btn.classList.remove('opacity-0', 'pointer-events-none');
+                        btn.classList.add('opacity-100', 'pointer-events-auto');
+                    } else {
+                        btn.classList.add('opacity-0', 'pointer-events-none');
+                        btn.classList.remove('opacity-100', 'pointer-events-auto');
+                    }
+                }
+            });
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('vn_guide_places_v4', JSON.stringify(placesState));
+            updateStatsCount();
+        }
+
+        function updateStatsCount() {
+            const el = document.getElementById('stat-spots-count');
+            if (el) el.innerText = placesState.length;
+            const elHeader = document.getElementById('total-count-header');
+            if (elHeader) elHeader.innerText = `共 ${placesState.length} 個地點`;
+        }
+
+        let showAllTags = false;
+        function toggleShowAllTags() {
+            showAllTags = !showAllTags;
+            renderHotTags();
+        }
+
+        function renderHotTags() {
+            const container = document.getElementById('hot-tags-container');
+            if (!container) return;
+
+            const tagCounts = {};
+            placesState.forEach(item => {
+                if (Array.isArray(item.tags)) {
+                    item.tags.forEach(t => {
+                        let tag = t.trim();
+                        if (!tag.startsWith('#')) tag = '#' + tag;
+                        tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+                    });
+                }
+            });
+
+            // 過濾掉僅出現 1 次的冷門細項標籤，只保留出現 2 次以上的高頻核心標籤
+            let sortedTags = Object.keys(tagCounts)
+                .filter(tag => tagCounts[tag] >= 2)
+                .sort((a, b) => tagCounts[b] - tagCounts[a]);
+
+            // 預設精選 Top 10 最常用核心標籤，避免標籤列過長雜亂
+            let displayTags = sortedTags.slice(0, 10);
+            if (showAllTags) {
+                displayTags = sortedTags;
+            } else if (currentTag && !displayTags.includes(currentTag)) {
+                displayTags = [currentTag, ...displayTags.slice(0, 9)];
+            }
+
+            const toggleBtn = sortedTags.length > 10 ? `
+                <button onclick="toggleShowAllTags()" class="shrink-0 px-2.5 py-1 rounded-xl text-xs font-bold border transition bg-slate-100 dark:bg-[#1f2735] text-slate-600 dark:text-slate-400 border-dashed border-slate-300 dark:border-white/20 hover:border-slate-400">
+                    ${showAllTags ? '收合標籤' : '更多熱門...'}
+                </button>
+            ` : '';
+
+            container.innerHTML = displayTags.map(tag => {
+                const isActive = (currentTag === tag);
+                return `<button onclick="setTagFilter('${tag}')" class="shrink-0 px-2.5 py-1 rounded-xl text-xs font-bold border transition ${
+                    isActive 
+                    ? 'bg-rose-600 text-white border-rose-600 shadow-sm' 
+                    : 'bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:border-emerald-600'
+                }">
+                    ${tag} <span class="text-[10px] opacity-75">(${tagCounts[tag]})</span>
+                </button>`;
+            }).join('') + toggleBtn;
+        }
+
+        function setRegionFilter(region) {
+            currentRegion = region;
+            document.querySelectorAll('#region-filter-container button').forEach(btn => {
+                const isMatch = (region === 'ALL' && btn.innerText.includes('全部')) || btn.innerText.includes(region.split(' ')[0]);
+                if (isMatch) {
+                    btn.className = 'region-btn active shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition bg-emerald-700 dark:bg-emerald-600 text-white shadow-sm';
+                } else {
+                    btn.className = 'region-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10';
+                }
+            });
+            applyFilters();
+        }
+
+        function setTypeFilter(type) {
+            currentType = type;
+            document.querySelectorAll('#type-filter-container button').forEach(btn => {
+                const isMatch = (type === 'ALL' && btn.innerText.includes('全部')) || btn.innerText.includes(type.replace(/^[^\s]+\s*/, '').slice(0,2));
+                if (isMatch) {
+                    btn.className = 'type-btn active shrink-0 px-3 py-1 rounded-xl text-xs font-bold transition bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950';
+                } else {
+                    btn.className = 'type-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold transition bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10';
+                }
+            });
+            applyFilters();
+        }
+
+        function setTagFilter(tag) {
+            if (currentTag === tag) {
+                currentTag = 'ALL';
+            } else {
+                currentTag = tag;
+            }
+            const clearBtn = document.getElementById('clear-tag-btn');
+            if (clearBtn) clearBtn.style.display = (currentTag !== 'ALL') ? 'inline-block' : 'none';
+            renderHotTags();
+            applyFilters();
+        }
+
+        function clearTagFilter() {
+            currentTag = 'ALL';
+            const clearBtn = document.getElementById('clear-tag-btn');
+            if (clearBtn) clearBtn.style.display = 'none';
+            renderHotTags();
+            applyFilters();
+        }
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            applyFilters();
+        }
+
+        function resetAllFilters() {
+            currentRegion = 'ALL';
+            currentType = 'ALL';
+            currentTag = 'ALL';
+            document.getElementById('search-input').value = '';
+            setRegionFilter('ALL');
+            setTypeFilter('ALL');
+            clearTagFilter();
+        }
+
+        function applyFilters() {
+            const searchVal = document.getElementById('search-input').value.trim().toLowerCase();
+
+            const filtered = placesState.filter(item => {
+                if (currentRegion !== 'ALL' && item.region !== currentRegion) return false;
+                if (currentType !== 'ALL' && item.type !== currentType) return false;
+                if (currentTag !== 'ALL') {
+                    const hasTag = Array.isArray(item.tags) && item.tags.some(t => t.toLowerCase() === currentTag.toLowerCase());
+                    if (!hasTag) return false;
+                }
+                if (searchVal) {
+                    const nameMatch = item.name && item.name.toLowerCase().includes(searchVal);
+                    const addrMatch = item.address && item.address.toLowerCase().includes(searchVal);
+                    const noteMatch = item.note && item.note.toLowerCase().includes(searchVal);
+                    const tagMatch = Array.isArray(item.tags) && item.tags.some(t => t.toLowerCase().includes(searchVal));
+                    if (!nameMatch && !addrMatch && !noteMatch && !tagMatch) return false;
+                }
+                return true;
+            });
+
+            renderPlacesGrid(filtered);
+        }
+
+        function renderPlacesGrid(list) {
+            const grid = document.getElementById('places-grid');
+            const noResults = document.getElementById('no-results-msg');
+            const countBadge = document.getElementById('filtered-count-badge');
+
+            if (countBadge) countBadge.innerText = `${list.length} 個地點`;
+
+            if (list.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+
+            grid.innerHTML = list.map(item => {
+                const tagsHtml = (item.tags || []).map(t => {
+                    return `<span onclick="setTagFilter('${t}')" class="cursor-pointer px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10 hover:border-emerald-600 transition">
+                        ${t}
+                    </span>`;
+                }).join(' ');
+
+                const mapUrl = item.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name + ' ' + (item.address||''))}`;
+
+                return `
+                <div class="ui-card rounded-2xl p-3.5 flex flex-col justify-between relative bg-white dark:bg-[#2e3746] border border-slate-200 dark:border-white/10">
+                    <div>
+                        <!-- Header Badges -->
+                        <div class="flex items-center justify-between gap-1 mb-2">
+                            <span class="badge-region px-2 py-0.5 rounded-lg text-[10px] font-black flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-[9px]"></i> ${item.region}
+                            </span>
+                            <span class="badge-type px-2 py-0.5 rounded-lg text-[10px] font-black">
+                                ${item.type}
+                            </span>
+                        </div>
+
+                        <!-- Title & Rating -->
+                        <div class="flex items-start justify-between gap-2 mb-1">
+                            <h4 class="font-black text-slate-900 dark:text-white text-xs leading-snug">
+                                ${item.name}
+                            </h4>
+                            <div class="flex items-center gap-1 px-1.5 py-0.5 rounded-lg bg-amber-100 dark:bg-amber-500/20 border border-amber-300 dark:border-amber-500/30 text-amber-900 dark:text-amber-300 text-[11px] font-black shrink-0">
+                                <i class="fa-solid fa-star text-[9px] text-amber-600 dark:text-amber-400"></i> ${item.rating || '4.5'}
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <p class="text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-2 flex items-center gap-1">
+                            <i class="fa-regular fa-compass text-slate-400"></i> ${item.address || '地點資料維護中'}
+                        </p>
+
+                        <!-- Note Box -->
+                        ${item.note ? `
+                        <div class="note-box p-2.5 rounded-xl text-[11px] font-medium leading-relaxed mb-2.5">
+                            <i class="fa-solid fa-quote-left text-amber-600/50 mr-1 text-[9px]"></i>${item.note}
+                        </div>
+                        ` : ''}
+
+                        <!-- Tags Cloud -->
+                        <div class="flex flex-wrap gap-1 mb-2.5">
+                            ${tagsHtml}
+                        </div>
+                    </div>
+
+                    <!-- Footer Actions (Mobile-Optimized Touch Button) -->
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-white/5">
+                        <a href="${mapUrl}" target="_blank" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 text-white text-xs font-black shadow-sm active:scale-95 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-diamond-turn-right text-[10px]"></i> 1-Tap 導航
+                        </a>
+
+                        <div class="flex items-center gap-1">
+                            <button onclick="editPlace('${item.id}')" class="p-1.5 rounded-xl bg-slate-100 dark:bg-[#262f3c] text-slate-700 dark:text-slate-300 hover:bg-slate-200 font-bold transition text-xs active:scale-90" title="編輯">
+                                <i class="fa-solid fa-pen text-[10px]"></i>
+                            </button>
+                            <button onclick="deletePlace('${item.id}')" class="p-1.5 rounded-xl bg-rose-50 dark:bg-[#262f3c] text-rose-700 dark:text-rose-400 hover:bg-rose-100 font-bold transition text-xs active:scale-90" title="刪除">
+                                <i class="fa-solid fa-trash-can text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function openAddModal() {
+            document.getElementById('modal-title').innerText = '新增私房地點';
+            document.getElementById('form-id').value = '';
+            document.getElementById('form-name').value = '';
+            document.getElementById('form-region').value = '慈山 (Từ Sơn)';
+            document.getElementById('form-type').value = '🍜 在地/精緻美食';
+            document.getElementById('form-rating').value = '4.5';
+            document.getElementById('form-tags').value = '';
+            document.getElementById('form-address').value = '';
+            document.getElementById('form-mapurl').value = '';
+            document.getElementById('form-note').value = '';
+
+            document.getElementById('place-modal').classList.remove('hidden');
+        }
+
+        function openMenuModal() {
+            document.getElementById('menu-modal').classList.remove('hidden');
+        }
+
+        function editPlace(id) {
+            const item = placesState.find(p => p.id === id);
+            if (!item) return;
+
+            document.getElementById('modal-title').innerText = '編輯地點資訊';
+            document.getElementById('form-id').value = item.id;
+            document.getElementById('form-name').value = item.name || '';
+            document.getElementById('form-region').value = item.region || '慈山 (Từ Sơn)';
+            document.getElementById('form-type').value = item.type || '🍜 在地/精緻美食';
+            document.getElementById('form-rating').value = item.rating || 4.5;
+            document.getElementById('form-tags').value = (item.tags || []).join(', ');
+            document.getElementById('form-address').value = item.address || '';
+            document.getElementById('form-mapurl').value = item.mapUrl || '';
+            document.getElementById('form-note').value = item.note || '';
+
+            document.getElementById('place-modal').classList.remove('hidden');
+        }
+
+        function handleSavePlace(e) {
+            e.preventDefault();
+            const id = document.getElementById('form-id').value;
+            const name = document.getElementById('form-name').value.trim();
+            const region = document.getElementById('form-region').value;
+            const type = document.getElementById('form-type').value;
+            const rating = parseFloat(document.getElementById('form-rating').value) || 4.5;
+            const address = document.getElementById('form-address').value.trim();
+            const mapUrl = document.getElementById('form-mapurl').value.trim();
+            const note = document.getElementById('form-note').value.trim();
+
+            const rawTags = document.getElementById('form-tags').value;
+            const tags = rawTags.split(/[,，]/).map(t => t.trim()).filter(t => t.length > 0).map(t => t.startsWith('#') ? t : '#' + t);
+
+            if (id) {
+                const index = placesState.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    placesState[index] = { id, name, region, type, rating, tags, address, mapUrl, note };
+                    showToast('已更新地點資訊', 'success');
+                }
+            } else {
+                const newId = 'custom-' + Date.now();
+                placesState.unshift({ id: newId, name, region, type, rating, tags, address, mapUrl, note });
+                showToast('已新增地點', 'success');
+            }
+
+            saveToLocalStorage();
+            renderHotTags();
+            applyFilters();
+            closeModal('place-modal');
+        }
+
+        function deletePlace(id) {
+            if (confirm('確定要刪除此地點紀錄嗎？')) {
+                placesState = placesState.filter(p => p.id !== id);
+                saveToLocalStorage();
+                renderHotTags();
+                applyFilters();
+                showToast('已刪除地點', 'info');
+            }
+        }
+
+        function confirmResetModal() {
+            document.getElementById('reset-modal').classList.remove('hidden');
+        }
+
+        function executeResetData() {
+            placesState = [...DEFAULT_PLACES];
+            saveToLocalStorage();
+            renderHotTags();
+            applyFilters();
+            closeModal('reset-modal');
+            showToast('已重置預設資料', 'info');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function exportJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(placesState, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `vietnam_secret_spots_backup_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast('已匯出 JSON 備份檔', 'success');
+        }
+
+        function importJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (Array.isArray(imported)) {
+                        placesState = imported;
+                        saveToLocalStorage();
+                        renderHotTags();
+                        applyFilters();
+                        showToast('已成功匯入備份檔', 'success');
+                    } else {
+                        alert('格式不正確');
+                    }
+                } catch (err) {
+                    alert('讀取失敗：' + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function filterMichelin(type, val) {
+            if (type === 'city') michelinCityFilter = val;
+            if (type === 'award') michelinAwardFilter = val;
+
+            document.querySelectorAll('#michelin-city-filters button').forEach(btn => {
+                if ((val === 'ALL' && btn.innerText.includes('全部')) || btn.innerText.includes(val.split(' ')[0])) {
+                    if (type === 'city') btn.className = 'm-city-btn active shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950';
+                } else if (type === 'city') {
+                    btn.className = 'm-city-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10';
+                }
+            });
+
+            document.querySelectorAll('#michelin-award-filters button').forEach(btn => {
+                if ((val === 'ALL' && btn.innerText.includes('全部')) || btn.innerText.includes(val.split(' ')[0])) {
+                    if (type === 'award') btn.className = 'm-award-btn active shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-rose-700 dark:bg-rose-600 text-white';
+                } else if (type === 'award') {
+                    btn.className = 'm-award-btn shrink-0 px-3 py-1 rounded-xl text-xs font-bold bg-white dark:bg-[#262f3c] text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-white/10';
+                }
+            });
+
+            renderMichelin();
+        }
+
+        function renderMichelin() {
+            const grid = document.getElementById('michelin-grid');
+            if (!grid) return;
+
+            const filtered = MICHELIN_DATA.filter(item => {
+                if (michelinCityFilter !== 'ALL' && item.city !== michelinCityFilter) return false;
+                if (michelinAwardFilter !== 'ALL' && item.award !== michelinAwardFilter) return false;
+                return true;
+            });
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="ui-card rounded-2xl p-3.5 flex flex-col justify-between border border-slate-200 dark:border-white/10 bg-white dark:bg-[#2e3746]">
+                    <div>
+                        <div class="flex items-center justify-between gap-1 mb-1.5">
+                            <span class="badge-michelin px-2 py-0.5 rounded-lg text-[10px] font-black flex items-center gap-1">
+                                <i class="fa-solid fa-star text-[8px]"></i> ${item.award}
+                            </span>
+                            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">${item.city}</span>
+                        </div>
+
+                        <h4 class="font-black text-slate-900 dark:text-white text-xs mb-0.5">${item.name}</h4>
+                        <div class="text-[10px] font-bold text-amber-700 dark:text-amber-400 mb-1.5">${item.cuisine}</div>
+
+                        <p class="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed font-medium mb-2.5">
+                            ${item.desc}
+                        </p>
+
+                        <div class="p-2 rounded-xl bg-slate-50 dark:bg-[#262f3c] border border-slate-200 dark:border-white/10 text-[10px] mb-2.5">
+                            <div class="font-black text-slate-900 dark:text-slate-200 mb-0.5"><i class="fa-solid fa-fire text-rose-600 mr-1 text-[9px]"></i> 招牌必點：</div>
+                            <div class="text-slate-600 dark:text-slate-400 font-bold">${item.dish}</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 mb-2 pt-1.5 border-t border-slate-100 dark:border-white/5 font-bold">
+                            <span>價位：<strong class="text-emerald-700 dark:text-emerald-400 font-black">${item.price}</strong></span>
+                        </div>
+                        <a href="${item.mapUrl}" target="_blank" class="w-full py-1.5 rounded-xl bg-rose-700 hover:bg-rose-800 text-white text-xs font-black shadow-sm flex items-center justify-center gap-1 transition active:scale-95">
+                            <i class="fa-solid fa-map-location-dot text-[10px]"></i> 查看地圖導航
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMallsMobileCards() {
+            const container = document.getElementById('malls-mobile-cards');
+            if (!container) return;
+
+            container.innerHTML = MALLS_DATA.map(m => `
+                <div class="ui-card rounded-2xl p-3.5 border border-slate-200 dark:border-white/10 bg-white dark:bg-[#2e3746]">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-black text-slate-900 dark:text-white">${m.name}</span>
+                        <span class="badge-region px-1.5 py-0.5 rounded-md text-[9px] font-black">${m.region}</span>
+                    </div>
+                    <div class="text-[10px] text-amber-800 dark:text-amber-400 font-black mb-1.5"><i class="fa-solid fa-fire text-rose-600 mr-1 text-[9px]"></i>${m.busyness}</div>
+                    <p class="text-[11px] text-slate-700 dark:text-slate-300 font-medium leading-relaxed mb-2">${m.highlight}</p>
+                    <div class="p-2 rounded-xl bg-slate-50 dark:bg-[#262f3c] text-[10px] text-slate-600 dark:text-slate-400 space-y-1 font-medium">
+                        <div><strong class="text-slate-900 dark:text-slate-200">設施：</strong>${m.facilities}</div>
+                        <div><strong class="text-slate-900 dark:text-slate-200">交通：</strong>${m.transport}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMallsTable() {
+            const tbody = document.getElementById('mall-table-body');
+            if (!tbody) return;
+
+            tbody.innerHTML = MALLS_DATA.map(m => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition">
+                    <td class="py-2.5 px-3">
+                        <div class="font-black text-slate-900 dark:text-white text-xs">${m.name}</div>
+                        <div class="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold">${m.region}</div>
+                    </td>
+                    <td class="py-2.5 px-3 text-xs font-bold text-slate-800 dark:text-slate-300">${m.scale}</td>
+                    <td class="py-2.5 px-3 text-[11px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed">${m.facilities}</td>
+                    <td class="py-2.5 px-3 font-black text-amber-800 dark:text-amber-400 text-xs">${m.busyness}</td>
+                    <td class="py-2.5 px-3 text-[11px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed">${m.dining}</td>
+                    <td class="py-2.5 px-3 text-[11px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed">${m.transport}</td>
+                </tr>
+            `).join('');
+        }
+
+        function showToast(msg, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'p-2.5 rounded-xl shadow-lg border text-xs font-bold bg-slate-900/95 dark:bg-slate-800/95 text-white border-slate-700 flex items-center gap-1.5 pointer-events-auto backdrop-blur-md';
+            toast.innerHTML = `<i class="fa-solid fa-circle-info text-amber-400 text-xs"></i> ${msg}`;
+
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.addEventListener('DOMContentLoaded', initData);
+    </script>
+</body>
+</html>
