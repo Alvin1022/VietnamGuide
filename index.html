@@ -119,7 +119,7 @@
 
     <!-- iOS 18 Style Translucent Navigation Bar -->
     <header class="sticky top-0 z-40 px-4 py-2.5 bg-white/85 dark:bg-[#141820]/85 backdrop-blur-xl border-b border-slate-200/60 dark:border-white/5 transition-colors">
-        <div class="max-w-xl mx-auto flex items-center justify-between">
+        <div class="app-container max-w-xl md:max-w-5xl lg:max-w-7xl mx-auto flex items-center justify-between transition-all">
             <div class="flex items-center gap-2">
                 <span class="text-xl">🇻🇳</span>
                 <div>
@@ -132,7 +132,13 @@
 
             <!-- Header Quick Actions (iOS Style Capsule Buttons) -->
             <div class="flex items-center gap-1.5">
-                <!-- Theme Toggle Button (Correct Target Action Logic: In Light Mode shows Moon+深色; In Dark Mode shows Sun+淺色) -->
+                <!-- Layout Mode Toggle (Auto / Mobile / Desktop) -->
+                <button onclick="toggleLayoutMode()" class="h-8 px-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 font-semibold text-xs transition active:scale-95 flex items-center gap-1.5" id="layout-toggle-btn" title="切換版面寬度">
+                    <i class="fa-solid fa-desktop text-sky-600 dark:text-sky-400 text-xs" id="layout-icon"></i>
+                    <span id="layout-text" class="text-[11px] hidden sm:inline">自適應</span>
+                </button>
+
+                <!-- Theme Toggle Button -->
                 <button onclick="toggleTheme()" class="h-8 px-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-700 dark:text-amber-300 font-semibold text-xs transition active:scale-95 flex items-center gap-1.5" id="theme-toggle-btn" title="切換為深色模式">
                     <i class="fa-solid fa-moon text-indigo-500 text-xs" id="theme-icon"></i>
                     <span id="theme-text" class="text-[11px]">深色</span>
@@ -153,7 +159,7 @@
 
     <!-- iOS Style Segmented Control (Sticky Under Navigation Bar) -->
     <div class="sticky top-[49px] z-30 px-4 pt-2 pb-1.5 bg-white/85 dark:bg-[#141820]/85 backdrop-blur-xl border-b border-slate-200/40 dark:border-white/5">
-        <div class="max-w-xl mx-auto">
+        <div class="app-container max-w-xl md:max-w-5xl lg:max-w-7xl mx-auto transition-all">
             <div class="p-1 rounded-xl bg-slate-200/60 dark:bg-[#1e2532] flex items-center gap-1 text-xs font-semibold" id="segmented-tabs">
                 <button onclick="switchMainSection('secret-spots')" id="tab-secret-spots" class="flex-1 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 bg-white dark:bg-[#283241] text-emerald-700 dark:text-emerald-400 shadow-sm font-bold">
                     <i class="fa-solid fa-map-pin text-[11px]"></i> <span>私房地點</span>
@@ -169,7 +175,7 @@
     </div>
 
     <!-- MAIN APP CONTAINER -->
-    <main class="max-w-xl mx-auto w-full px-4 pt-2.5 space-y-3.5">
+    <main class="app-container max-w-xl md:max-w-5xl lg:max-w-7xl mx-auto w-full px-4 pt-2.5 space-y-3.5 transition-all">
 
         <!-- ==================== MODULE 1: SECRET SPOTS ==================== -->
         <section id="secret-spots" class="scroll-mt-24 space-y-2.5">
@@ -218,7 +224,7 @@
             </div>
 
             <!-- Cards Container -->
-            <div class="space-y-3" id="places-grid">
+            <div class="app-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5" id="places-grid">
                 <!-- Dynamic Cards -->
             </div>
 
@@ -252,7 +258,7 @@
             </div>
 
             <!-- Michelin Cards Container (Pre-rendered + JS synced) -->
-            <div class="space-y-3" id="michelin-grid">
+            <div class="app-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5" id="michelin-grid">
                 
         <div class="ui-surface rounded-2xl p-4 space-y-2.5">
             <div class="flex items-center justify-between gap-2">
@@ -902,7 +908,7 @@
             </div>
 
             <!-- Malls Mobile Cards Grid (Pre-rendered so it is never blank!) -->
-            <div class="space-y-3" id="malls-mobile-cards">
+            <div class="app-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5" id="malls-mobile-cards">
                 
         <div class="ui-surface rounded-2xl p-4 space-y-2.5">
             <div class="flex items-center justify-between gap-2">
@@ -1219,7 +1225,7 @@
     </main>
 
     <!-- iOS Style Fixed Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/85 dark:bg-[#141820]/85 backdrop-blur-2xl border-t border-slate-200/60 dark:border-white/5 safe-bottom shadow-lg transition-colors">
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/85 dark:bg-[#141820]/85 backdrop-blur-2xl border-t border-slate-200/60 dark:border-white/5 safe-bottom shadow-lg transition-colors">
         <div class="max-w-xl mx-auto flex items-center justify-around py-1.5">
             <button onclick="switchMainSection('secret-spots')" id="bottom-nav-spots" class="flex-1 flex flex-col items-center gap-0.5 text-emerald-600 dark:text-emerald-400 transition-colors font-bold">
                 <i class="fa-solid fa-map-pin text-sm"></i>
@@ -1332,6 +1338,24 @@
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
+            <!-- Layout Mode Selection in Menu -->
+            <div class="p-2.5 rounded-2xl bg-slate-50 dark:bg-[#141820] border border-slate-200/60 dark:border-white/5 space-y-1.5">
+                <span class="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
+                    <i class="fa-solid fa-sliders text-sky-600 mr-1"></i> 版面寬度設定
+                </span>
+                <div class="grid grid-cols-3 gap-1 text-[11px]">
+                    <button onclick="setLayoutMode('auto')" id="layout-btn-auto" class="py-1.5 px-1 rounded-xl text-center font-bold border transition bg-emerald-600 text-white shadow-sm">
+                        ⚡ 自動適應
+                    </button>
+                    <button onclick="setLayoutMode('mobile')" id="layout-btn-mobile" class="py-1.5 px-1 rounded-xl text-center font-semibold border transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border-slate-200/80 dark:border-white/10">
+                        📱 手機精簡
+                    </button>
+                    <button onclick="setLayoutMode('desktop')" id="layout-btn-desktop" class="py-1.5 px-1 rounded-xl text-center font-semibold border transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border-slate-200/80 dark:border-white/10">
+                        🖥️ 電腦寬版
+                    </button>
+                </div>
+            </div>
+
             <button onclick="exportJSON()" class="w-full py-2.5 px-3 rounded-xl border border-slate-200/80 dark:border-white/10 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-[#141820]">
                 <span class="flex items-center gap-2"><i class="fa-solid fa-download text-emerald-600"></i> 匯出備份 JSON</span>
                 <i class="fa-solid fa-angle-right text-slate-400 text-xs"></i>
@@ -1383,6 +1407,85 @@
         let currentTag = 'ALL';
         let showAllTags = false;
         let activeSection = 'secret-spots';
+
+        // --- LAYOUT MODE ENGINE (Auto / Mobile / Desktop) ---
+        let currentLayoutMode = 'auto';
+
+        function initLayoutMode() {
+            const saved = localStorage.getItem('vn_layout_mode') || 'auto';
+            setLayoutMode(saved, false);
+        }
+
+        function toggleLayoutMode() {
+            const modes = ['auto', 'desktop', 'mobile'];
+            const nextIdx = (modes.indexOf(currentLayoutMode) + 1) % modes.length;
+            setLayoutMode(modes[nextIdx], true);
+        }
+
+        function setLayoutMode(mode, showNotice = true) {
+            currentLayoutMode = mode;
+            localStorage.setItem('vn_layout_mode', mode);
+
+            const containers = document.querySelectorAll('.app-container');
+            const grids = document.querySelectorAll('.app-grid');
+            const icon = document.getElementById('layout-icon');
+            const text = document.getElementById('layout-text');
+            const btn = document.getElementById('layout-toggle-btn');
+
+            // Reset menu buttons styling
+            ['auto', 'mobile', 'desktop'].forEach(m => {
+                const b = document.getElementById(`layout-btn-${m}`);
+                if (b) {
+                    if (m === mode) {
+                        b.className = 'py-1.5 px-1 rounded-xl text-center font-bold border transition bg-emerald-600 text-white shadow-sm';
+                    } else {
+                        b.className = 'py-1.5 px-1 rounded-xl text-center font-semibold border transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border-slate-200/80 dark:border-white/10';
+                    }
+                }
+            });
+
+            if (mode === 'mobile') {
+                // Force single-column mobile view on any screen
+                containers.forEach(c => {
+                    c.classList.remove('md:max-w-5xl', 'lg:max-w-7xl');
+                    c.classList.add('max-w-xl');
+                });
+                grids.forEach(g => {
+                    g.classList.remove('md:grid-cols-2', 'lg:grid-cols-3');
+                    g.classList.add('grid-cols-1');
+                });
+                if (icon) icon.className = 'fa-solid fa-mobile-screen text-amber-500 text-xs';
+                if (text) text.innerText = '手機版';
+                if (btn) btn.setAttribute('title', '目前：手機精簡版（點擊切換）');
+                if (showNotice) showToast('已切換為：手機精簡模式 📱');
+            } else if (mode === 'desktop') {
+                // Force wide multi-column desktop view
+                containers.forEach(c => {
+                    c.classList.remove('max-w-xl');
+                    c.classList.add('max-w-5xl', 'lg:max-w-7xl');
+                });
+                grids.forEach(g => {
+                    g.classList.remove('grid-cols-1');
+                    g.classList.add('grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3');
+                });
+                if (icon) icon.className = 'fa-solid fa-desktop text-emerald-500 text-xs';
+                if (text) text.innerText = '寬螢幕';
+                if (btn) btn.setAttribute('title', '目前：電腦寬版（點擊切換）');
+                if (showNotice) showToast('已切換為：電腦寬版模式 🖥️');
+            } else {
+                // Auto adaptive responsive (default)
+                containers.forEach(c => {
+                    c.classList.add('max-w-xl', 'md:max-w-5xl', 'lg:max-w-7xl');
+                });
+                grids.forEach(g => {
+                    g.classList.add('grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3');
+                });
+                if (icon) icon.className = 'fa-solid fa-sliders text-sky-500 text-xs';
+                if (text) text.innerText = '自適應';
+                if (btn) btn.setAttribute('title', '目前：自動自適應（點擊切換）');
+                if (showNotice) showToast('已切換為：自動偵測適應模式 ⚡');
+            }
+        }
 
         // --- THEME ENGINE (FIXED INVERTED LOGIC) ---
         function initTheme() {
@@ -1480,6 +1583,7 @@
         // --- DATA INITIALIZATION & LOCALSTORAGE (v6 with forced rename migration) ---
         function initData() {
             initTheme();
+            initLayoutMode();
             const stored = localStorage.getItem('vn_guide_places_v6');
             if (stored) {
                 try {
