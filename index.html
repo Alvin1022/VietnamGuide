@@ -1666,7 +1666,7 @@
         function initData() {
             initTheme();
             initLayoutMode();
-            const stored = localStorage.getItem('vn_guide_places_v6');
+            const stored = localStorage.getItem('vn_guide_places_v7');
             if (stored) {
                 try {
                     placesState = JSON.parse(stored);
@@ -1725,7 +1725,7 @@
         }
 
         function saveToLocalStorage() {
-            localStorage.setItem('vn_guide_places_v6', JSON.stringify(placesState));
+            localStorage.setItem('vn_guide_places_v7', JSON.stringify(placesState));
             const pill = document.getElementById('header-count-pill');
             if (pill) pill.innerText = `${placesState.length} 處`;
         }
@@ -1741,12 +1741,34 @@
             if (!container) return;
 
             const tagCounts = {};
+
+            // 嚴格排除第一行已有的地區名稱與主要分類名稱，第二行只顯示純特色/主題標籤
+            const EXCLUDED_TAGS = new Set([
+                '#全桃園', '#桃園', '#桃園市', '#桃園區', '#中壢', '#中壢區', '#八德', '#八德區',
+                '#大溪', '#大溪區', '#平鎮', '#平鎮區', '#復興', '#復興區', '#青埔', '#青埔高鐵',
+                '#中壢/青埔', '#蘆竹', '#蘆竹區', '#龍潭', '#龍潭區', '#楊梅', '#楊梅區',
+                '#新屋', '#新屋區', '#觀音', '#觀音區', '#大園', '#大園區', '#龜山', '#龜山區', '#桃竹生活圈',
+                '#台灣', '#全台灣', '#台灣精選', '#雙北', '#台北', '#新北', '#基隆', '#雙北/基隆',
+                '#新竹', '#苗栗', '#新竹苗栗', '#台中', '#台中市', '#彰化', '#南投', '#彰化南投',
+                '#雲林', '#嘉義', '#雲林嘉義', '#台南', '#台南市', '#高雄', '#屏東', '#高雄屏東',
+                '#宜蘭', '#花蓮', '#台東', '#宜蘭花東',
+                '#芝加哥', '#矽谷', '#舊金山', '#舊金山灣區', '#全美', '#Chicago', '#Silicon Valley',
+                '#慈山', '#北寧', '#北寧市區', '#河內', '#河內市', '#峴港', '#胡志明', '#胡志明市',
+                '#Từ Sơn', '#Bắc Ninh', '#Hà Nội', '#Đà Nẵng',
+                '#私房景點', '#在地美食', '#在地小吃', '#咖啡甜點', '#火鍋燒烤', '#火鍋燒肉', '#宵夜餐酒',
+                '#宵夜熱炒', '#休閒園區', '#質感餐館', '#精選美食', '#美式牛排/漢堡', '#異國/亞洲料理',
+                '#購物採買', '#打卡景點', '#必訪景點', '#必訪景點/地標', '#必訪景點/交通', '#飯店住宿',
+                '#觀光夜市', '#景觀與景點', '#特色私房推薦'
+            ]);
+
             placesState.forEach(item => {
                 if (Array.isArray(item.tags)) {
                     item.tags.forEach(t => {
                         let tag = t.trim();
                         if (!tag.startsWith('#')) tag = '#' + tag;
+                        if (!EXCLUDED_TAGS.has(tag) && !EXCLUDED_TAGS.has(tag.replace('#', ''))) {
                         tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+                    }
                     });
                 }
             });
