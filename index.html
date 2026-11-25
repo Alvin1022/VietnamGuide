@@ -37,43 +37,49 @@
 
     <style>
         :root, [data-theme="light"] {
-            --bg-canvas: #f2f2f7;
-            --bg-surface: #ffffff;
-            --bg-surface-sub: #f8f9fa;
-            --bg-input: rgba(142, 142, 147, 0.12);
-            --border-surface: rgba(0, 0, 0, 0.06);
-            --border-subtle: rgba(0, 0, 0, 0.04);
-            
-            --text-primary: #1c1c1e;
-            --text-secondary: #3a3a3c;
-            --text-tertiary: #8e8e93;
+            --bg-canvas: #eef9f4;
+            --bg-mesh: radial-gradient(at 12% 10%, rgba(16, 185, 129, 0.24) 0px, transparent 52%), radial-gradient(at 88% 14%, rgba(56, 189, 248, 0.22) 0px, transparent 50%), radial-gradient(at 78% 82%, rgba(251, 191, 36, 0.16) 0px, transparent 52%), radial-gradient(at 15% 85%, rgba(167, 243, 208, 0.32) 0px, transparent 55%);
+            --bg-surface: rgba(255, 255, 255, 0.58);
+            --bg-surface-hover: rgba(255, 255, 255, 0.76);
+            --bg-surface-sub: rgba(255, 255, 255, 0.45);
+            --bg-input: rgba(255, 255, 255, 0.55);
+            --border-surface: rgba(255, 255, 255, 0.85);
+            --border-subtle: rgba(15, 23, 42, 0.06);
 
-            --note-bg: rgba(5, 150, 105, 0.05);
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-tertiary: #64748b;
+
+            --note-bg: rgba(16, 185, 129, 0.08);
             --note-border: #059669;
-            --note-text: #334155;
+            --note-text: #1e293b;
 
-            --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
-            --shadow-nav: 0 -2px 10px rgba(0, 0, 0, 0.04);
+            --shadow-card: 0 8px 30px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+            --shadow-card-hover: 0 14px 38px rgba(15, 23, 42, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.98);
+            --shadow-nav: 0 8px 32px rgba(15, 23, 42, 0.08);
         }
 
         [data-theme="dark"] {
-            --bg-canvas: #141820;
-            --bg-surface: #1e2532;
-            --bg-surface-sub: #171d27;
+            --bg-canvas: #081312;
+            --bg-mesh: radial-gradient(at 12% 10%, rgba(16, 185, 129, 0.20) 0px, transparent 52%), radial-gradient(at 88% 15%, rgba(20, 184, 166, 0.16) 0px, transparent 50%), radial-gradient(at 75% 85%, rgba(14, 165, 233, 0.14) 0px, transparent 52%), radial-gradient(at 20% 80%, rgba(6, 95, 70, 0.20) 0px, transparent 55%);
+            --bg-surface: rgba(22, 30, 48, 0.54);
+            --bg-surface-hover: rgba(30, 41, 64, 0.68);
+            --bg-surface-sub: rgba(15, 23, 42, 0.48);
             --bg-input: rgba(255, 255, 255, 0.08);
-            --border-surface: rgba(255, 255, 255, 0.08);
-            --border-subtle: rgba(255, 255, 255, 0.05);
-            
-            --text-primary: #ffffff;
+            --border-surface: rgba(255, 255, 255, 0.14);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+
+            --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-tertiary: #94a3b8;
 
-            --note-bg: rgba(16, 185, 129, 0.08);
+            --note-bg: rgba(52, 211, 153, 0.12);
             --note-border: #10b981;
             --note-text: #e2e8f0;
 
-            --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.25);
-            --shadow-nav: 0 -4px 16px rgba(0, 0, 0, 0.35);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+            --shadow-card-hover: 0 14px 40px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+            --shadow-nav: 0 8px 32px rgba(0, 0, 0, 0.45);
         }
 
         * {
@@ -86,17 +92,41 @@
             color: var(--text-secondary);
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Plus Jakarta Sans", "Noto Sans TC", Roboto, sans-serif;
             padding-bottom: calc(76px + env(safe-area-inset-bottom, 16px));
-            transition: background-color 0.25s ease, color 0.25s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image: var(--bg-mesh);
+            background-attachment: fixed;
+            pointer-events: none;
         }
 
         .ui-surface {
             background-color: var(--bg-surface);
+            backdrop-filter: blur(24px) saturate(185%);
+            -webkit-backdrop-filter: blur(24px) saturate(185%);
             border: 1px solid var(--border-surface);
             box-shadow: var(--shadow-card);
+            transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        @media (hover: hover) {
+            .ui-surface:hover {
+                background-color: var(--bg-surface-hover);
+                box-shadow: var(--shadow-card-hover);
+                transform: translateY(-2px);
+            }
         }
 
         .note-block {
             background-color: var(--note-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-left: 3px solid var(--note-border);
             color: var(--note-text);
         }
@@ -118,7 +148,7 @@
 <body class="min-h-screen flex flex-col antialiased overflow-x-hidden">
 
     <!-- iOS 18 Style Translucent Navigation Bar (Optimized Never-Wrap Mobile Layout) -->
-    <header class="sticky top-0 z-40 px-3.5 sm:px-4 h-[50px] bg-white/85 dark:bg-[#141820]/85 backdrop-blur-xl border-b border-slate-200/60 dark:border-white/5 transition-colors flex items-center">
+    <header class="sticky top-0 z-40 px-3.5 sm:px-4 h-[50px] bg-white/55 dark:bg-[#0b1120]/55 backdrop-blur-2xl saturate-150 border-b border-white/60 dark:border-white/10 shadow-[0_4px_24px_rgba(15,23,42,0.04)] transition-colors flex items-center">
         <div class="app-container max-w-xl md:max-w-5xl lg:max-w-7xl mx-auto w-full flex items-center justify-between gap-2">
             <!-- Brand & Count -->
             <div class="flex items-center gap-1.5 shrink-0">
@@ -131,18 +161,18 @@
             <div class="flex items-center gap-1.5 shrink-0">
                 <!-- Layout Mode Toggle (Shown on tablet/desktop, mobile uses settings menu) -->
                 <!-- Universal Guide Switcher Button -->
-                <button onclick="openGuideSwitcherModal()" class="h-8 px-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 font-bold text-xs transition active:scale-95 flex items-center gap-1.5 shrink-0" title="切換其他私房導覽">
+                <button onclick="openGuideSwitcherModal()" class="h-8 px-2.5 rounded-full border border-white/75 dark:border-white/15 bg-white/55 dark:bg-white/[0.08] backdrop-blur-md shadow-sm text-slate-700 dark:text-slate-300 font-bold text-xs transition active:scale-95 flex items-center gap-1.5 shrink-0" title="切換其他私房導覽">
                     <i class="fa-solid fa-compass text-amber-500 text-xs"></i>
                     <span class="text-[11px] hidden sm:inline">切換導覽</span>
                 </button>
 
-                <button onclick="toggleLayoutMode()" class="hidden md:flex h-8 px-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 font-semibold text-xs transition active:scale-95 items-center gap-1" id="layout-toggle-btn" title="切換版面寬度">
+                <button onclick="toggleLayoutMode()" class="hidden md:flex h-8 px-2.5 rounded-full border border-white/75 dark:border-white/15 bg-white/55 dark:bg-white/[0.08] backdrop-blur-md shadow-sm text-slate-700 dark:text-slate-300 font-semibold text-xs transition active:scale-95 items-center gap-1" id="layout-toggle-btn" title="切換版面寬度">
                     <i class="fa-solid fa-desktop text-sky-600 dark:text-sky-400 text-xs" id="layout-icon"></i>
                     <span id="layout-text" class="text-[11px]">自適應</span>
                 </button>
 
                 <!-- Theme Toggle Button (Compact circular icon on mobile, label on tablet/desktop) -->
-                <button onclick="toggleTheme()" class="h-8 w-8 sm:w-auto sm:px-2.5 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-700 dark:text-amber-300 font-semibold text-xs transition active:scale-95 flex items-center justify-center gap-1.5 shrink-0" id="theme-toggle-btn" title="切換為深色模式">
+                <button onclick="toggleTheme()" class="h-8 w-8 sm:w-auto sm:px-2.5 rounded-full border border-white/75 dark:border-white/15 bg-white/55 dark:bg-white/[0.08] backdrop-blur-md shadow-sm text-slate-700 dark:text-amber-300 font-semibold text-xs transition active:scale-95 flex items-center justify-center gap-1.5 shrink-0" id="theme-toggle-btn" title="切換為深色模式">
                     <i class="fa-solid fa-moon text-indigo-500 text-xs" id="theme-icon"></i>
                     <span id="theme-text" class="text-[11px] hidden sm:inline">深色</span>
                 </button>
@@ -154,7 +184,7 @@
                 </button>
 
                 <!-- More Menu Trigger -->
-                <button onclick="openMenuModal()" class="h-8 w-8 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100/80 dark:bg-[#1e2532] text-slate-600 dark:text-slate-300 flex items-center justify-center text-xs active:scale-95 shrink-0" title="更多設定">
+                <button onclick="openMenuModal()" class="h-8 w-8 rounded-full border border-white/75 dark:border-white/15 bg-white/55 dark:bg-white/[0.08] backdrop-blur-md shadow-sm text-slate-600 dark:text-slate-300 flex items-center justify-center text-xs active:scale-95 shrink-0" title="更多設定">
                     <i class="fa-solid fa-ellipsis"></i>
                 </button>
             </div>
@@ -162,9 +192,9 @@
     </header>
 
     <!-- iOS Style Segmented Control (Sticky Under Navigation Bar) -->
-    <div class="sticky top-[50px] z-30 px-4 pt-2 pb-1.5 bg-white/85 dark:bg-[#141820]/85 backdrop-blur-xl border-b border-slate-200/40 dark:border-white/5">
+    <div class="sticky top-[50px] z-30 px-4 pt-2 pb-1.5 bg-white/45 dark:bg-[#0b1120]/45 backdrop-blur-2xl saturate-150 border-b border-white/50 dark:border-white/10">
         <div class="app-container max-w-xl md:max-w-5xl lg:max-w-7xl mx-auto transition-all">
-            <div class="p-1 rounded-xl bg-slate-200/60 dark:bg-[#1e2532] flex items-center gap-1 text-xs font-semibold" id="segmented-tabs">
+            <div class="p-1 rounded-xl bg-white/45 dark:bg-white/[0.06] backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-inner flex items-center gap-1 text-xs font-semibold" id="segmented-tabs">
                 <button onclick="switchMainSection('secret-spots')" id="tab-secret-spots" class="flex-1 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 bg-white dark:bg-[#283241] text-emerald-700 dark:text-emerald-400 shadow-sm font-bold">
                     <i class="fa-solid fa-map-pin text-[11px]"></i> <span>私房地點</span>
                 </button>
@@ -196,22 +226,22 @@
             <!-- Material You 3 Style Filter Chips: Row 1 Regions (Exact data-region matching) -->
             <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar py-0.5" id="region-filter-container">
                 <button data-region="ALL" onclick="setRegionFilter('ALL')" class="region-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-emerald-600 text-white shadow-sm">全部區域</button>
-                <button data-region="慈山 (Từ Sơn)" onclick="setRegionFilter('慈山 (Từ Sơn)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">慈山 (Từ Sơn)</button>
-                <button data-region="北寧市區 (Bắc Ninh)" onclick="setRegionFilter('北寧市區 (Bắc Ninh)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">北寧市區</button>
-                <button data-region="河內市 (Hà Nội)" onclick="setRegionFilter('河內市 (Hà Nội)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">河內市</button>
-                <button data-region="峴港 (Đà Nẵng)" onclick="setRegionFilter('峴港 (Đà Nẵng)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">峴港</button>
+                <button data-region="慈山 (Từ Sơn)" onclick="setRegionFilter('慈山 (Từ Sơn)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">慈山 (Từ Sơn)</button>
+                <button data-region="北寧市區 (Bắc Ninh)" onclick="setRegionFilter('北寧市區 (Bắc Ninh)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">北寧市區</button>
+                <button data-region="河內市 (Hà Nội)" onclick="setRegionFilter('河內市 (Hà Nội)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">河內市</button>
+                <button data-region="峴港 (Đà Nẵng)" onclick="setRegionFilter('峴港 (Đà Nẵng)')" class="region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">峴港</button>
             </div>
 
             <!-- Material You 3 Style Filter Chips: Row 2 Categories (Exact data-type matching) -->
             <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar py-0.5" id="type-filter-container">
                 <button data-type="ALL" onclick="setTypeFilter('ALL')" class="type-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-emerald-600 text-white shadow-sm">全部類型</button>
-                <button data-type="🍜 在地/精緻美食" onclick="setTypeFilter('🍜 在地/精緻美食')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">🍜 美食</button>
-                <button data-type="☕ 咖啡甜點" onclick="setTypeFilter('☕ 咖啡甜點')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">☕ 咖啡甜點</button>
-                <button data-type="🏞️ 景點園區" onclick="setTypeFilter('🏞️ 景點園區')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">🏞️ 景點</button>
-                <button data-type="🛍️ 超市/伴手禮" onclick="setTypeFilter('🛍️ 超市/伴手禮')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">🛍️ 超市/採買</button>
-                <button data-type="💆‍♂️ SPA/按摩" onclick="setTypeFilter('💆‍♂️ SPA/按摩')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">💆‍♂️ SPA</button>
-                <button data-type="🏋️ 運動/游泳池" onclick="setTypeFilter('🏋️ 運動/游泳池')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">🏋️ 運動</button>
-                <button data-type="🏨 飯店住宿" onclick="setTypeFilter('🏨 飯店住宿')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">🏨 住宿</button>
+                <button data-type="🍜 在地/精緻美食" onclick="setTypeFilter('🍜 在地/精緻美食')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">🍜 美食</button>
+                <button data-type="☕ 咖啡甜點" onclick="setTypeFilter('☕ 咖啡甜點')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">☕ 咖啡甜點</button>
+                <button data-type="🏞️ 景點園區" onclick="setTypeFilter('🏞️ 景點園區')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">🏞️ 景點</button>
+                <button data-type="🛍️ 超市/伴手禮" onclick="setTypeFilter('🛍️ 超市/伴手禮')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">🛍️ 超市/採買</button>
+                <button data-type="💆‍♂️ SPA/按摩" onclick="setTypeFilter('💆‍♂️ SPA/按摩')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">💆‍♂️ SPA</button>
+                <button data-type="🏋️ 運動/游泳池" onclick="setTypeFilter('🏋️ 運動/游泳池')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">🏋️ 運動</button>
+                <button data-type="🏨 飯店住宿" onclick="setTypeFilter('🏨 飯店住宿')" class="type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">🏨 住宿</button>
             </div>
 
             <!-- Material You 3 Style Filter Chips: Row 3 Curated Tags -->
@@ -256,9 +286,9 @@
             <!-- Michelin City Filters -->
             <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar py-0.5" id="michelin-city-filters">
                 <button onclick="filterMichelin('ALL')" class="michelin-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-rose-600 text-white shadow-sm">全部城市 (16)</button>
-                <button onclick="filterMichelin('河內')" class="michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">河內 (7)</button>
-                <button onclick="filterMichelin('胡志明')" class="michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">胡志明市 (7)</button>
-                <button onclick="filterMichelin('峴港')" class="michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10">峴港 (2)</button>
+                <button onclick="filterMichelin('河內')" class="michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">河內 (7)</button>
+                <button onclick="filterMichelin('胡志明')" class="michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">胡志明市 (7)</button>
+                <button onclick="filterMichelin('峴港')" class="michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm">峴港 (2)</button>
             </div>
 
             <!-- Michelin Cards Container (Pre-rendered + JS synced) -->
@@ -1259,7 +1289,7 @@
 
     <!-- ==================== UNIVERSAL GUIDE SWITCHER MODAL ==================== -->
     <div id="guide-switcher-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-        <div class="w-full max-w-sm bg-white dark:bg-[#1e2532] rounded-3xl p-5 space-y-3.5 border border-slate-200/80 dark:border-white/10 shadow-2xl">
+        <div class="w-full max-w-sm bg-white/80 dark:bg-[#11192c]/80 backdrop-blur-2xl saturate-150 border border-white/80 dark:border-white/15 rounded-3xl shadow-2xl p-5 space-y-3.5 border border-slate-200/80 dark:border-white/10 shadow-2xl">
             <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-white/10">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-map-location-dot text-amber-500 text-base"></i>
@@ -1801,7 +1831,7 @@
                 return `<button onclick="setTagFilter('${tag}')" class="shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition active:scale-95 ${
                     isActive 
                     ? 'bg-rose-600 text-white shadow-sm font-bold' 
-                    : 'bg-white dark:bg-[#1e2532] text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-white/10'
+                    : 'bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-600 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm'
                 }">
                     ${tag} <span class="text-[10px] opacity-70">(${tagCounts[tag]})</span>
                 </button>`;
@@ -1817,7 +1847,7 @@
                 if (isMatch) {
                     btn.className = 'region-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-emerald-600 text-white shadow-sm';
                 } else {
-                    btn.className = 'region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10';
+                    btn.className = 'region-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm';
                 }
             });
             updateCategoryTabCounts();
@@ -1834,7 +1864,7 @@
                 if (isMatch) {
                     btn.className = 'type-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-emerald-600 text-white shadow-sm';
                 } else {
-                    btn.className = 'type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10';
+                    btn.className = 'type-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm';
                 }
             });
             applyFilters();
@@ -1925,7 +1955,7 @@
 
             grid.innerHTML = list.map(item => {
                 const tagsHtml = (item.tags || []).map(t => {
-                    return `<span onclick="setTagFilter('${t}')" class="cursor-pointer px-2 py-0.5 rounded-md text-[10.5px] font-medium bg-slate-100 dark:bg-[#141820] text-slate-500 dark:text-slate-400 hover:text-emerald-600 transition">
+                    return `<span onclick="setTagFilter('${t}')" class="cursor-pointer px-2 py-0.5 rounded-md text-[10.5px] font-medium bg-white/65 dark:bg-white/[0.07] border border-white/70 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:text-emerald-600 transition">
                         ${t}
                     </span>`;
                 }).join(' ');
@@ -2147,7 +2177,7 @@
                 if (isMatch) {
                     btn.className = 'michelin-btn active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-rose-600 text-white shadow-sm';
                 } else {
-                    btn.className = 'michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white dark:bg-[#1e2532] text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-white/10';
+                    btn.className = 'michelin-btn shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white/55 dark:bg-white/[0.08] backdrop-blur-md text-slate-700 dark:text-slate-200 border border-white/75 dark:border-white/15 shadow-sm';
                 }
             });
 
